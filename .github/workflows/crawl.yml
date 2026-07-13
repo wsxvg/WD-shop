@@ -1,9 +1,9 @@
-name: 每日全量爬取
+name: 每小时全量爬取
 
 on:
   schedule:
-    # 每天 UTC 2:00（北京时间 10:00）执行一次全量爬取
-    - cron: '0 2 * * *'
+    # 每小时爬一次（UTC 整点，北京时间 +8）
+    - cron: '0 * * * *'
   workflow_dispatch:  # 也可以在 GitHub 页面手动触发
 
 jobs:
