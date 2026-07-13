@@ -1,6 +1,8 @@
 name: 每小时全量爬取
 
 on:
+  push:
+    branches: [main]
   schedule:
     # 每小时爬一次（UTC 整点，北京时间 +8）
     - cron: '0 * * * *'
