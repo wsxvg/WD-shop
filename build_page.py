@@ -263,13 +263,8 @@ SHOPS.filter(s=>s.hasShelfItems).forEach(s=>{
 let view='product';
 
 function shopCard(d){
-  const items=(d.items||[]).map(it=>`
-    <a class="item" href="${itemUrl(it)}" target="_blank" rel="noopener">
-      <img src="${it.image||''}" loading="lazy" onerror="this.style.visibility='hidden'">
-      <div style="flex:1;min-width:0"><div class="it-name">${it.itemName||''}</div></div>
-      <div class="it-price">${fmtPrice(it.price)}</div>
-    </a>`).join('');
-  const btn=(d.items&&d.items.length)?`<span class="toggle-items" data-toggle>展开在售商品 (${d.items.length})</span>`:'';
+  const cnt = (d.items||[]).length;
+  const btn = cnt ? `<span class="toggle-items" data-goshop="${d.shopId}">查看全部 ${cnt} 件商品 ›</span>` : '';
   return `<div class="card">
     <div class="top">
       <img class="avatar" src="${d.headImage||''}" loading="lazy" onerror="this.style.background='#eef0f3'">
@@ -281,7 +276,7 @@ function shopCard(d){
     </div>
     <div class="badges">
       ${d.hasShelfItems?'<span class="badge">有在售</span>':''}
-      ${d.onShelfItemNum?`<span class="badge" style="background:#eef0f3;color:#5a6068">在售 ${d.onShelfItemNum}</span>`:''}
+      ${cnt?`<span class="badge" style="background:#eef0f3;color:#5a6068">在售 ${cnt}</span>`:''}
     </div>
     <div class="metrics">
       <div>粉丝<b>${fmtNum(d.followCount)}</b></div>
@@ -290,7 +285,6 @@ function shopCard(d){
       <div>在售数<b>${fmtNum(d.onShelfItemNum)}</b></div>
     </div>
     ${btn}
-    <div class="items">${items}</div>
   </div>`;
 }
 
@@ -380,13 +374,30 @@ function finish(n,total,unit){
 }
 
 function bindToggles(){
-  grid.querySelectorAll('[data-toggle]').forEach(btn=>{
+  grid.querySelectorAll('[data-goshop]').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      const box=btn.nextElementSibling;
-      box.classList.toggle('open');
-      btn.textContent=box.classList.contains('open')?'收起在售商品':`展开在售商品 (${box.children.length})`;
+      const sid = btn.dataset.goshop;
+      switchToShop(sid);
     });
   });
+}
+function switchToShop(sid){
+  // 切换到商品视角，设置商家下拉，触发渲染
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('[data-view="product"]').classList.add('active');
+  view = 'product';
+  document.getElementById('shopBar').classList.add('hide');
+  document.getElementById('productBar').classList.remove('hide');
+  sentinel.classList.remove('hide');
+  document.getElementById('pMerchant').value = sid;
+  // 重置其他筛选条件
+  document.getElementById('pSearch').value = '';
+  document.getElementById('pMin').value = '';
+  document.getElementById('pMax').value = '';
+  document.querySelectorAll('#priceBtns .pbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('#priceBtns .pbtn:first-child').classList.add('active');
+  document.getElementById('pSort').value = 'newest';
+  render();
 }
 
 function render(){ view==='shop'?renderShop():renderProduct(true); }
