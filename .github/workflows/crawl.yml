@@ -24,7 +24,10 @@ jobs:
           python-version: '3.11'
 
       - name: 全量爬取商品
-        run: python crawl.py || true
+        env:
+          PYTHONUNBUFFERED: "1"       # 让 print 进度实时刷进 Actions 日志
+          PYTHONIOENCODING: "utf-8"
+        run: python -u crawl.py || true
         # 不用 token 时自动走「仅刷新已有店铺商品」路径，
         # getItemList 是公开接口，无需登录
 

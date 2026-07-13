@@ -320,7 +320,8 @@ def main():
             return
 
     # 阶段4：商品补全（getItemList 公开接口，无需 token，可增量刷新）
-    print(f"刷新 {len(shelf_ids)} 个店铺的全量商品 (getItemList)…")
+    total = len(shelf_ids)
+    print(f"刷新 {total} 个店铺的全量商品 (getItemList)…", flush=True)
     t0 = time.time()
     pending = list(shelf_ids)
     consecutive_empty = 0
@@ -329,27 +330,39 @@ def main():
     done_count = 0
     while pending:
         sid = pending.pop(0)
+        shop_name = str(by_id.get(sid, {}).get("name") or sid)[:18]
         raw = crawl_shop_items(context, headers, sid)
         if raw:
             by_id[sid]["items"] = [norm_item(it) for it in raw]
             by_id[sid]["hasShelfItems"] = True
             consecutive_empty = 0
             done_count += 1
+            pct = done_count / total * 100 if total else 100
+            bar_len = 20
+            filled = int(bar_len * done_count / total) if total else bar_len
+            bar = "#" * filled + "-" * (bar_len - filled)
+            elapsed = time.time() - t0
+            eta = elapsed / done_count * (total - done_count) if done_count else 0
+            print(f"  [{bar}] {done_count}/{total} {pct:.1f}% | "
+                  f"{shop_name} {len(raw)}件 | 剩{total-done_count}家 "
+                  f"已用{elapsed:.0f}s 预计还需{eta:.0f}s", flush=True)
         else:
             consecutive_empty += 1
             pending.append(sid)  # 限频，放回队尾稍后重试
+            print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 "
+                  f"(已完成 {done_count}/{total})", flush=True)
             if consecutive_empty >= 2:
                 cooldowns += 1
                 if cooldowns > MAX_COOLDOWNS:
-                    print("  !! 限频超时，放弃剩余未填店铺，保存已得数据")
+                    print("  !! 限频超时，放弃剩余未填店铺，保存已得数据", flush=True)
                     pending = []
                     break
-                print(f"  !! 检测到限频，全局冷却 300s ({cooldowns}/{MAX_COOLDOWNS})…")
+                print(f"  !! 检测到限频，全局冷却 300s "
+                      f"({cooldowns}/{MAX_COOLDOWNS})…", flush=True)
                 time.sleep(300)
                 consecutive_empty = 0
         if done_count % 5 == 0 or not pending:
             save_progress(shops, OUT)
-            print(f"  进度 {done_count}/{len(shelf_ids)} (用时 {time.time()-t0:.1f}s)")
         time.sleep(2.5)
     # 其余无在售店铺 items 置空
     for sid in by_id:
