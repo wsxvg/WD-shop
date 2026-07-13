@@ -146,10 +146,11 @@ def call_api_get(context, path, param, headers):
     req.add_header("xweb_xhr", "1")
     req.add_header("referer",
                    "https://servicewechat.com/wx4d1258677af59f5c/196/page-frame.html")
-    for k, v in headers.items():
-        if k == "referer":
-            continue
-        req.add_header(k, v)
+    if headers:
+        for k, v in headers.items():
+            if k == "referer":
+                continue
+            req.add_header(k, v)
     with urllib.request.urlopen(req, timeout=20) as resp:
         return _decode(resp)
 
@@ -232,7 +233,7 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1):
         try:
             d = call_api_get(context, "shopDetail.tab.getItemList/1.0", param, headers)
         except Exception as e:
-            print(f"    shop {shop_id} 请求异常(限频?): {e}")
+            print(f"    shop {shop_id} 请求异常: {type(e).__name__}: {e}")
             return items
         st = d.get("status", {}).get("code")
         res = d.get("result")
