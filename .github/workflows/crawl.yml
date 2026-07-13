@@ -1,0 +1,39 @@
+name: 每日全量爬取
+
+on:
+  schedule:
+    # 每天 UTC 2:00（北京时间 10:00）执行一次全量爬取
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # 也可以在 GitHub 页面手动触发
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # 全量爬取约 5-8 分钟，30 分钟绰绰有余
+
+    permissions:
+      contents: write  # 需要写权限来提交更新
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 全量爬取商品
+        run: python crawl.py || true
+        # 不用 token 时自动走「仅刷新已有店铺商品」路径，
+        # getItemList 是公开接口，无需登录
+
+      - name: 生成展示页面
+        run: python build_page.py
+
+      - name: 提交更新到仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/follow_shops.json data/status.json index.html
+          git diff --quiet && git diff --staged --quiet || \
+            git commit -m "auto: 每日全量爬取 $(TZ=Asia/Shanghai date +'%Y-%m-%d %H:%M')"
+          git push

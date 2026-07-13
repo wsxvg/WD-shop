@@ -1,0 +1,8 @@
+# 含登录 token 的敏感文件，切勿上传 GitHub（等同账号密码）
+*.har
+data/context.json
+
+# 运行日志 / 缓存
+crawl.log
+__pycache__/
+*.pyc
