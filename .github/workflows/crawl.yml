@@ -11,7 +11,7 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 60  # 全量爬取约 5-8 分钟，30 分钟绰绰有余
+    timeout-minutes: 60  # 159 店含大店（2000+件），考虑限频冷却，设 60 分钟
 
     permissions:
       contents: write  # 需要写权限来提交更新
