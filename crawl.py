@@ -311,9 +311,8 @@ def main():
             existing = json.load(open(OUT, encoding="utf-8"))
             by_id = {r["shopId"]: r for r in existing if "shopId" in r}
             shops = existing
-            # 只刷新「历史有商品/曾在售」的店铺，避免对 0 商品店误判限频触发冷却
-            shelf_ids = set(sid for sid, r in by_id.items()
-                            if r.get("items") or r.get("onShelfItemNum"))
+            # 全量刷新所有店铺，空店 getItemList 公开接口也能正常返回 0 件
+            shelf_ids = set(by_id.keys())
             print(f"  [!] Token 已过期/缺失，载入历史 {len(shops)} 个店铺，"
                   f"仅刷新商品（不获取新关注）")
         else:
