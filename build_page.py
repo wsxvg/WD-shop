@@ -217,20 +217,8 @@ const TOKEN_EXPIRED = __TOKEN_EXPIRED__;
 if (TOKEN_EXPIRED) {
   document.getElementById('tokenWarn').classList.remove('hide');
 }
-const SHOPS = __DATA__;
+const SHOPS = [];  // 数据将通过 fetch 异步加载
 const PRODUCTS = [];
-SHOPS.forEach(s=>{
-  (s.items||[]).forEach(it=>{
-    PRODUCTS.push({
-      shopId:s.shopId, shopName:s.name, shopAvatar:s.headImage,
-      itemId:it.itemId, itemName:it.itemName, image:it.image,
-      price:it.price, priceYuan:(it.price||0)/100, addTime:it.addTime||'',
-      stock:it.stock||0, soldText:it.soldText||'', soldNum:it.soldNum||0,
-      originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
-      preSale:it.preSale||false, hasSku:it.hasSku||false
-    });
-  });
-});
 // 品类快速筛选
 const CATE_RULES = [
   { name: '短袖', kws: ['短袖','t恤','tee','体恤','短t'], exclude: ['长袖','长t'] },
@@ -478,7 +466,35 @@ document.getElementById('cateBtns').addEventListener('click', e => {
   if (view === 'product') render();
 });
 
-render();
+// 异步加载数据
+(async () => {
+  try {
+    const resp = await fetch('data/shops_data.json');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const d = await resp.json();
+    SHOPS.push(...d);
+    SHOPS.forEach(s => {
+      (s.items||[]).forEach(it => {
+        PRODUCTS.push({
+          shopId:s.shopId, shopName:s.name, shopAvatar:s.headImage,
+          itemId:it.itemId, itemName:it.itemName, image:it.image,
+          price:it.price, priceYuan:(it.price||0)/100, addTime:it.addTime||'',
+          stock:it.stock||0, soldText:it.soldText||'', soldNum:it.soldNum||0,
+          originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
+          preSale:it.preSale||false, hasSku:it.hasSku||false
+        });
+      });
+    });
+    // 更新统计
+    document.getElementById('total').textContent = SHOPS.length;
+    document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
+    document.getElementById('totalItems').textContent = PRODUCTS.length;
+    // 渲染
+    render();
+  } catch (e) {
+    document.getElementById('grid').innerHTML = `<div class="empty">数据加载失败: ${e.message}</div>`;
+  }
+})();
 </script>
 </body>
 </html>
@@ -497,11 +513,14 @@ def main():
         except Exception:
             pass
     out = (HTML
-           .replace("__DATA__", json.dumps(data, ensure_ascii=False))
            .replace("__TOKEN_EXPIRED__", "true" if expired else "false"))
     out_path = os.path.join(HERE, "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(out)
+    # 数据抽成独立 JSON，让页面异步加载
+    data_path = os.path.join(HERE, "data", "shops_data.json")
+    with open(data_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False)
     n_items = sum(1 for d in data if d.get("items"))
     total_products = sum(len(d.get("items", [])) for d in data)
     print("written:", out_path)
