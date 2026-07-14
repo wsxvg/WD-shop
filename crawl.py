@@ -218,15 +218,17 @@ def norm_item(it):
     }
 
 
-def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1):
+def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_pages=50):
     """用 decorate.shopDetail.tab.getItemList 分页拉取某店铺全部在售商品。
-    每页 limit 拉到最大(2000)，翻页最少→总请求最少→最不易被限频。
-    不在函数内做退避重试（限频是全局性的，交给调用方的冷却逻辑统一处理），
-    仅检测：业务错误码 / 结果非 dict / 首页静默空 → 判为限频返回空列表。
-    该接口公开，context 可为 None。"""
+    limit=100（API 不支持 >100）；max_pages=50 防止 API 死循环。"""
     items = []
     offset = 0
+    page_count = 0
     while True:
+        page_count += 1
+        if page_count > max_pages:
+            print(f"    shop {shop_id} 翻页 {max_pages} 次仍无结束信号，强制停止")
+            return items
         param = {"shopId": str(shop_id), "tabId": 0, "sortOrder": "desc",
                  "offset": offset, "limit": limit, "from": "wdplus",
                  "showItemTag": True}
@@ -238,11 +240,11 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1):
         st = d.get("status", {}).get("code")
         res = d.get("result")
         if st != 0 or not isinstance(res, dict):
-            print(f"    shop {shop_id} 业务错误: code={st}")
+            print(f"    shop {shop_id} 业务错误: code={st}, res_type={type(res).__name__}")
             return items
         lst = res.get("itemList", [])
         if offset == 0 and len(lst) == 0 and not res.get("hasData", False):
-            return items  # 首页静默空 → 限频，返回空让调用方冷却重试
+            return items  # 首页静默空 → 限频
         items.extend(lst)
         if len(lst) < limit or not res.get("hasData", False):
             break
@@ -360,19 +362,19 @@ def main():
             print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 (第{tries}次, "
                   f"已完成 {done_count}/{total})", flush=True)
             consecutive_empty += 1
-            if consecutive_empty >= 2:
+            if consecutive_empty >= 5:
                 cooldowns += 1
                 if cooldowns > MAX_COOLDOWNS:
                     print("  !! 限频超时，放弃剩余未填店铺，保存已得数据", flush=True)
                     pending = []
                     break
-                print(f"  !! 检测到限频，全局冷却 300s "
+                print(f"  !! 检测到限频，短冷却 60s "
                       f"({cooldowns}/{MAX_COOLDOWNS})…", flush=True)
-                time.sleep(300)
+                time.sleep(60)
                 consecutive_empty = 0
         if done_count % 5 == 0 or not pending:
             save_progress(shops, OUT)
-        time.sleep(2.5)
+        time.sleep(1.5)
     # 其余无在售店铺 items 置空
     for sid in by_id:
         if "items" not in by_id[sid]:

@@ -108,6 +108,38 @@ HTML = r"""<!DOCTYPE html>
     background:var(--card);cursor:pointer;color:var(--sub);user-select:none;transition:all .15s;white-space:nowrap;}
   .cate-btn:hover{border-color:var(--brand);color:var(--brand);}
   .cate-btn.active{background:var(--text);color:#fff;border-color:var(--text);font-weight:600;}
+  /* 移动端优化 */
+  @media (max-width:480px){
+    .wrap{padding:12px 8px 40px;}
+    header h1{font-size:18px;}
+    .grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+    .pcard .pbody{padding:6px 8px;gap:4px;}
+    .pcard .pname{font-size:11px;min-height:28px;-webkit-line-clamp:2;}
+    .pcard .pprice{font-size:13px;}
+    .pcard .pmerchant{font-size:10px;padding:2px 6px;}
+    .pcard .pmerchant img{width:14px;height:14px;}
+    .pprice-row{gap:3px;}
+    .pprice-original{font-size:10px;}
+    .pmeta{font-size:10px;}
+    .ptag{font-size:9px;padding:1px 4px;}
+    .pbadge-discount{font-size:10px;padding:1px 6px;}
+    .toolbar{padding:10px;border-radius:10px;}
+    .toolbar .row{gap:6px;}
+    input[type=text],input[type=number],select{font-size:13px;padding:7px 10px;}
+    #search,#pSearch{min-width:120px;}
+    .pbtn{font-size:11px;padding:4px 10px;}
+    .cate-btn{font-size:11px;padding:3px 10px;}
+    .tabs{gap:6px;}
+    .tab{font-size:13px;padding:6px 12px;}
+    .card{padding:10px;}
+    .card .avatar{width:40px;height:40px;}
+    .card .name{font-size:13px;}
+    .badges{gap:4px;}
+    .badge{font-size:10px;padding:2px 6px;}
+    .metrics{font-size:11px;}
+    .metrics b{font-size:12px;}
+    .pbtns{gap:4px;}
+  }
 </style>
 </head>
 <body>
@@ -201,16 +233,16 @@ SHOPS.forEach(s=>{
 });
 // 品类快速筛选
 const CATE_RULES = [
-  { name: '短袖', kws: ['短袖','t恤','tee','体恤','短t'] },
-  { name: '长袖', kws: ['长袖','长t'] },
-  { name: '卫衣', kws: ['卫衣','hoodie','帽衫','连帽'] },
-  { name: '外套', kws: ['外套','夹克','风衣','大衣','棉服','冲锋衣','牛仔外套'] },
-  { name: '毛衣', kws: ['毛衣','针织','羊毛','开衫'] },
-  { name: '短裤', kws: ['短裤','热裤','沙滩裤'] },
-  { name: '长裤', kws: ['长裤','休闲裤','工装裤','牛仔裤','西裤','阔腿裤','拖地裤'] },
-  { name: '裙子', kws: ['裙子','连衣裙','半身裙','蓬蓬裙','仙女裙','百褶裙','小黑裙'] },
-  { name: '鞋子', kws: ['鞋','运动鞋','板鞋','帆布','拖鞋','凉鞋','靴子','德训鞋'] },
-  { name: '配饰', kws: ['配饰','项链','手链','耳环','戒指','手表','腰带','墨镜','帽子','包包','背包','袜子','眼镜'] },
+  { name: '短袖', kws: ['短袖','t恤','tee','体恤','短t'], exclude: ['长袖','长t'] },
+  { name: '长袖', kws: ['长袖','长t'], exclude: [] },
+  { name: '卫衣', kws: ['卫衣','hoodie','帽衫','连帽'], exclude: [] },
+  { name: '外套', kws: ['外套','夹克','风衣','大衣','棉服','冲锋衣','牛仔外套'], exclude: [] },
+  { name: '毛衣', kws: ['毛衣','针织','羊毛','开衫'], exclude: [] },
+  { name: '短裤', kws: ['短裤','热裤','沙滩裤'], exclude: ['长裤'] },
+  { name: '长裤', kws: ['长裤','休闲裤','工装裤','牛仔裤','西裤','阔腿裤','拖地裤'], exclude: ['短裤'] },
+  { name: '裙子', kws: ['裙子','连衣裙','半身裙','蓬蓬裙','仙女裙','百褶裙','小黑裙'], exclude: [] },
+  { name: '鞋子', kws: ['鞋','运动鞋','板鞋','帆布','拖鞋','凉鞋','靴子','德训鞋'], exclude: [] },
+  { name: '配饰', kws: ['配饰','项链','手链','耳环','戒指','手表','腰带','墨镜','帽子','包包','背包','袜子','眼镜'], exclude: [] },
 ];
 (()=>{
   const box = document.getElementById('cateBtns');
@@ -227,7 +259,11 @@ function matchCategory(name, cate) {
   if (!cate) return true;
   const nl = name.toLowerCase();
   const rule = CATE_RULES.find(c => c.name === cate);
-  return rule ? rule.kws.some(kw => nl.includes(kw)) : true;
+  if (!rule) return true;
+  // 先检查排除关键词（例：短袖中排除含"长袖"的商品）
+  if (rule.exclude && rule.exclude.some(kw => nl.includes(kw))) return false;
+  // 再检查匹配关键词
+  return rule.kws.some(kw => nl.includes(kw));
 }
 
 const fmtNum = n => (n==null?0:n).toLocaleString('zh-CN');
