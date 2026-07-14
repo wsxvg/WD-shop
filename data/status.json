@@ -1,8 +1,8 @@
 {
-  "token_expired": false,
-  "token_source": "context.json",
-  "follow_refreshed": true,
-  "updated_at": "2026-07-14T06:03:01.472933+00:00",
+  "token_expired": true,
+  "token_source": "none",
+  "follow_refreshed": false,
+  "updated_at": "2026-07-14T08:44:04.278278+00:00",
   "shops": 159,
-  "products": 16741
+  "products": 26389
 }
