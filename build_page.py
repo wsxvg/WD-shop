@@ -469,7 +469,7 @@ document.getElementById('cateBtns').addEventListener('click', e => {
 // 异步加载数据
 (async () => {
   try {
-    const resp = await fetch('data/shops_data.json');
+    const resp = await fetch('data/shops_data.json?v=__BUILD_TIME__');
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const d = await resp.json();
     SHOPS.push(...d);
@@ -503,6 +503,7 @@ document.getElementById('cateBtns').addEventListener('click', e => {
 
 def main():
     data = load_data()
+    data_path = os.path.join(HERE, "data", "shops_data.json")
     # 读取 token 状态，决定是否显示过期提示
     expired = False
     status_path = os.path.join(HERE, "data", "status.json")
@@ -512,8 +513,10 @@ def main():
             expired = bool(st.get("token_expired"))
         except Exception:
             pass
+    build_time = str(int(os.path.getmtime(data_path) if os.path.exists(data_path) else 0))
     out = (HTML
-           .replace("__TOKEN_EXPIRED__", "true" if expired else "false"))
+           .replace("__TOKEN_EXPIRED__", "true" if expired else "false")
+           .replace("__BUILD_TIME__", build_time))
     out_path = os.path.join(HERE, "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(out)
