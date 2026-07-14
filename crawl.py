@@ -324,9 +324,11 @@ def main():
     print(f"刷新 {total} 个店铺的全量商品 (getItemList)…", flush=True)
     t0 = time.time()
     pending = list(shelf_ids)
+    retry_count = {}  # sid → 已重试次数
     consecutive_empty = 0
     cooldowns = 0
     MAX_COOLDOWNS = 20
+    MAX_RETRY_PER_SHOP = 3  # 每家店最多重试 3 次，超限跳过
     done_count = 0
     while pending:
         sid = pending.pop(0)
@@ -347,10 +349,17 @@ def main():
                   f"{shop_name} {len(raw)}件 | 剩{total-done_count}家 "
                   f"已用{elapsed:.0f}s 预计还需{eta:.0f}s", flush=True)
         else:
-            consecutive_empty += 1
+            tries = retry_count.get(sid, 0) + 1
+            retry_count[sid] = tries
+            if tries >= MAX_RETRY_PER_SHOP:
+                print(f"  [跳过] {shop_name} 连续 {tries} 次无数据，跳过此店", flush=True)
+                if by_id.get(sid, {}).get("items") is None:
+                    by_id[sid]["items"] = []
+                continue  # 不再重试，继续下一家
             pending.append(sid)  # 限频，放回队尾稍后重试
-            print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 "
-                  f"(已完成 {done_count}/{total})", flush=True)
+            print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 (第{tries}次, "
+                  f"已完成 {done_count}/{total})", flush=True)
+            consecutive_empty += 1
             if consecutive_empty >= 2:
                 cooldowns += 1
                 if cooldowns > MAX_COOLDOWNS:
