@@ -451,7 +451,7 @@ document.getElementById('cateBtns').addEventListener('click', e => {
 // 异步加载数据
 (async () => {
   try {
-    const resp = await fetch('data/shops_data.json?v=1784069537');
+    const resp = await fetch('data/shops_data.json?v=1784072749');
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const d = await resp.json();
     SHOPS.push(...d);
