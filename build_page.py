@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""根据 data/follow_shops.json 生成「我关注的微店」双视角单文件页面。
-- 店铺视角：关注店铺卡片（可展开在售商品）
-- 商品视角：跨商家摊平的商品总表，每件商品带「商家标签 + 价格」
-数据内联进 index.html，双击即可打开。"""
+"""根据 data/follow_shops.json 生成拆分数据文件：
+- shops_index.json（店铺元数据，~50KB，秒开）
+- shops_products.json（全量商品，扁平化，~5MB，后台加载）
+- shops_data.json（旧格式，保留兼容）"""
 import json
 import os
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data", "follow_shops.json")
@@ -513,21 +514,61 @@ def main():
             expired = bool(st.get("token_expired"))
         except Exception:
             pass
-    build_time = str(int(os.path.getmtime(data_path) if os.path.exists(data_path) else 0))
-    out = (HTML
-           .replace("__TOKEN_EXPIRED__", "true" if expired else "false")
-           .replace("__BUILD_TIME__", build_time))
-    out_path = os.path.join(HERE, "index.html")
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(out)
-    # 数据抽成独立 JSON，让页面异步加载
+    # 更新 status.json 用于页面端读取 token 状态
+    if os.path.exists(status_path):
+        try:
+            st = json.load(open(status_path, encoding="utf-8"))
+            st["build_time"] = int(time.time())
+            with open(status_path, "w", encoding="utf-8") as f:
+                json.dump(st, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+    # 拆分数据：店铺索引（不含商品）+ 商品数据，实现秒开
+    # shops_index.json — 店铺元数据（~50KB），页面秒开
+    idx = []
+    for s in data:
+        sc = dict(s)
+        sc["items"] = []  # 不嵌入商品，仅保留店铺信息
+        idx.append(sc)
+    idx_path = os.path.join(HERE, "data", "shops_index.json")
+    with open(idx_path, "w", encoding="utf-8") as f:
+        json.dump(idx, f, ensure_ascii=False)
+
+    # shops_products.json — 扁平化全量商品（~9MB），后台异步加载
+    products = []
+    for s in data:
+        sid = s["shopId"]
+        for it in s.get("items", []):
+            products.append({
+                "s": sid,
+                "i": it.get("itemId"),
+                "n": it.get("itemName"),
+                "g": it.get("image"),
+                "p": it.get("price"),
+                "t": it.get("addTime", ""),
+                "k": it.get("stock", 0),
+                "d": it.get("soldText", ""),
+                "u": it.get("soldNum", 0),
+                "o": it.get("originalPrice", 0),
+                "a": it.get("itemTag", []),
+                "r": it.get("preSale", False),
+                "h": it.get("hasSku", False),
+            })
+    prod_path = os.path.join(HERE, "data", "shops_products.json")
+    with open(prod_path, "w", encoding="utf-8") as f:
+        json.dump(products, f, ensure_ascii=False, separators=(",", ":"))
+
+    # 保留旧 shops_data.json 兼容（后续可移除）
     data_path = os.path.join(HERE, "data", "shops_data.json")
     with open(data_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False)
+
     n_items = sum(1 for d in data if d.get("items"))
     total_products = sum(len(d.get("items", [])) for d in data)
-    print("written:", out_path)
     print("shops:", len(data), "with items:", n_items, "products:", total_products)
+    print("  -> shops_index.json (秒开):", os.path.getsize(idx_path), "bytes")
+    print("  -> shops_products.json (后台):", os.path.getsize(prod_path), "bytes")
     print("token 提示:", "已过期（页面将显示提示）" if expired else "正常")
 
 
