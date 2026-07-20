@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://si.geilicdn.com" crossorigin>
+<link rel="dns-prefetch" href="https://si.geilicdn.com">
 <title>我关注的微店</title>
 <style>
   :root{
@@ -54,10 +56,12 @@
   .toggle-items{font-size:12px;color:var(--brand);cursor:pointer;align-self:flex-start;font-weight:600;}
   /* 商品视角 */
   .pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
-    box-shadow:var(--shadow);display:flex;flex-direction:column;text-decoration:none;color:inherit;}
+    box-shadow:var(--shadow);display:flex;flex-direction:column;text-decoration:none;color:inherit;
+    content-visibility:auto;contain-intrinsic-size:auto 280px;}
   .pcard:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.08),0 12px 28px rgba(0,0,0,.06);}
-  .pcard .pimg{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--chip);}
-  .pcard .pbody{padding:10px 12px;display:flex;flex-direction:column;gap:8px;}
+  .pcard .pimg{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--chip);
+    transition:opacity .3s;opacity:0;}
+  .pcard .pimg.loaded{opacity:1;}
   .pcard .pname{font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px;}
   .pcard .pprice{color:var(--brand);font-weight:700;font-size:16px;}
   .pcard .pmerchant{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);
@@ -236,6 +240,13 @@ function matchCategory(name, cate) {
   return rule.kws.some(kw => nl.includes(kw));
 }
 
+// 分词搜索：把关键词按中英文边界拆成token，全部命中才算匹配
+// 如 "ac短袖" → ["ac","短袖"] → "acne 2024短袖" 同时命中 ac 和 短袖
+function tokenMatch(text, kw) {
+  const tokens = kw.split(/(?<=[\u4e00-\u9fff])(?=[^\u4e00-\u9fff])|(?<=[^\u4e00-\u9fff])(?=[\u4e00-\u9fff])|\s+/);
+  return tokens.filter(Boolean).every(t => text.includes(t));
+}
+
 const fmtNum = n => (n==null?0:n).toLocaleString('zh-CN');
 const fmtRate = r => (r==null?0:(r*100).toFixed(2)) + '%';
 const fmtPrice = p => '¥' + ((p==null?0:p)/100).toLocaleString('zh-CN',{maximumFractionDigits:((p/100)%1)?2:0});
@@ -251,13 +262,13 @@ document.getElementById('totalItems').textContent=PRODUCTS.length;
 
 // 商品视角分批懒加载（避免一次性渲染上万张卡片卡死页面）
 const sentinel = document.getElementById('sentinel');
-const BATCH = 80;
+const BATCH = 30;
 let pAll = [], pShown = 0;
 const io = new IntersectionObserver(es => {
   if (view === 'product' && es[0].isIntersecting && pShown < pAll.length) {
     renderProduct(false);
   }
-}, { rootMargin: '400px' });
+}, { rootMargin: '800px' });
 io.observe(sentinel);
 
 // 商家下拉
@@ -301,7 +312,9 @@ function productCard(p){
   const meta = [p.soldText, p.stock ? `库存 ${p.stock}` : ''].filter(Boolean).join(' · ');
   return `<a class="pcard" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
-      <img class="pimg" src="${p.image||''}" loading="lazy" onerror="this.style.background='#eef0f3'">
+      <img class="pimg" src="${p.image||''}" loading="lazy" decoding="async"
+        onload="this.classList.add('loaded')"
+        onerror="this.style.background='#eef0f3';this.classList.add('loaded')">
       ${discount ? `<span class="pbadge-discount">-${discount}%</span>` : ''}
     </div>
     <div class="pbody">
@@ -355,7 +368,7 @@ function renderProduct(reset){
       if(mid&&String(p.shopId)!==mid)return false;
       if((p.priceYuan||0)<min)return false;
       if((p.priceYuan||0)>max)return false;
-      if(kw&&!(p.itemName||'').toLowerCase().includes(kw))return false;
+      if(kw&&!tokenMatch((p.itemName||'').toLowerCase(), kw))return false;
       if(cate&&!matchCategory((p.itemName||'').toLowerCase(), cate))return false;
       return true;
     });
