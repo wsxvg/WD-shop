@@ -555,6 +555,18 @@ def main():
                 "r": it.get("preSale", False),
                 "h": it.get("hasSku", False),
             })
+    # shops_products — 按 7000 件/块分段，首块秒出，其余后台排队
+    CHUNK = 7000
+    total_prods = len(products)
+    n_chunks = (total_prods + CHUNK - 1) // CHUNK
+    for ci in range(n_chunks):
+        chunk = products[ci*CHUNK : (ci+1)*CHUNK]
+        cp = os.path.join(HERE, f"data/shops_products_{ci}.json")
+        with open(cp, "w", encoding="utf-8") as f:
+            json.dump(chunk, f, ensure_ascii=False, separators=(",", ":"))
+        print(f"  -> shops_products_{ci}.json: {os.path.getsize(cp)} bytes ({len(chunk)} 件)")
+
+    # 保留完整文件兼容旧版
     prod_path = os.path.join(HERE, "data", "shops_products.json")
     with open(prod_path, "w", encoding="utf-8") as f:
         json.dump(products, f, ensure_ascii=False, separators=(",", ":"))
@@ -565,10 +577,7 @@ def main():
         json.dump(data, f, ensure_ascii=False)
 
     n_items = sum(1 for d in data if d.get("items"))
-    total_products = sum(len(d.get("items", [])) for d in data)
-    print("shops:", len(data), "with items:", n_items, "products:", total_products)
-    print("  -> shops_index.json (秒开):", os.path.getsize(idx_path), "bytes")
-    print("  -> shops_products.json (后台):", os.path.getsize(prod_path), "bytes")
+    print(f"shops: {len(data)} with items: {n_items} products: {total_prods}")
     print("token 提示:", "已过期（页面将显示提示）" if expired else "正常")
 
 

@@ -463,40 +463,23 @@ document.getElementById('cateBtns').addEventListener('click', e => {
   if (view === 'product') render();
 });
 
-// 异步加载数据：先秒开店铺索引（~50KB），再后台加载商品（~5MB）
+// 异步加载数据：店铺索引秒开 → 商品分块首块秒出 → 其余后台排队
 (async () => {
   grid.innerHTML = '<div class="empty">⏳ 加载店铺数据...</div>';
   const start = performance.now();
-  const VER = 'v=1';
-  try {
-    // 第一步：加载店铺索引（秒开）
-    const idxResp = await fetch('data/shops_index.json?' + VER);
-    if (!idxResp.ok) throw new Error('店铺索引 HTTP ' + idxResp.status);
-    const idx = await idxResp.json();
-    SHOPS.push(...idx);
-    console.log(`店铺索引加载完成 ${(performance.now()-start).toFixed(0)}ms，${SHOPS.length} 个店铺`);
-    // 立即显示店铺统计
-    document.getElementById('total').textContent = SHOPS.length;
-    document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
-    document.getElementById('totalItems').textContent = '...';
-    // 填充商家下拉
-    const pM = document.getElementById('pMerchant');
-    pM.innerHTML = '<option value="">全部商家</option>';
-    SHOPS.filter(s => s.hasShelfItems).forEach(s => {
-      const o = document.createElement('option'); o.value = s.shopId; o.textContent = s.name; pM.appendChild(o);
-    });
-    grid.innerHTML = '<div class="empty">⏳ 加载商品数据...<br><small style="font-size:11px;color:#aaa">' + SHOPS.length + ' 个店铺 · 商品加载中</small></div>';
+  const VER = 'v=2';
+  const TIMEOUT = 30000; // 单块超时30秒
+  const shopMap = {};
 
-    // 第二步：后台加载商品（大头）
-    const prodResp = await fetch('data/shops_products.json?' + VER);
-    if (!prodResp.ok) throw new Error('商品数据 HTTP ' + prodResp.status);
-    const rawProducts = await prodResp.json();
-    console.log(`商品数据下载完成 ${(performance.now()-start).toFixed(0)}ms，${rawProducts.length} 件`);
-    // 构建店铺查找表
-    const shopMap = {};
-    SHOPS.forEach(s => { shopMap[s.shopId] = s; });
-    // 摊平产品
-    rawProducts.forEach(p => {
+  async function fetchWithTimeout(url) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), TIMEOUT);
+    try { return await fetch(url, { signal: ctrl.signal }); }
+    finally { clearTimeout(timer); }
+  }
+
+  function addProducts(raw) {
+    raw.forEach(p => {
       const shop = shopMap[p.s] || {};
       PRODUCTS.push({
         shopId: p.s, shopName: shop.name || '', shopAvatar: shop.headImage || '',
@@ -507,36 +490,78 @@ document.getElementById('cateBtns').addEventListener('click', e => {
         preSale: p.r || false, hasSku: p.h || false
       });
     });
-    console.log(`数据处理完成 ${(performance.now()-start).toFixed(0)}ms，${PRODUCTS.length} 件 · 总耗时${((performance.now()-start)/1000).toFixed(1)}s`);
+  }
+
+  try {
+    // 第一步：加载店铺索引（52KB，秒开）
+    const idxResp = await fetchWithTimeout('data/shops_index.json?' + VER);
+    if (!idxResp.ok) throw new Error('店铺索引 HTTP ' + idxResp.status);
+    const idx = await idxResp.json();
+    SHOPS.push(...idx);
+    SHOPS.forEach(s => { shopMap[s.shopId] = s; });
+    // 立即显示店铺统计
+    document.getElementById('total').textContent = SHOPS.length;
+    document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
+    document.getElementById('totalItems').textContent = '...';
+    const pM = document.getElementById('pMerchant');
+    pM.innerHTML = '<option value="">全部商家</option>';
+    SHOPS.filter(s => s.hasShelfItems).forEach(s => {
+      const o = document.createElement('option'); o.value = s.shopId; o.textContent = s.name; pM.appendChild(o);
+    });
+    console.log(`店铺索引 ${(performance.now()-start).toFixed(0)}ms，${SHOPS.length} 店`);
+
+    // 第二步：加载第一块商品（~2MB），立即渲染
+    grid.innerHTML = '<div class="empty">⏳ 加载首屏商品...</div>';
+    const c0 = await fetchWithTimeout(`data/shops_products_0.json?${VER}`);
+    if (!c0.ok) throw new Error('首块 HTTP ' + c0.status);
+    const r0 = await c0.json();
+    addProducts(r0);
+    console.log(`首块 ${(performance.now()-start).toFixed(0)}ms · ${r0.length} 件 → 总${PRODUCTS.length}件`);
     document.getElementById('totalItems').textContent = PRODUCTS.length;
     render();
+
+    // 第三步：后台排队加载剩余块
+    let ci = 1;
+    (async function loadRest() {
+      while (true) {
+        const url = `data/shops_products_${ci}.json?${VER}`;
+        try {
+          const resp = await fetchWithTimeout(url);
+          if (!resp.ok) break;
+          const raw = await resp.json();
+          addProducts(raw);
+          console.log(`块${ci} ${(performance.now()-start).toFixed(0)}ms · +${raw.length} 件 → 总${PRODUCTS.length}件`);
+          document.getElementById('totalItems').textContent = PRODUCTS.length;
+          // 如果在商品视图且当前滚动可见，静默刷新
+          if (window.view === 'product') render();
+          ci++;
+        } catch (e) { break; }
+      }
+    })();
+
   } catch (e) {
-    // 降级：尝试旧格式 shops_data.json
+    // 降级：旧格式
+    console.warn('新格式失败，降级旧格式:', e.message);
     try {
-      console.warn('新格式加载失败，尝试旧格式:', e.message);
-      const resp = await fetch('data/shops_data.json?v=1784017232');
+      const resp = await fetchWithTimeout('data/shops_data.json?' + VER);
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const d = await resp.json();
       SHOPS.length = 0;
       SHOPS.push(...d);
-      SHOPS.forEach(s => {
-        (s.items||[]).forEach(it => {
-          PRODUCTS.push({
-            shopId:s.shopId, shopName:s.name, shopAvatar:s.headImage,
-            itemId:it.itemId, itemName:it.itemName, image:it.image,
-            price:it.price, priceYuan:(it.price||0)/100, addTime:it.addTime||'',
-            stock:it.stock||0, soldText:it.soldText||'', soldNum:it.soldNum||0,
-            originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
-            preSale:it.preSale||false, hasSku:it.hasSku||false
-          });
-        });
-      });
+      SHOPS.forEach(s => { shopMap[s.shopId] = s; s.items.forEach(it => { PRODUCTS.push({
+        shopId:s.shopId, shopName:s.name, shopAvatar:s.headImage,
+        itemId:it.itemId, itemName:it.itemName, image:it.image,
+        price:it.price, priceYuan:(it.price||0)/100, addTime:it.addTime||'',
+        stock:it.stock||0, soldText:it.soldText||'', soldNum:it.soldNum||0,
+        originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
+        preSale:it.preSale||false, hasSku:it.hasSku||false
+      }); }); });
       document.getElementById('total').textContent = SHOPS.length;
       document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
       document.getElementById('totalItems').textContent = PRODUCTS.length;
       render();
     } catch (e2) {
-      document.getElementById('grid').innerHTML = `<div class="empty">数据加载失败: ${e2.message}</div>`;
+      grid.innerHTML = `<div class="empty">数据加载失败<br><small>${e2.message}</small><br><br><button onclick="location.reload()" style="padding:8px 24px;background:#4a6cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">🔄 重试</button></div>`;
     }
   }
 })();
