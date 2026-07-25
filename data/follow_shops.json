@@ -64,7 +64,7 @@
         "image": "https://si.geilicdn.com/wdseller2010920741-3aa60000019f36f01f820a2303ee_1179_1548.jpg",
         "price": 13800,
         "addTime": "2026-07-14",
-        "stock": 63,
+        "stock": 61,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -106,7 +106,7 @@
         "image": "https://si.geilicdn.com/wdseller2010920741-4a500000019f6c3da9980a207569_750_750.jpg",
         "price": 5000,
         "addTime": "2026-07-25",
-        "stock": 572,
+        "stock": 557,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -171,7 +171,7 @@
         "image": "https://si.geilicdn.com/wdseller2010920741-174e0000019f0792b1a30a21146b_1179_1608.jpg",
         "price": 24800,
         "addTime": "2026-07-24",
-        "stock": 690,
+        "stock": 689,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -568,7 +568,7 @@
         "image": "https://si.geilicdn.com/wdseller1936222320-356b0000019b6a47850d0a8134f0_660_660.jpg",
         "price": 3900,
         "addTime": "2026-07-19",
-        "stock": 206,
+        "stock": 205,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -610,7 +610,7 @@
         "image": "https://si.geilicdn.com/wdseller1936222320-656b0000019c9da029750a210256_660_660.jpg",
         "price": 9900,
         "addTime": "2026-06-12",
-        "stock": 449,
+        "stock": 448,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -638,7 +638,7 @@
         "image": "https://si.geilicdn.com/wdseller1936222320-337e00000198472172140a230115_1233_1233.jpg",
         "price": 6900,
         "addTime": "2026-06-12",
-        "stock": 236,
+        "stock": 235,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -1300,7 +1300,7 @@
         "image": "https://si.geilicdn.com/wdseller1967891636-656e0000019e252c56d50a20e273_1206_1608.jpg",
         "price": 15800,
         "addTime": "2026-07-04",
-        "stock": 238,
+        "stock": 236,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -1906,7 +1906,7 @@
         "image": "https://si.geilicdn.com/wdseller1871105296-7b9d0000019d22d2071d0a240147_1280_1280.jpg",
         "price": 6800,
         "addTime": "2026-05-06",
-        "stock": 287,
+        "stock": 288,
         "soldText": "218",
         "soldNum": 218,
         "originalPrice": 12800,
@@ -2210,7 +2210,7 @@
         "image": "https://si.geilicdn.com/open1767382824-1234478995-6b7a0000018fcfe5c9960a210559_1080_1440.jpg",
         "price": 3500,
         "addTime": "2026-05-03",
-        "stock": 2084,
+        "stock": 2085,
         "soldText": "124",
         "soldNum": 124,
         "originalPrice": 0,
@@ -2230,6 +2230,25 @@
         "price": 11880,
         "addTime": "2026-05-07",
         "stock": 120,
+        "soldText": "123",
+        "soldNum": 123,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7689357686",
+        "itemName": "无售后 福利gm墨镜 带包装+15 出口国外订单滞留清仓 细节都特别好 无脑冲",
+        "image": "https://si.geilicdn.com/open1694547077-1234478995-0452000001946174217b0a22d234_1159_1159.jpg",
+        "price": 7900,
+        "addTime": "2026-03-14",
+        "stock": 474,
         "soldText": "123",
         "soldNum": 123,
         "originalPrice": 0,
@@ -2274,25 +2293,6 @@
         "itemTag": [
           {
             "tagTitle": "￥4",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7689357686",
-        "itemName": "无售后 福利gm墨镜 带包装+15 出口国外订单滞留清仓 细节都特别好 无脑冲",
-        "image": "https://si.geilicdn.com/open1694547077-1234478995-0452000001946174217b0a22d234_1159_1159.jpg",
-        "price": 7900,
-        "addTime": "2026-03-14",
-        "stock": 475,
-        "soldText": "122",
-        "soldNum": 122,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
             "tagType": 3
           }
         ],
@@ -2750,7 +2750,7 @@
         "image": "https://si.geilicdn.com/wdseller1890570276-1aa30000019daa062c9b0a2315ef_750_750.jpg",
         "price": 36900,
         "addTime": "2026-07-05",
-        "stock": 32,
+        "stock": 31,
         "soldText": "81",
         "soldNum": 81,
         "originalPrice": 0,
@@ -2864,30 +2864,11 @@
         "image": "https://si.geilicdn.com/weidian901962865053-48700000019dde66744b0a2304aa_2142_2856.jpg",
         "price": 5900,
         "addTime": "2026-05-01",
-        "stock": 621,
+        "stock": 620,
         "soldText": "79",
         "soldNum": 79,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "401920482103432831544",
-        "itemName": "ac 618活动（现货）Bal 25ss spring 篮球系列复古01blueTshirts  pp同款 ",
-        "image": "https://si.geilicdn.com/wdseller1767265673-532d0000019f087af2d10a22d1a4_1290_1720.jpg",
-        "price": 3990,
-        "addTime": "2026-06-28",
-        "stock": 1,
-        "soldText": "79",
-        "soldNum": 79,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "库存紧张",
-            "tagType": 4
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -3001,7 +2982,7 @@
         "image": "https://si.geilicdn.com/weidian901962865053-109f0000019d52cb33240a2103bd_1320_1731.jpg",
         "price": 9900,
         "addTime": "2026-05-01",
-        "stock": 123,
+        "stock": 121,
         "soldText": "73",
         "soldNum": 73,
         "originalPrice": 0,
@@ -3041,6 +3022,25 @@
         "itemTag": [
           {
             "tagTitle": "￥4",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7809708684",
+        "itemName": "#xiaozhang来一件 三折清仓！bv水洗灰色牛仔裤/拆版开发",
+        "image": "https://si.geilicdn.com/wdseller365544549-7e120000019f627c636c0a207569_1290_1714.jpg",
+        "price": 9900,
+        "addTime": "2026-07-14",
+        "stock": 51,
+        "soldText": "71",
+        "soldNum": 71,
+        "originalPrice": 29900,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
             "tagType": 3
           }
         ],
@@ -3100,31 +3100,12 @@
         "hasSku": true
       },
       {
-        "itemId": "7809708684",
-        "itemName": "#xiaozhang来一件 三折清仓！bv水洗灰色牛仔裤/拆版开发",
-        "image": "https://si.geilicdn.com/wdseller365544549-7e120000019f627c636c0a207569_1290_1714.jpg",
-        "price": 9900,
-        "addTime": "2026-07-14",
-        "stock": 51,
-        "soldText": "70",
-        "soldNum": 70,
-        "originalPrice": 29900,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7810395900",
         "itemName": "四折清仓！ Bc 26ss 三色刺绣标识针织立领polo马球衫",
         "image": "https://si.geilicdn.com/wdseller365544549-43990000019f743cd7c60a2303ee_1023_942.jpg",
         "price": 9900,
         "addTime": "2026-07-18",
-        "stock": 272,
+        "stock": 273,
         "soldText": "70",
         "soldNum": 70,
         "originalPrice": 24900,
@@ -3203,7 +3184,7 @@
         "image": "https://si.geilicdn.com/wdseller365544549-1beb0000019f6300799b0a230115_1320_1320.jpg",
         "price": 4880,
         "addTime": "2026-07-14",
-        "stock": 291,
+        "stock": 292,
         "soldText": "69",
         "soldNum": 69,
         "originalPrice": 14800,
@@ -3590,6 +3571,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7689244856",
+        "itemName": "换新链接！爆卖1000+全是好评 Pra Re-Nylon再生尼龙材质 两件套斜挎单肩包 yb开模 对标外面400-800的大货",
+        "image": "https://si.geilicdn.com/open1694547077-1234478995-4f5700000197e3228c830aa043f9_1290_1718.jpg",
+        "price": 5900,
+        "addTime": "2026-02-27",
+        "stock": 469,
+        "soldText": "55",
+        "soldNum": 55,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "401920482103353068003",
         "itemName": "女神清仓福利！！Miu25ss新款鞠婧祎同款短裙/原版开发/原价2xx",
         "image": "https://si.geilicdn.com/wdseller1767265673-33c40000019d302c84dc0a239846_1290_1577.jpg",
@@ -3667,25 +3667,6 @@
         "price": 6660,
         "addTime": "2026-06-14",
         "stock": 36,
-        "soldText": "54",
-        "soldNum": 54,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7689244856",
-        "itemName": "换新链接！爆卖1000+全是好评 Pra Re-Nylon再生尼龙材质 两件套斜挎单肩包 yb开模 对标外面400-800的大货",
-        "image": "https://si.geilicdn.com/open1694547077-1234478995-4f5700000197e3228c830aa043f9_1290_1718.jpg",
-        "price": 5900,
-        "addTime": "2026-02-27",
-        "stock": 470,
         "soldText": "54",
         "soldNum": 54,
         "originalPrice": 0,
@@ -3808,7 +3789,7 @@
         "image": "https://si.geilicdn.com/wdseller1871105296-433f00000195964db61c0a239846_1290_1720.jpg",
         "price": 8800,
         "addTime": "2026-03-19",
-        "stock": 1005,
+        "stock": 1004,
         "soldText": "52",
         "soldNum": 52,
         "originalPrice": 0,
@@ -3860,7 +3841,7 @@
         "image": "https://si.geilicdn.com/wdseller1951584266-48cd0000019eb6a0fe750a230449_1080_1440.jpg",
         "price": 14900,
         "addTime": "2026-06-12",
-        "stock": 74,
+        "stock": 75,
         "soldText": "49",
         "soldNum": 49,
         "originalPrice": 0,
@@ -4143,6 +4124,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7689343852",
+        "itemName": "福利价 小剑腰带 🍑2xx同源批次 小牛皮材质",
+        "image": "https://si.geilicdn.com/wdseller1871105296-244300000193c14a31410a23047e_750_1000.jpg",
+        "price": 3990,
+        "addTime": "2026-03-14",
+        "stock": 287,
+        "soldText": "44",
+        "soldNum": 44,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥4",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7759483246",
         "itemName": "半折福利狠价！Acn26ss假两件长袖/定制240g有机棉/浙江做货人代工款式/ac这个价格就是成本 赚个运费钱",
         "image": "https://si.geilicdn.com/wdseller902053673764-449f0000019e043de1070a811411_1280_1280.jpg",
@@ -4193,25 +4193,6 @@
         "itemTag": [
           {
             "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7689343852",
-        "itemName": "福利价 小剑腰带 🍑2xx同源批次 小牛皮材质",
-        "image": "https://si.geilicdn.com/wdseller1871105296-244300000193c14a31410a23047e_750_1000.jpg",
-        "price": 3990,
-        "addTime": "2026-03-14",
-        "stock": 288,
-        "soldText": "43",
-        "soldNum": 43,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥4",
             "tagType": 3
           }
         ],
@@ -4380,12 +4361,26 @@
         "hasSku": true
       },
       {
+        "itemId": "401920482103421927698",
+        "itemName": "真正的老钱！杰尼ya撞色门襟 海军蓝珠地棉Polo短袖T恤",
+        "image": "https://si.geilicdn.com/wdseller1767265673-14960000019ec1bb07eb0a230115_1208_1611.jpg",
+        "price": 7990,
+        "addTime": "2026-06-13",
+        "stock": 50,
+        "soldText": "41",
+        "soldNum": 41,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7812443270",
         "itemName": "#马里奥制造 【独立囤货库存】巴巴塔塔鱼叉有机棉短袖（浅蓝色非白色",
         "image": "https://si.geilicdn.com/pcitem2006539928-30500000019f7f02830c0a23041a_1206_1750.jpg",
         "price": 4900,
         "addTime": "2026-07-22",
-        "stock": 61,
+        "stock": 62,
         "soldText": "41",
         "soldNum": 41,
         "originalPrice": 0,
@@ -4422,7 +4417,7 @@
         "image": "https://si.geilicdn.com/wdseller2068685817-14b40000019e2650533e0a22d1a4_1248_1248.jpg",
         "price": 16900,
         "addTime": "2026-07-18",
-        "stock": 1,
+        "stock": 2,
         "soldText": "40",
         "soldNum": 40,
         "originalPrice": 20900,
@@ -4474,20 +4469,6 @@
             "tagType": 3
           }
         ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "401920482103421927698",
-        "itemName": "真正的老钱！杰尼ya撞色门襟 海军蓝珠地棉Polo短袖T恤",
-        "image": "https://si.geilicdn.com/wdseller1767265673-14960000019ec1bb07eb0a230115_1208_1611.jpg",
-        "price": 7990,
-        "addTime": "2026-06-13",
-        "stock": 46,
-        "soldText": "40",
-        "soldNum": 40,
-        "originalPrice": 0,
-        "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
@@ -6006,7 +5987,7 @@
         "image": "https://si.geilicdn.com/weidian901962865053-74fd0000019d735084540a230115_1024_1024.jpg",
         "price": 7900,
         "addTime": "2026-05-01",
-        "stock": 345,
+        "stock": 343,
         "soldText": "30",
         "soldNum": 30,
         "originalPrice": 0,
@@ -6853,7 +6834,7 @@
         "image": "https://si.geilicdn.com/weidian901962865053-2cc40000019e741a3ab40a21146b_1320_1292.jpg",
         "price": 7900,
         "addTime": "2026-06-25",
-        "stock": 1100,
+        "stock": 1099,
         "soldText": "27",
         "soldNum": 27,
         "originalPrice": 0,
@@ -7305,6 +7286,20 @@
         "hasSku": true
       },
       {
+        "itemId": "401920482103401663936",
+        "itemName": "！爱不释手 不退不换 Pm x Blcg 联名刺绣做旧破坏双层梭织休闲裤",
+        "image": "https://si.geilicdn.com/wdseller1846727789-79500000019e2acfa0760a230417_1184_1086.jpg",
+        "price": 13800,
+        "addTime": "2026-05-16",
+        "stock": 61,
+        "soldText": "25",
+        "soldNum": 25,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7721048430",
         "itemName": " 现货折扣福利！！Lu Scuba秋冬神级卫裤/黑灰双色/现货 做货人原价188",
         "image": "https://si.geilicdn.com/wdseller1871105296-40670000019a58cd662b0a231316_1290_1713.jpg",
@@ -7561,20 +7556,6 @@
             "tagType": 3
           }
         ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "401920482103401663936",
-        "itemName": "！爱不释手 不退不换 Pm x Blcg 联名刺绣做旧破坏双层梭织休闲裤",
-        "image": "https://si.geilicdn.com/wdseller1846727789-79500000019e2acfa0760a230417_1184_1086.jpg",
-        "price": 13800,
-        "addTime": "2026-05-16",
-        "stock": 62,
-        "soldText": "24",
-        "soldNum": 24,
-        "originalPrice": 0,
-        "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
@@ -7976,7 +7957,7 @@
         "image": "https://si.geilicdn.com/weidian1872967870-27240000019f69b253b60a207569_1076_1432.jpg",
         "price": 14800,
         "addTime": "2026-07-23",
-        "stock": 27,
+        "stock": 28,
         "soldText": "22",
         "soldNum": 22,
         "originalPrice": 19900,
@@ -8841,6 +8822,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7530907598",
+        "itemName": "【鞍山鼎级】砸到底 ❗️coach 蔻驰hudson双肩包 背包 鞍山最顶批次 对花五金皮料无敌，鼎级全牛皮 质感非常好，不是那些卖二送一合成革可以比的",
+        "image": "https://si.geilicdn.com/wdseller1569972159-4ee300000197be603b900a81347d_1184_1578.jpg",
+        "price": 28000,
+        "addTime": "2026-02-27",
+        "stock": 49103,
+        "soldText": "20",
+        "soldNum": 20,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7750153697",
         "itemName": "#做货人极限清仓 Acn26ss蝴蝶结打印牛仔裤 中山做货人出手/原版开发",
         "image": "https://si.geilicdn.com/wdseller902035828917-31e10000019dda037eea0a20e2c5_1276_1702.jpg",
@@ -9003,6 +9003,25 @@
         "soldNum": 20,
         "originalPrice": 0,
         "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7780820202",
+        "itemName": "四折福利！bal狮子徽标长袖衬衫",
+        "image": "https://si.geilicdn.com/wdseller365544549-72090000019e85b9fd420a23041a_1290_1682.jpg",
+        "price": 6800,
+        "addTime": "2026-06-02",
+        "stock": 32,
+        "soldText": "20",
+        "soldNum": 20,
+        "originalPrice": 14800,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
         "preSale": false,
         "hasSku": true
       },
@@ -9342,25 +9361,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7780820202",
-        "itemName": "四折福利！bal狮子徽标长袖衬衫",
-        "image": "https://si.geilicdn.com/wdseller365544549-72090000019e85b9fd420a23041a_1290_1682.jpg",
-        "price": 6800,
-        "addTime": "2026-06-02",
-        "stock": 33,
-        "soldText": "19",
-        "soldNum": 19,
-        "originalPrice": 14800,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7784345632",
         "itemName": "麦兜 Work Lulu 风格scuba mid 定染毛圈 9号短裤/洗水磨毛/软糯通勤/五金开模",
         "image": "https://si.geilicdn.com/wdseller1861718942-29430000019e95c368f80a811411_1180_1572.jpg",
@@ -9423,6 +9423,25 @@
         "soldNum": 19,
         "originalPrice": 0,
         "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "401920482103448934752",
+        "itemName": "【不退不换】一件短袖的价格 Prd 下摆徽标牛仔夹克",
+        "image": "https://si.geilicdn.com/wdseller1846727789-739f0000019f932188440a23038e_1206_1147.jpg",
+        "price": 6800,
+        "addTime": "2026-07-24",
+        "stock": 61,
+        "soldText": "19",
+        "soldNum": 19,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
         "preSale": false,
         "hasSku": true
       },
@@ -9549,25 +9568,6 @@
         "soldText": "18",
         "soldNum": 18,
         "originalPrice": 29900,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7530907598",
-        "itemName": "【鞍山鼎级】砸到底 ❗️coach 蔻驰hudson双肩包 背包 鞍山最顶批次 对花五金皮料无敌，鼎级全牛皮 质感非常好，不是那些卖二送一合成革可以比的",
-        "image": "https://si.geilicdn.com/wdseller1569972159-4ee300000197be603b900a81347d_1184_1578.jpg",
-        "price": 28000,
-        "addTime": "2026-02-27",
-        "stock": 49104,
-        "soldText": "18",
-        "soldNum": 18,
-        "originalPrice": 0,
         "itemTag": [
           {
             "tagTitle": "￥10",
@@ -9787,25 +9787,6 @@
         "soldNum": 18,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "401920482103448934752",
-        "itemName": "【不退不换】一件短袖的价格 Prd 下摆徽标牛仔夹克",
-        "image": "https://si.geilicdn.com/wdseller1846727789-739f0000019f932188440a23038e_1206_1147.jpg",
-        "price": 6800,
-        "addTime": "2026-07-24",
-        "stock": 62,
-        "soldText": "18",
-        "soldNum": 18,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -10926,7 +10907,7 @@
         "image": "https://si.geilicdn.com/wdseller1861718942-1f720000019d7c1684580a230449_1206_1588.jpg",
         "price": 19800,
         "addTime": "2026-06-08",
-        "stock": 15,
+        "stock": 16,
         "soldText": "15",
         "soldNum": 15,
         "originalPrice": 0,
@@ -11749,7 +11730,7 @@
         "image": "https://si.geilicdn.com/wdseller1669279350-20bb0000019f6283afdf0a23037f_1280_1707.jpg",
         "price": 24900,
         "addTime": "2026-07-15",
-        "stock": 46845,
+        "stock": 46844,
         "soldText": "14",
         "soldNum": 14,
         "originalPrice": 0,
@@ -12032,7 +12013,7 @@
         "image": "https://si.geilicdn.com/wdseller2007878160-25f70000019f72eea1fe0a8133cc_3900_4872.jpg",
         "price": 9900,
         "addTime": "2026-07-19",
-        "stock": 39,
+        "stock": 40,
         "soldText": "14",
         "soldNum": 14,
         "originalPrice": 0,
@@ -13286,7 +13267,7 @@
         "image": "https://si.geilicdn.com/wdseller365544549-44820000019eadba5c2b0a22d535_1320_1289.jpg",
         "price": 18800,
         "addTime": "2026-06-15",
-        "stock": 485,
+        "stock": 486,
         "soldText": "12",
         "soldNum": 12,
         "originalPrice": 48800,
@@ -13363,6 +13344,25 @@
         "price": 19900,
         "addTime": "2026-07-11",
         "stock": 228,
+        "soldText": "12",
+        "soldNum": 12,
+        "originalPrice": 29900,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7775743698",
+        "itemName": "#丘比特Cupid【独家开团不退不换】26ss殿堂系列 120支 Lp真丝卷边tee/精英必备",
+        "image": "https://si.geilicdn.com/wdseller1492914565-2d5b0000019e5d3bd66b0a23041a_1320_1760.jpg",
+        "price": 24900,
+        "addTime": "2026-07-24",
+        "stock": 74,
         "soldText": "12",
         "soldNum": 12,
         "originalPrice": 29900,
@@ -14994,31 +14994,12 @@
         "hasSku": true
       },
       {
-        "itemId": "7775743698",
-        "itemName": "#丘比特Cupid【独家开团不退不换】26ss殿堂系列 120支 Lp真丝卷边tee/精英必备",
-        "image": "https://si.geilicdn.com/wdseller1492914565-2d5b0000019e5d3bd66b0a23041a_1320_1760.jpg",
-        "price": 24900,
-        "addTime": "2026-07-24",
-        "stock": 76,
-        "soldText": "10",
-        "soldNum": 10,
-        "originalPrice": 29900,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7808731867",
         "itemName": "#最狠半折清仓 Ch银马毛牛仔裤 镀银银饰 头层马毛 市面最强缝线 随意对比/做货人出品",
         "image": "https://si.geilicdn.com/weidian901962865053-306a0000019b939269a10a20e273_1900_2532.jpg",
         "price": 18800,
         "addTime": "2026-07-18",
-        "stock": 11,
+        "stock": 12,
         "soldText": "10",
         "soldNum": 10,
         "originalPrice": 28800,
@@ -16984,29 +16965,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7755823441",
-        "itemName": "妙蛙种子出品 pata 黑色 山峰 经典棒球帽 定织定染高密棉布/全开模logo制作/定制五金设计",
-        "image": "https://si.geilicdn.com/wdseller2012128984-2be60000019df8e071b60a2102c5_1170_1537.jpg",
-        "price": 7900,
-        "addTime": "2026-05-06",
-        "stock": 4,
-        "soldText": "9",
-        "soldNum": 9,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          },
-          {
-            "tagTitle": "库存紧张",
-            "tagType": 4
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7726833940",
         "itemName": "#顶男 四折清仓！BA23SS Upcycled 拼接Femme刺绣字母logo破坏鸭舌帽",
         "image": "https://si.geilicdn.com/wdseller1468816995-4b4b00000199efc0896e0a231177_1026_1020.jpg",
@@ -17668,25 +17626,6 @@
         "soldText": "8",
         "soldNum": 8,
         "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7789118096",
-        "itemName": "#杰尼龟【独家囤货全新带扣不退换】自主25麦穗短裤/Archetype磨毛/3D立体剪裁/新疆长绒棉/百灵达刺绣/成衣染色做旧/多部位吊磨",
-        "image": "https://si.geilicdn.com/wdseller1405292126-061b00000195c4a35fa70a239646_1290_1645.jpg",
-        "price": 11800,
-        "addTime": "2026-06-15",
-        "stock": 36,
-        "soldText": "8",
-        "soldNum": 8,
-        "originalPrice": 15800,
         "itemTag": [
           {
             "tagTitle": "￥10",
@@ -19811,7 +19750,7 @@
         "image": "https://si.geilicdn.com/wdseller1861718942-6fda0000019f8961a2980a2103bd_1206_1584.jpg",
         "price": 11800,
         "addTime": "2026-07-23",
-        "stock": 353,
+        "stock": 354,
         "soldText": "7",
         "soldNum": 7,
         "originalPrice": 0,
@@ -19825,6 +19764,20 @@
             "tagType": 5
           }
         ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "401920482103440449715",
+        "itemName": "独家订单 匡威木村一星系列 木村拓哉同款",
+        "image": "https://si.geilicdn.com/weidian2085151807-2b8b0000019f61510a8e0a23038e_1440_1920.jpg",
+        "price": 11500,
+        "addTime": "2026-07-15",
+        "stock": 1919797,
+        "soldText": "7",
+        "soldNum": 7,
+        "originalPrice": 0,
+        "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
@@ -21800,20 +21753,6 @@
         "hasSku": true
       },
       {
-        "itemId": "401920482103440449715",
-        "itemName": "独家订单 匡威木村一星系列 木村拓哉同款",
-        "image": "https://si.geilicdn.com/weidian2085151807-2b8b0000019f61510a8e0a23038e_1440_1920.jpg",
-        "price": 11500,
-        "addTime": "2026-07-15",
-        "stock": 1919798,
-        "soldText": "6",
-        "soldNum": 6,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7798101609",
         "itemName": "贝多芬【现货】sup26SS鸭子印花短袖",
         "image": "https://si.geilicdn.com/wdseller1944483041-43620000019e4669f0d20a210256_1290_1290.jpg",
@@ -22612,6 +22551,29 @@
           {
             "tagTitle": "￥10",
             "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7812531805",
+        "itemName": "乔治【现货】CT0281 过y Panthere猎豹系列无框眼镜 二代立体豹头 银色+金色 #L113",
+        "image": "https://si.geilicdn.com/wdseller1430397593-51b2000001997f5f2afc0a20e7c7_1320_1320.jpg",
+        "price": 28800,
+        "addTime": "2026-07-24",
+        "stock": 427,
+        "soldText": "5",
+        "soldNum": 5,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          },
+          {
+            "tagTitle": "新品",
+            "tagType": 5
           }
         ],
         "preSale": false,
@@ -24741,29 +24703,6 @@
           {
             "tagTitle": "￥10",
             "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7812531805",
-        "itemName": "乔治【现货】CT0281 过y Panthere猎豹系列无框眼镜 二代立体豹头 银色+金色 #L113",
-        "image": "https://si.geilicdn.com/wdseller1430397593-51b2000001997f5f2afc0a20e7c7_1320_1320.jpg",
-        "price": 28800,
-        "addTime": "2026-07-24",
-        "stock": 427,
-        "soldText": "4",
-        "soldNum": 4,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          },
-          {
-            "tagTitle": "新品",
-            "tagType": 5
           }
         ],
         "preSale": false,
@@ -34764,6 +34703,10 @@
           {
             "tagTitle": "￥15",
             "tagType": 3
+          },
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
           }
         ],
         "preSale": false,
@@ -35759,6 +35702,29 @@
           {
             "tagTitle": "￥10",
             "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7812462767",
+        "itemName": "Judx Si 26新款幽灵高端60支双股加捻弹力薄款240克纯棉立体剪裁拉链卫衣  周日晚上八点会员先购 非会员九点可拍",
+        "image": "https://si.geilicdn.com/wdseller2073214832-64280000019f8e826ae10a2301af_2560_3413.jpg",
+        "price": 27800,
+        "addTime": "2026-07-24",
+        "stock": 388,
+        "soldText": "1",
+        "soldNum": 1,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          },
+          {
+            "tagTitle": "新品",
+            "tagType": 5
           }
         ],
         "preSale": false,
@@ -36976,6 +36942,29 @@
           {
             "tagTitle": "￥10",
             "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7812507995",
+        "itemName": "【现货链接】musemood小天使居家服",
+        "image": "https://si.geilicdn.com/wdseller1898621097-28420000019f9318dafa0a21146b_1179_1513.jpg",
+        "price": 18300,
+        "addTime": "2026-07-24",
+        "stock": 119,
+        "soldText": "1",
+        "soldNum": 1,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          },
+          {
+            "tagTitle": "新品",
+            "tagType": 5
           }
         ],
         "preSale": false,
@@ -40513,6 +40502,10 @@
           {
             "tagTitle": "￥15",
             "tagType": 3
+          },
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
           }
         ],
         "preSale": false,
@@ -40544,6 +40537,25 @@
         "price": 58900,
         "addTime": "2026-07-07",
         "stock": 11,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥15",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7783884833",
+        "itemName": "卡尔出品 自主马蹄藤蔓印花长袖 ",
+        "image": "https://si.geilicdn.com/weidian2043982213-4e390000019e93c8577d0a239833_1179_1165.jpg",
+        "price": 58900,
+        "addTime": "2026-06-11",
+        "stock": 178,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -40624,7 +40636,7 @@
         "image": "https://si.geilicdn.com/wdseller1413146918-755f0000019ca57bdec50a81347d_1320_1980.jpg",
         "price": 15800,
         "addTime": "2026-07-22",
-        "stock": 27,
+        "stock": 26,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -41135,7 +41147,7 @@
         "image": "https://si.geilicdn.com/pcitem1932880292-65060000019ed6d6d34d0a23111a_800_800.jpg",
         "price": 9900,
         "addTime": "2026-06-23",
-        "stock": 93,
+        "stock": 92,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -42000,7 +42012,7 @@
         "image": "https://si.geilicdn.com/wdseller1492914565-3cb90000019f3b57fdce0a23c191_2560_3413.jpg",
         "price": 28900,
         "addTime": "2026-07-25",
-        "stock": 111,
+        "stock": 112,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -42117,7 +42129,7 @@
         "image": "https://si.geilicdn.com/wdseller1492914565-4d950000019cb7aad4d70a2304aa_720_880.jpg",
         "price": 23900,
         "addTime": "2026-07-11",
-        "stock": 64,
+        "stock": 63,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -42159,7 +42171,7 @@
         "image": "https://si.geilicdn.com/wdseller1492914565-2a5b0000019dc2b08a070a22d1a4_1280_1707.jpg",
         "price": 28900,
         "addTime": "2026-07-11",
-        "stock": 50,
+        "stock": 49,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -42173,7 +42185,7 @@
         "image": "https://si.geilicdn.com/wdseller1492914565-78150000019cb7abd1f90a23037f_1280_1707.jpg",
         "price": 18900,
         "addTime": "2026-07-25",
-        "stock": 101,
+        "stock": 98,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -42577,7 +42589,7 @@
         "image": "https://si.geilicdn.com/wdseller902062624543-5d430000019eefaf43760a2302e6_6192_5376.jpg",
         "price": 9800,
         "addTime": "2026-06-17",
-        "stock": 252,
+        "stock": 250,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -42605,7 +42617,7 @@
         "image": "https://si.geilicdn.com/wdseller902062624543-39140000019eefabf6590a23b6ac_6234_5103.jpg",
         "price": 32900,
         "addTime": "2026-07-22",
-        "stock": 969,
+        "stock": 970,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -42624,7 +42636,7 @@
         "image": "https://si.geilicdn.com/wdseller902062624543-3a0c0000019eeffd672b0a23b6ac_6144_5274.jpg",
         "price": 28900,
         "addTime": "2026-05-06",
-        "stock": 14,
+        "stock": 16,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -42662,7 +42674,7 @@
         "image": "https://si.geilicdn.com/wdseller902062624543-78110000019eeffa10a70a210247_6144_5274.jpg",
         "price": 19800,
         "addTime": "2026-04-29",
-        "stock": 28,
+        "stock": 26,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -42790,9 +42802,9 @@
         "image": "https://si.geilicdn.com/wdseller902062624543-6c850000019f4cda8bb80a23b4f4_6144_5367.jpg",
         "price": 14900,
         "addTime": "2026-07-14",
-        "stock": 804,
-        "soldText": "583",
-        "soldNum": 583,
+        "stock": 803,
+        "soldText": "584",
+        "soldNum": 584,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -43604,132 +43616,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7786978044",
-        "itemName": "【开发完成】CH 自主 粉色马蹄印花短袖",
-        "image": "https://si.geilicdn.com/wdseller901748851605-7e7c00000196ba0a62440a2395a3_1290_1290.jpg",
-        "price": 21900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786873516",
-        "itemName": "【原版开发】Loe基础绣花T恤 无敌刺绣 正品0区别 详情页有做货实拍",
-        "image": "https://si.geilicdn.com/wdseller901748851605-275f00000196df62e70e0a2303ee_1320_1743.jpg",
-        "price": 6900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7784007743",
-        "itemName": "【K总制作】M*u | 25SS 羊绒与羊毛混纺POLO衫  第四批预计4月中旬到货",
-        "image": "https://si.geilicdn.com/wdseller901748851605-56220000019958271a0e0a210139_972_1280.jpg",
-        "price": 26900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783893295",
-        "itemName": "【原版开发】alo 今年超火阔腿裤/正确色是带光泽感的！注意区分！",
-        "image": "https://si.geilicdn.com/wdseller1278794927-07ed00000198bf24d4b00a23047e_1320_1760.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783980067",
-        "itemName": "【K总制作】/售完不补|经典自主小马纯色Logo彩马刺绣卫衣",
-        "image": "https://si.geilicdn.com/wdseller1233219081-79510000019ab8e720800a239846_1320_1760.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786960222",
-        "itemName": "【k总制作】c h 粉色马蹄纯色连帽卫衣 男女同款",
-        "image": "https://si.geilicdn.com/pcitem902017538591-0f9d0000019b736870d30a23047e_1695_2260.jpg",
-        "price": 26900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 32900,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786981938",
-        "itemName": "【K总制作】Supreme FW23背标卫衣/跑量价430克重磅加绒面料/极致还原出毛织背标/    年前整理  年后恢复上架",
-        "image": "https://si.geilicdn.com/wdseller902002967502-5ef80000019ab14481510a2395e9_1440_1920.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7805460415",
-        "itemName": "【K总制作】原单品质 tb织带v领开衫外套",
-        "image": "https://si.geilicdn.com/pcitem901999456870-1f9f0000019a6c16b8860a23038e_1179_1534.jpg",
-        "price": 8900,
-        "addTime": "2026-07-12",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783980039",
-        "itemName": "【K总制作】拉夫小马 SS23 经典纯色半拉链Logo刺绣 卫衣",
-        "image": "https://si.geilicdn.com/pcitem902029057843-69ce0000019d06d716e10a23047e_2425_2745.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7783934719",
         "itemName": "【K总制作】双C珍珠项链 开发时间半年",
         "image": "https://si.geilicdn.com/pcitem902027070197-0f120000019dd3991b8c0a23057e_1200_1600.jpg",
@@ -43744,192 +43630,10 @@
         "hasSku": false
       },
       {
-        "itemId": "7786907024",
-        "itemName": "【原厂渠道正品】FOG复线ESSENTIALS联名NBA全明星休闲短裤男女百搭运动裤潮",
-        "image": "https://si.geilicdn.com/open1855501466-1234478995-61d6000001977e1df0480a231226_1080_1080.jpg",
-        "price": 12900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 24900,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786891184",
-        "itemName": "【限时秒杀】M*iu快闪系列纯色条纹圆领长袖T恤",
-        "image": "https://si.geilicdn.com/pcitem902017538591-13370000019b1c72a6370a8134f0_1076_1435.jpg",
-        "price": 21900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786972064",
-        "itemName": "【K总制作】AC* 24FW 秋冬系列纯色羊毛夹克/澳洲羊毛/定制五金纽扣",
-        "image": "https://si.geilicdn.com/pcitem902010002639-17ea0000019a9fd6bc7c0a23037f_1179_1545.jpg",
-        "price": 18900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7786873500",
         "itemName": "【限时秒杀】（无法鉴定）Ba*l  新批次顶级版本项链",
         "image": "https://si.geilicdn.com/pcitem901999456870-1e190000019a68e1eae90a2315ef_1280_1707.jpg",
         "price": 18800,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783932783",
-        "itemName": "【k总制造】Ba24FW新款胶带尼龙夹克冲锋衣外套 原版开发  区别通货 美纹纸冲锋衣",
-        "image": "https://si.geilicdn.com/open1855501466-1234478995-574f00000195e635b2c10a22d249_1290_1713.jpg",
-        "price": 12800,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786934670",
-        "itemName": "【原版开发】ALO 松弛神裤 遛弯小心机 男女同款 收藏不会错过 长款裤子介意勿拍！",
-        "image": "https://si.geilicdn.com/wdseller901748851605-1e610000019a0f2ecf290a230246_3510_3996.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783980089",
-        "itemName": "【特价秒杀】ba*l SS25/循环运动刺绣黑色长裤 区别通货",
-        "image": "https://si.geilicdn.com/wdseller901748851605-0a470000019a342a00da0a22d58f_1189_1411.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783978125",
-        "itemName": "【详情页更新开发进度】lemair 老钱束带弯刀裤  正品0差别 一定要入！！！版型上身巨好看！！！",
-        "image": "https://si.geilicdn.com/wdseller1639773960-451a00000197928a842a0a23c286_7551_8322.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783881511",
-        "itemName": "【K总制作】迪子 kpop外套 韩娱妹自己的校服 阿迪女人手必备 区别市场所有版本",
-        "image": "https://si.geilicdn.com/wdseller901956727590-2844000001998f8faec10a23111a_1179_1572.jpg",
-        "price": 9900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7787003668",
-        "itemName": "【原版开发】Miu 25ss 珠地棉 刺绣字母长袖polo ZF9048",
-        "image": "https://si.geilicdn.com/wdseller901748851605-02f200000199c09e0e5b0a210139_1320_1737.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786932550",
-        "itemName": "【K总制作】ac黑色珠地立体绣花长袖/精准还原/现货",
-        "image": "https://si.geilicdn.com/pcitem902027070197-695b0000019bcb62ee2f0a230115_1320_1740.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7786932526",
-        "itemName": "【K总制作】DE*ENTE女款梭织夹克  专业训练防水透湿连帽上衣",
-        "image": "https://si.geilicdn.com/pcitem902028323716-06cf0000019c3d4739980a23037f_960_1280.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783966271",
-        "itemName": "【年货节 特价秒杀】Pra 25FW圆领卫衣 基础款 克重很高 成本价福利",
-        "image": "https://si.geilicdn.com/pcitem2016338616-29330000019babdee1e10a23111a_1280_1707.jpg",
-        "price": 8900,
-        "addTime": "2026-06-11",
-        "stock": 0,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7783918961",
-        "itemName": "【过验狠货】D家 毛巾刺绣短袖",
-        "image": "https://si.geilicdn.com/wdseller901748851605-206c00000198c2702a230a811411_1320_1760.jpg",
-        "price": 8900,
         "addTime": "2026-06-11",
         "stock": 0,
         "soldText": "",
@@ -44320,9 +44024,9 @@
         "image": "https://si.geilicdn.com/wdseller902051206089-5bf20000019ef34a77990a23010f_1206_1608.jpg",
         "price": 35800,
         "addTime": "2026-06-22",
-        "stock": 108,
-        "soldText": "515",
-        "soldNum": 515,
+        "stock": 107,
+        "soldText": "516",
+        "soldNum": 516,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -44586,12 +44290,7 @@
         "soldText": "41",
         "soldNum": 41,
         "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "包邮",
-            "tagType": 6
-          }
-        ],
+        "itemTag": [],
         "preSale": false,
         "hasSku": false
       },
@@ -46879,9 +46578,9 @@
         "image": "https://si.geilicdn.com/wdseller1898621097-2e8a0000019f47a4f4d70a23010f_1206_1934.jpg",
         "price": 7800,
         "addTime": "2026-07-19",
-        "stock": 4,
-        "soldText": "78",
-        "soldNum": 78,
+        "stock": 1,
+        "soldText": "81",
+        "soldNum": 81,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -47234,9 +46933,9 @@
         "image": "https://si.geilicdn.com/ch1442206621-74c700000194da13f0ec0a231316_1290_1280.jpg",
         "price": 100,
         "addTime": "2025-02-06",
-        "stock": 99998392,
-        "soldText": "1634",
-        "soldNum": 1634,
+        "stock": 99998391,
+        "soldText": "1635",
+        "soldNum": 1635,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -51565,6 +51264,29 @@
         "hasSku": true
       },
       {
+        "itemId": "7809476896",
+        "itemName": "画家made/26ss 徽标polo领毛织短袖",
+        "image": "https://si.geilicdn.com/pcitem902057633840-00ad0000019f1c14aa370a811411_1024_1024.jpg",
+        "price": 19800,
+        "addTime": "2026-07-18",
+        "stock": 7,
+        "soldText": "5",
+        "soldNum": 5,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "满1500送赠品",
+            "tagType": 2
+          },
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7755003586",
         "itemName": "现货 耿鬼made 自主MIU/美国进口匹马棉/丝光棉扁机领/GY辅料/进口缝纫/新款百灵达刺绣Polo长袖",
         "image": "https://si.geilicdn.com/wdseller1442206621-78b80000019de2c2181a0a22d1a4_1170_1526.jpg",
@@ -52880,29 +52602,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7809476896",
-        "itemName": "画家made/26ss 徽标polo领毛织短袖",
-        "image": "https://si.geilicdn.com/pcitem902057633840-00ad0000019f1c14aa370a811411_1024_1024.jpg",
-        "price": 19800,
-        "addTime": "2026-07-18",
-        "stock": 8,
-        "soldText": "4",
-        "soldNum": 4,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "满1500送赠品",
-            "tagType": 2
-          },
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7807423206",
         "itemName": "现货 Aike的研发笔记 哎咯喂 液氨短袖 老钱风格 面料厚实丝滑 真皮油边",
         "image": "https://si.geilicdn.com/weidian425383005-7b8c0000019f4778e0ef0a23047e_960_960.jpg",
@@ -53153,6 +52852,29 @@
         "price": 17500,
         "addTime": "2026-06-17",
         "stock": 1,
+        "soldText": "4",
+        "soldNum": 4,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "满1500送赠品",
+            "tagType": 2
+          },
+          {
+            "tagTitle": "库存紧张",
+            "tagType": 4
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7802072353",
+        "itemName": "现货 丘比特club/Cupid 1996麻棉不脏版长袖/独家还原触感",
+        "image": "https://si.geilicdn.com/wdseller1492914565-0b480000019f3a5fd22b0a23010f_1280_1707.jpg",
+        "price": 16900,
+        "addTime": "2026-07-07",
+        "stock": 4,
         "soldText": "4",
         "soldNum": 4,
         "originalPrice": 0,
@@ -55045,29 +54767,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7802072353",
-        "itemName": "现货 丘比特club/Cupid 1996麻棉不脏版长袖/独家还原触感",
-        "image": "https://si.geilicdn.com/wdseller1492914565-0b480000019f3a5fd22b0a23010f_1280_1707.jpg",
-        "price": 16900,
-        "addTime": "2026-07-07",
-        "stock": 5,
-        "soldText": "3",
-        "soldNum": 3,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "满1500送赠品",
-            "tagType": 2
-          },
-          {
-            "tagTitle": "库存紧张",
-            "tagType": 4
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7797666030",
         "itemName": "现货 985made/小马黑/燕麦棉织短袖polo/双色夏日氛围感/全定制纽扣/Tajima田岛绣花//经典版型，百搭不挑人",
         "image": "https://si.geilicdn.com/wdseller2067963549-79570000019ef3e5e3a50a2396f4_1320_1320.jpg",
@@ -56441,7 +56140,7 @@
         "image": "https://si.geilicdn.com/wdseller1442206621-65ee0000019f897b42530a23057e_1170_1560.jpg",
         "price": 45500,
         "addTime": "2026-07-22",
-        "stock": 38,
+        "stock": 37,
         "soldText": "2",
         "soldNum": 2,
         "originalPrice": 0,
@@ -74239,6 +73938,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7806434531",
+        "itemName": "Bal26限量款WFP粮食署T恤/水洗黑/白/软糯面料/成衣水洗/进口浆料",
+        "image": "https://si.geilicdn.com/wdseller902021023148-4bb00000019f5faa58050a230115_1170_1170.jpg",
+        "price": 16800,
+        "addTime": "2026-07-23",
+        "stock": 183,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7636560158",
         "itemName": "D 水洗黑半拉链卫衣/成衣染色/内里加绒无敌亲肤/定染绣花线/私模拉链（现货）",
         "image": "https://si.geilicdn.com/wdseller1647323945-5b8a0000019a3a3f9c8e0a2103bd_1170_1170.jpg",
@@ -74252,25 +73970,6 @@
           {
             "tagTitle": "库存紧张",
             "tagType": 4
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7806434531",
-        "itemName": "Bal26限量款WFP粮食署T恤/水洗黑/白/软糯面料/成衣水洗/进口浆料",
-        "image": "https://si.geilicdn.com/wdseller902021023148-4bb00000019f5faa58050a230115_1170_1170.jpg",
-        "price": 16800,
-        "addTime": "2026-07-23",
-        "stock": 186,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
           }
         ],
         "preSale": false,
@@ -79537,9 +79236,9 @@
         "image": "https://si.geilicdn.com/pcitem2018634283-16e90000019d6d656fc80a20e273-unadjust_3000_3000.png",
         "price": 18900,
         "addTime": "2026-04-08",
-        "stock": 44,
-        "soldText": "1650",
-        "soldNum": 1650,
+        "stock": 43,
+        "soldText": "1651",
+        "soldNum": 1651,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -82642,7 +82341,7 @@
         "image": "https://si.geilicdn.com/pcitem902058195251-5e950000019eef64d9880a2304aa-unadjust_2994_3000.png",
         "price": 12900,
         "addTime": "2026-06-22",
-        "stock": 4915,
+        "stock": 1939,
         "soldText": "97",
         "soldNum": 97,
         "originalPrice": 0,
@@ -82698,9 +82397,9 @@
         "image": "https://si.geilicdn.com/pcitem902055368460-5bc80000019f50a657ec0a2303ee-unadjust_2994_3000.png",
         "price": 12900,
         "addTime": "2026-07-03",
-        "stock": 643,
-        "soldText": "66",
-        "soldNum": 66,
+        "stock": 642,
+        "soldText": "67",
+        "soldNum": 67,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -82992,7 +82691,7 @@
         "image": "https://si.geilicdn.com/pcitem902058195251-06430000019e984ffae50a23111a-unadjust_2994_3000.png",
         "price": 15800,
         "addTime": "2026-06-06",
-        "stock": 232,
+        "stock": 233,
         "soldText": "13",
         "soldNum": 13,
         "originalPrice": 0,
@@ -83910,9 +83609,9 @@
         "image": "https://si.geilicdn.com/weidian1950809619-0d560000019e8dbadcc10a2315ef_500_500.jpg",
         "price": 32900,
         "addTime": "2026-07-06",
-        "stock": 17178,
-        "soldText": "822",
-        "soldNum": 822,
+        "stock": 17177,
+        "soldText": "823",
+        "soldNum": 823,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -83952,7 +83651,7 @@
         "image": "https://si.geilicdn.com/weidian1950809619-59920000019ba3571bec0a81347d_1280_1280.jpg",
         "price": 48000,
         "addTime": "2026-07-04",
-        "stock": 8598,
+        "stock": 8597,
         "soldText": "400",
         "soldNum": 400,
         "originalPrice": 0,
@@ -83980,9 +83679,9 @@
         "image": "https://si.geilicdn.com/weidian1950809619-637c0000019ce40a272f0a231316_1280_1280.jpg",
         "price": 69900,
         "addTime": "2026-07-11",
-        "stock": 1582,
-        "soldText": "304",
-        "soldNum": 304,
+        "stock": 1581,
+        "soldText": "305",
+        "soldNum": 305,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -84487,7 +84186,7 @@
       },
       {
         "itemId": "7722311711",
-        "itemName": "<百岁山Made>自主Sup ss23幻影黑色短袖（操作中）",
+        "itemName": "<百岁山Made>自主Sup 幻影黑色短袖（操作中）",
         "image": "https://si.geilicdn.com/weidian1959321239-1ac70000019e1b2a5f8f0a23111a_1008_977.jpg",
         "price": 999900,
         "addTime": "2026-03-31",
@@ -84582,7 +84281,7 @@
         "image": "https://si.geilicdn.com/wdseller1887130565-67db0000019f4e97bef10a2301f1_1290_1290.jpg",
         "price": 16800,
         "addTime": "2026-07-24",
-        "stock": 54,
+        "stock": 52,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -84766,9 +84465,9 @@
         "image": "https://si.geilicdn.com/wdseller2070652511-7f100000019ec706802e0a2315ef_1106_1106.jpg",
         "price": 5900,
         "addTime": "2026-07-19",
-        "stock": 290,
-        "soldText": "818",
-        "soldNum": 818,
+        "stock": 288,
+        "soldText": "820",
+        "soldNum": 820,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -84851,9 +84550,9 @@
         "image": "https://si.geilicdn.com/pcitem902006768225-44d90000019efdb351410a23057e-unadjust_1106_1106.png",
         "price": 10900,
         "addTime": "2026-06-03",
-        "stock": 133,
-        "soldText": "265",
-        "soldNum": 265,
+        "stock": 132,
+        "soldText": "266",
+        "soldNum": 266,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -85175,7 +84874,7 @@
         "image": "https://si.geilicdn.com/pcitem1573998123-5e960000019ec16fad360a23038e_1648_1648.jpg",
         "price": 12800,
         "addTime": "2026-06-18",
-        "stock": 122,
+        "stock": 121,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -85195,29 +84894,6 @@
         "price": 14800,
         "addTime": "2026-07-07",
         "stock": 5,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "库存紧张",
-            "tagType": 4
-          },
-          {
-            "tagTitle": "售后无忧",
-            "tagType": 8
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7715941199",
-        "itemName": "【余】海军蓝-🐎绞麻花短袖polo",
-        "image": "https://si.geilicdn.com/wdseller1573998123-72a10000019d1f5f50340a210256_1125_1125.jpg",
-        "price": 14800,
-        "addTime": "2026-04-18",
-        "stock": 1,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -85385,7 +85061,7 @@
         "image": "https://si.geilicdn.com/pcitem1573998123-30e40000019f4b06e85f0a8132bd_1648_1648.jpg",
         "price": 9800,
         "addTime": "2026-07-10",
-        "stock": 127,
+        "stock": 126,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -85404,7 +85080,7 @@
         "image": "https://si.geilicdn.com/wdseller1573998123-79c80000019cff446a3d0a23913e_1125_1125.jpg",
         "price": 6900,
         "addTime": "2026-07-09",
-        "stock": 93,
+        "stock": 94,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -85648,6 +85324,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7715941199",
+        "itemName": "【余】海军蓝-🐎绞麻花短袖polo",
+        "image": "https://si.geilicdn.com/wdseller1573998123-72a10000019d1f5f50340a210256_1125_1125.jpg",
+        "price": 14800,
+        "addTime": "2026-04-18",
+        "stock": 0,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "售后无忧",
+            "tagType": 8
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7717708470",
         "itemName": "【余粮】tw黑色长袖衬衫",
         "image": "https://si.geilicdn.com/wdseller1573998123-74c60000019d18e362040a20e2c5_1125_1125.jpg",
@@ -85871,8 +85566,8 @@
         "price": 7900,
         "addTime": "2026-05-04",
         "stock": 999999999,
-        "soldText": "910",
-        "soldNum": 910,
+        "soldText": "911",
+        "soldNum": 911,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -85899,8 +85594,8 @@
         "price": 11900,
         "addTime": "2026-06-21",
         "stock": 999999999,
-        "soldText": "883",
-        "soldNum": 883,
+        "soldText": "884",
+        "soldNum": 884,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86151,8 +85846,8 @@
         "price": 5900,
         "addTime": "2026-07-24",
         "stock": 999999999,
-        "soldText": "629",
-        "soldNum": 629,
+        "soldText": "641",
+        "soldNum": 641,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86221,8 +85916,8 @@
         "price": 12900,
         "addTime": "2026-07-10",
         "stock": 999999999,
-        "soldText": "584",
-        "soldNum": 584,
+        "soldText": "587",
+        "soldNum": 587,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86333,8 +86028,8 @@
         "price": 9900,
         "addTime": "2026-06-28",
         "stock": 999999999,
-        "soldText": "518",
-        "soldNum": 518,
+        "soldText": "519",
+        "soldNum": 519,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86422,8 +86117,8 @@
         "price": 12900,
         "addTime": "2026-07-08",
         "stock": 999999999,
-        "soldText": "489",
-        "soldNum": 489,
+        "soldText": "490",
+        "soldNum": 490,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86478,8 +86173,8 @@
         "price": 9900,
         "addTime": "2026-07-08",
         "stock": 999999999,
-        "soldText": "461",
-        "soldNum": 461,
+        "soldText": "462",
+        "soldNum": 462,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86492,8 +86187,8 @@
         "price": 6900,
         "addTime": "2026-07-08",
         "stock": 999999999,
-        "soldText": "461",
-        "soldNum": 461,
+        "soldText": "462",
+        "soldNum": 462,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86520,8 +86215,8 @@
         "price": 9900,
         "addTime": "2026-07-15",
         "stock": 999999999,
-        "soldText": "448",
-        "soldNum": 448,
+        "soldText": "449",
+        "soldNum": 449,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86576,8 +86271,8 @@
         "price": 9900,
         "addTime": "2026-07-16",
         "stock": 999999999,
-        "soldText": "436",
-        "soldNum": 436,
+        "soldText": "437",
+        "soldNum": 437,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86857,8 +86552,27 @@
         "price": 12900,
         "addTime": "2026-07-24",
         "stock": 999999999,
-        "soldText": "354",
-        "soldNum": 354,
+        "soldText": "356",
+        "soldNum": 356,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7808178731",
+        "itemName": "妙蛙种子出品 pata 七寸 baggies 碳灰色 运动短裤 定织高密梭织面料/定做多规格辅料/内里含网布双层短裤",
+        "image": "https://si.geilicdn.com/wdseller2012128984-60900000019f6f44fdfb0a20e672_1170_1502.jpg",
+        "price": 12900,
+        "addTime": "2026-07-24",
+        "stock": 999999999,
+        "soldText": "344",
+        "soldNum": 344,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -86884,33 +86598,14 @@
         "hasSku": true
       },
       {
-        "itemId": "7808178731",
-        "itemName": "妙蛙种子出品 pata 七寸 baggies 碳灰色 运动短裤 定织高密梭织面料/定做多规格辅料/内里含网布双层短裤",
-        "image": "https://si.geilicdn.com/wdseller2012128984-60900000019f6f44fdfb0a20e672_1170_1502.jpg",
-        "price": 12900,
-        "addTime": "2026-07-24",
-        "stock": 999999999,
-        "soldText": "340",
-        "soldNum": 340,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7804167438",
         "itemName": "妙蛙种子出品 小马风格自主 黑色 polo衫 定织定染朱地面料/百灵达刺绣/定做纽扣",
         "image": "https://si.geilicdn.com/wdseller2012128984-3f2f0000019f35ebbdaa0a811411_1170_1552.jpg",
         "price": 8900,
         "addTime": "2026-07-15",
         "stock": 999999999,
-        "soldText": "338",
-        "soldNum": 338,
+        "soldText": "340",
+        "soldNum": 340,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -86931,6 +86626,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7814028532",
+        "itemName": "妙蛙种子出品 非小鲨自主风格 黑色 健身运动logo短袖 定制速干面料/四针六线做法/过y级辅料",
+        "image": "https://si.geilicdn.com/wdseller2012128984-1f570000019f8d7e95f40a2301b4_1168_1426.jpg",
+        "price": 8900,
+        "addTime": "2026-07-24",
+        "stock": 999999999,
+        "soldText": "309",
+        "soldNum": 309,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7730366605",
         "itemName": "妙蛙种子出品 非ac自主风格 1996 樱花粉色 卫衣 89棉11聚酯纤维疙瘩底面料/表面起球风格/丝网印花/环保水洗",
         "image": "https://si.geilicdn.com/wdseller2012128984-7a3a0000019d728d19f00a2303ea_1168_1546.jpg",
@@ -86941,25 +86655,6 @@
         "soldNum": 306,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7814028532",
-        "itemName": "妙蛙种子出品 非小鲨自主风格 黑色 健身运动logo短袖 定制速干面料/四针六线做法/过y级辅料",
-        "image": "https://si.geilicdn.com/wdseller2012128984-1f570000019f8d7e95f40a2301b4_1168_1426.jpg",
-        "price": 8900,
-        "addTime": "2026-07-24",
-        "stock": 999999999,
-        "soldText": "305",
-        "soldNum": 305,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -87575,7 +87270,7 @@
         "image": "https://si.geilicdn.com/pcitem1462038279-744200000198a2e957f70a2102c5_1278_1278.jpg",
         "price": 21900,
         "addTime": "2025-11-11",
-        "stock": 8,
+        "stock": 7,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -87659,7 +87354,7 @@
         "image": "https://si.geilicdn.com/pcitem1462038279-02f90000019977e0e92d0a23047e_1242_1656.jpg",
         "price": 27900,
         "addTime": "2026-07-14",
-        "stock": 20,
+        "stock": 19,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -87734,7 +87429,7 @@
         "image": "https://si.geilicdn.com/pcitem1996878086-779c0000019f410fef480a8132bd_959_1280.jpg",
         "price": 13800,
         "addTime": "2026-07-15",
-        "stock": 19,
+        "stock": 18,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -87842,7 +87537,7 @@
         "image": "https://si.geilicdn.com/pcitem1996878086-143b0000019e96109f8c0a210256-unadjust_1320_1746.png",
         "price": 10900,
         "addTime": "2026-07-08",
-        "stock": 104,
+        "stock": 103,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -87870,7 +87565,7 @@
         "image": "https://si.geilicdn.com/pcitem1996878086-3b600000019eb58f3e630a2304aa_1320_1178.jpg",
         "price": 10900,
         "addTime": "2026-07-10",
-        "stock": 76,
+        "stock": 75,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -87884,7 +87579,7 @@
         "image": "https://si.geilicdn.com/pcitem1996878086-3d5b0000019f1327e4060a20e284_1320_1269.jpg",
         "price": 25900,
         "addTime": "2026-07-16",
-        "stock": 120,
+        "stock": 119,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -88381,7 +88076,7 @@
         "image": "https://si.geilicdn.com/wdseller902014088930-26400000019b8db543310a23047e_1320_1760.jpg",
         "price": 14900,
         "addTime": "2026-07-01",
-        "stock": 117,
+        "stock": 118,
         "soldText": "47",
         "soldNum": 47,
         "originalPrice": 0,
@@ -93315,6 +93010,20 @@
         "hasSku": false
       },
       {
+        "itemId": "7735355491",
+        "itemName": "【only薇薇】香家 25C盒子包 原厂皮➕独家定制五金 夏薇薇",
+        "image": "https://si.geilicdn.com/wdseller1604041281-25850000019d8ca92e310a2301b4_1159_1159.jpg",
+        "price": 228000,
+        "addTime": "2026-04-14",
+        "stock": 9997,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": false
+      },
+      {
         "itemId": "7728071407",
         "itemName": "【only薇薇】土著竖版",
         "image": "https://si.geilicdn.com/wdseller1604041281-59440000019d6731332b0a2303ee_1168_1168.jpg",
@@ -93423,18 +93132,23 @@
         "hasSku": false
       },
       {
-        "itemId": "7735355491",
-        "itemName": "【only薇薇】香家 25C盒子包 原厂皮➕独家定制五金 夏薇薇",
-        "image": "https://si.geilicdn.com/wdseller1604041281-25850000019d8ca92e310a2301b4_1159_1159.jpg",
+        "itemId": "7813455554",
+        "itemName": "【only薇薇】迷你原厂皮➕独家定制五金 夏薇薇长13cm 宽9cm 高18cm",
+        "image": "https://si.geilicdn.com/wdseller1604041281-462c0000019f88b2c2a70a20e273_1171_1167.jpg",
         "price": 228000,
-        "addTime": "2026-04-14",
-        "stock": 9998,
+        "addTime": "2026-07-22",
+        "stock": 99,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
-        "itemTag": [],
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
         "preSale": false,
-        "hasSku": false
+        "hasSku": true
       },
       {
         "itemId": "7804431127",
@@ -93639,25 +93353,6 @@
         "soldNum": 0,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7813455554",
-        "itemName": "【only薇薇】迷你原厂皮➕独家定制五金 夏薇薇长13cm 宽9cm 高18cm",
-        "image": "https://si.geilicdn.com/wdseller1604041281-462c0000019f88b2c2a70a20e273_1171_1167.jpg",
-        "price": 228000,
-        "addTime": "2026-07-22",
-        "stock": 100,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -94015,9 +93710,9 @@
         "image": "https://si.geilicdn.com/wdseller448984223-19290000019d6c7d8a8d0a239846_1320_1568.jpg",
         "price": 10800,
         "addTime": "2026-07-24",
-        "stock": 3993,
-        "soldText": "536",
-        "soldNum": 536,
+        "stock": 3991,
+        "soldText": "538",
+        "soldNum": 538,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -94029,9 +93724,9 @@
         "image": "https://si.geilicdn.com/wdseller448984223-0d790000019d70050ed70a231316_1320_1568.jpg",
         "price": 4900,
         "addTime": "2026-07-20",
-        "stock": 2973,
-        "soldText": "443",
-        "soldNum": 443,
+        "stock": 2970,
+        "soldText": "446",
+        "soldNum": 446,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100108,9 +99803,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-317b000001980e4f260c0a23a2cb_1206_1175.jpg",
         "price": 15900,
         "addTime": "2026-05-21",
-        "stock": 138,
-        "soldText": "843",
-        "soldNum": 843,
+        "stock": 137,
+        "soldText": "844",
+        "soldNum": 844,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100277,9 +99972,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-4e6500000194bc68cb340a20e284_1206_1172.jpg",
         "price": 17500,
         "addTime": "2026-06-18",
-        "stock": 102,
-        "soldText": "295",
-        "soldNum": 295,
+        "stock": 101,
+        "soldText": "296",
+        "soldNum": 296,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100291,9 +99986,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-48a400000194bc316ccd0a23037f_1206_1182.jpg",
         "price": 20900,
         "addTime": "2026-07-06",
-        "stock": 114,
-        "soldText": "276",
-        "soldNum": 276,
+        "stock": 113,
+        "soldText": "277",
+        "soldNum": 277,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100305,9 +100000,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-47130000019629f755e80a23057e_1206_1191.jpg",
         "price": 19900,
         "addTime": "2026-04-24",
-        "stock": 40,
-        "soldText": "270",
-        "soldNum": 270,
+        "stock": 39,
+        "soldText": "271",
+        "soldNum": 271,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100427,26 +100122,26 @@
         "hasSku": true
       },
       {
-        "itemId": "7445753779",
-        "itemName": "（现货）space调节 钢 v手链 男女同款",
-        "image": "https://si.geilicdn.com/wdseller1532186080-3e530000019629eb01f60a207569_1206_1199.jpg",
-        "price": 17900,
-        "addTime": "2026-06-25",
-        "stock": 89,
-        "soldText": "178",
-        "soldNum": 178,
+        "itemId": "7483012115",
+        "itemName": "（现货） blsj耳钉 赠精美包装",
+        "image": "https://si.geilicdn.com/wdseller1532186080-165800000197327b1d120a21146b_1206_1188.jpg",
+        "price": 12500,
+        "addTime": "2026-05-13",
+        "stock": 22,
+        "soldText": "179",
+        "soldNum": 179,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
       {
-        "itemId": "7483012115",
-        "itemName": "（现货） blsj耳钉 赠精美包装",
-        "image": "https://si.geilicdn.com/wdseller1532186080-165800000197327b1d120a21146b_1206_1188.jpg",
-        "price": 12500,
-        "addTime": "2026-05-13",
-        "stock": 23,
+        "itemId": "7445753779",
+        "itemName": "（现货）space调节 钢 v手链 男女同款",
+        "image": "https://si.geilicdn.com/wdseller1532186080-3e530000019629eb01f60a207569_1206_1199.jpg",
+        "price": 17900,
+        "addTime": "2026-06-25",
+        "stock": 89,
         "soldText": "178",
         "soldNum": 178,
         "originalPrice": 0,
@@ -100549,9 +100244,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-66f10000019c076de11b0a2103bd_3960_3903.jpg",
         "price": 1000,
         "addTime": "2026-03-19",
-        "stock": 67,
-        "soldText": "133",
-        "soldNum": 133,
+        "stock": 66,
+        "soldText": "134",
+        "soldNum": 134,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100652,9 +100347,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-145700000199bb07f38c0a23047e_1206_1177.jpg",
         "price": 17900,
         "addTime": "2026-04-01",
-        "stock": 42,
-        "soldText": "108",
-        "soldNum": 108,
+        "stock": 41,
+        "soldText": "109",
+        "soldNum": 109,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100966,9 +100661,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-0d6200000196d799c1aa0a2396c9_1180_1572.jpg",
         "price": 33900,
         "addTime": "2026-07-06",
-        "stock": 167,
-        "soldText": "33",
-        "soldNum": 33,
+        "stock": 166,
+        "soldText": "34",
+        "soldNum": 34,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -100980,9 +100675,9 @@
         "image": "https://si.geilicdn.com/wdseller1532186080-43250000019d5170741a0a23111a_1320_1297.jpg",
         "price": 18900,
         "addTime": "2026-06-12",
-        "stock": 68,
-        "soldText": "32",
-        "soldNum": 32,
+        "stock": 67,
+        "soldText": "33",
+        "soldNum": 33,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -102625,9 +102320,9 @@
         "image": "https://si.geilicdn.com/weidian1672407812-039e0000019cdd3108120a207569_1920_2560.jpg",
         "price": 28800,
         "addTime": "2026-07-25",
-        "stock": 10,
-        "soldText": "210",
-        "soldNum": 210,
+        "stock": 9,
+        "soldText": "211",
+        "soldNum": 211,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -103027,7 +102722,7 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-731f0000019cf5ffbdaa0a8133cc_1324_1324.jpg",
         "price": 8800,
         "addTime": "2026-07-19",
-        "stock": 879,
+        "stock": 878,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103041,7 +102736,7 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-46d80000019ccbfdb0c70a2301b4_1320_1320.jpg",
         "price": 10900,
         "addTime": "2026-04-18",
-        "stock": 205,
+        "stock": 206,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103055,7 +102750,7 @@
         "image": "https://si.geilicdn.com/pcitem2032929136-7f900000019ce659309a0a21146b_1600_1600.jpg",
         "price": 16900,
         "addTime": "2026-06-11",
-        "stock": 247,
+        "stock": 246,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103069,7 +102764,7 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-085f0000019ccbd90af50a20e2c5_1320_1320.jpg",
         "price": 14800,
         "addTime": "2026-07-22",
-        "stock": 713,
+        "stock": 709,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103083,7 +102778,7 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-643c0000019ccc1560930a2303ee_1320_1760.jpg",
         "price": 5990,
         "addTime": "2026-06-08",
-        "stock": 328,
+        "stock": 326,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103111,7 +102806,7 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-113a0000019ccbdb7f4f0a23913e_1320_1320.jpg",
         "price": 12900,
         "addTime": "2026-05-26",
-        "stock": 166,
+        "stock": 164,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103195,7 +102890,7 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-37bf0000019e15e120cd0a21146b_1320_1320.jpg",
         "price": 16900,
         "addTime": "2026-06-02",
-        "stock": 560,
+        "stock": 558,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -103251,9 +102946,9 @@
         "image": "https://si.geilicdn.com/wdseller902014754728-6ef40000019d393a36590a23b4f4_1320_1760.jpg",
         "price": 14800,
         "addTime": "2026-06-25",
-        "stock": 418,
-        "soldText": "910",
-        "soldNum": 910,
+        "stock": 417,
+        "soldText": "911",
+        "soldNum": 911,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -103321,9 +103016,9 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-40100000019dce0553ad0a22d1a4_1320_1760.jpg",
         "price": 14900,
         "addTime": "2026-07-01",
-        "stock": 37,
-        "soldText": "757",
-        "soldNum": 757,
+        "stock": 36,
+        "soldText": "758",
+        "soldNum": 758,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -103391,7 +103086,7 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-1d990000019e9cc5f9590a2301f1_1320_1320.jpg",
         "price": 16900,
         "addTime": "2026-07-06",
-        "stock": 642,
+        "stock": 643,
         "soldText": "574",
         "soldNum": 574,
         "originalPrice": 0,
@@ -103475,9 +103170,9 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-07f80000019e3ed631bb0a210247_1320_1760.jpg",
         "price": 11900,
         "addTime": "2026-07-11",
-        "stock": 28,
-        "soldText": "461",
-        "soldNum": 461,
+        "stock": 27,
+        "soldText": "462",
+        "soldNum": 462,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -103522,7 +103217,7 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-67660000019ea4d3eb010a2103bd_1320_1320.jpg",
         "price": 12900,
         "addTime": "2026-06-17",
-        "stock": 328,
+        "stock": 329,
         "soldText": "400",
         "soldNum": 400,
         "originalPrice": 0,
@@ -103620,9 +103315,9 @@
         "image": "https://si.geilicdn.com/wdseller2032929136-2ca10000019d6e5a8d710a20e7c7_1320_1760.jpg",
         "price": 12900,
         "addTime": "2026-07-21",
-        "stock": 131,
-        "soldText": "315",
-        "soldNum": 315,
+        "stock": 130,
+        "soldText": "316",
+        "soldNum": 316,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -104900,7 +104595,12 @@
         "soldText": "27027",
         "soldNum": 27027,
         "originalPrice": 0,
-        "itemTag": [],
+        "itemTag": [
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
+          }
+        ],
         "preSale": false,
         "hasSku": false
       },
@@ -108889,6 +108589,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7806796072",
+        "itemName": "独家订单出货 市面唯一最强 亚瑟士三宅一生 联名限定款 把颜值与脚感焊死在脚上",
+        "image": "https://si.geilicdn.com/weidian2085151807-2fb30000019f41e8361d0a2315ef_1206_1454.jpg",
+        "price": 18000,
+        "addTime": "2026-07-09",
+        "stock": 47922,
+        "soldText": "17",
+        "soldNum": 17,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7441877718",
         "itemName": "七天无理由独家没任何人能拿到也不会接任何代理订单 幕后大哥对接的资源专门给人做货的自己有厂 带售后169💰",
         "image": "https://si.geilicdn.com/weidian1443557090-12ea00000195ff7684070a20e273_1115_1487.jpg",
@@ -108962,6 +108681,25 @@
         "itemTag": [
           {
             "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7714345544",
+        "itemName": "可达鸭出品 一年之约！ 自主鸽子 Motus系列 MOTUS CREW 轻量透气速干短袖T恤 吸湿排汗 原子灰鸽子系列白t/速干面料/定织定染/舒适亲肤",
+        "image": "https://si.geilicdn.com/wdseller1465518183-3b0d0000019bd722bd3d0a239846_1080_1080.jpg",
+        "price": 8900,
+        "addTime": "2026-03-19",
+        "stock": 169,
+        "soldText": "17",
+        "soldNum": 17,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥3.33",
             "tagType": 3
           }
         ],
@@ -109263,25 +109001,6 @@
           {
             "tagTitle": "包邮",
             "tagType": 6
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7714345544",
-        "itemName": "可达鸭出品 一年之约！ 自主鸽子 Motus系列 MOTUS CREW 轻量透气速干短袖T恤 吸湿排汗 原子灰鸽子系列白t/速干面料/定织定染/舒适亲肤",
-        "image": "https://si.geilicdn.com/wdseller1465518183-3b0d0000019bd722bd3d0a239846_1080_1080.jpg",
-        "price": 8900,
-        "addTime": "2026-03-19",
-        "stock": 170,
-        "soldText": "16",
-        "soldNum": 16,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥3.33",
-            "tagType": 3
           }
         ],
         "preSale": false,
@@ -109651,25 +109370,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7806796072",
-        "itemName": "独家订单出货 市面唯一最强 亚瑟士三宅一生 联名限定款 把颜值与脚感焊死在脚上",
-        "image": "https://si.geilicdn.com/weidian2085151807-2fb30000019f41e8361d0a2315ef_1206_1454.jpg",
-        "price": 18000,
-        "addTime": "2026-07-09",
-        "stock": 47923,
-        "soldText": "16",
-        "soldNum": 16,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7698873044",
         "itemName": "adel出品 全款预售 自主COVE 1/2拉链 抓绒夹克                                   空间灰/黑灰 //免定金 叠加优惠卷折上折！// 定金我来出 ",
         "image": "https://si.geilicdn.com/wdseller1868208264-669c0000019c354716e50a207569_1179_1179.jpg",
@@ -109908,6 +109608,25 @@
         ],
         "preSale": false,
         "hasSku": true
+      },
+      {
+        "itemId": "7617374301",
+        "itemName": "雕眼镜 旷子独家狠货！眼镜大厂年底清仓！专属福利全套包装 无售后 仅69💰无售后性价比很高",
+        "image": "https://si.geilicdn.com/wdseller902007969626-744f0000019ac3b1c7eb0a210256_1179_1179.jpg",
+        "price": 6900,
+        "addTime": "2026-04-26",
+        "stock": 7,
+        "soldText": "14",
+        "soldNum": 14,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥3.33",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": false
       },
       {
         "itemId": "7568645074",
@@ -110176,25 +109895,6 @@
         ],
         "preSale": false,
         "hasSku": true
-      },
-      {
-        "itemId": "7617374301",
-        "itemName": "雕眼镜 旷子独家狠货！眼镜大厂年底清仓！专属福利全套包装 无售后 仅69💰无售后性价比很高",
-        "image": "https://si.geilicdn.com/wdseller902007969626-744f0000019ac3b1c7eb0a210256_1179_1179.jpg",
-        "price": 6900,
-        "addTime": "2026-04-26",
-        "stock": 8,
-        "soldText": "13",
-        "soldNum": 13,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥3.33",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": false
       },
       {
         "itemId": "7423362725",
@@ -112204,6 +111904,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7740380289",
+        "itemName": "【夏日神T】Captive速干T恤 空间灰 双标logo印花 1000+销量无差评",
+        "image": "https://si.geilicdn.com/wdseller1757154687-3c9b00000198d15ac1770a210256_1284_1703.jpg",
+        "price": 8900,
+        "addTime": "2026-04-20",
+        "stock": 13,
+        "soldText": "9",
+        "soldNum": 9,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥3.33",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7431429954",
         "itemName": "清仓无售后 海外订单levis棕色小牛皮腰带 全钢定做扣头 送打孔器 配礼盒发",
         "image": "https://si.geilicdn.com/open1815803184-1234478995-749c00000195b89b49640a231226_800_800.jpg",
@@ -112834,25 +112553,6 @@
         "price": 8900,
         "addTime": "2026-06-17",
         "stock": 52,
-        "soldText": "8",
-        "soldNum": 8,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥3.33",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7740380289",
-        "itemName": "【夏日神T】Captive速干T恤 空间灰 双标logo印花 1000+销量无差评",
-        "image": "https://si.geilicdn.com/wdseller1757154687-3c9b00000198d15ac1770a210256_1284_1703.jpg",
-        "price": 8900,
-        "addTime": "2026-04-20",
-        "stock": 14,
         "soldText": "8",
         "soldNum": 8,
         "originalPrice": 0,
@@ -123094,6 +122794,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7744536202",
+        "itemName": "Devil lab Saffiano三角牌皮带/zp料/zp三角牌/zp缝纫线",
+        "image": "https://si.geilicdn.com/wdseller1961510816-5d78000001995cb3fb840a2303ee_750_1000.jpg",
+        "price": 38000,
+        "addTime": "2026-04-21",
+        "stock": 193,
+        "soldText": "2",
+        "soldNum": 2,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "￥10",
+            "tagType": 3
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7521762423",
         "itemName": "A+ Batch HERMES 爱马仕 勃肯拖鞋 ",
         "image": "https://si.geilicdn.com/open1815803184-1234478995-663200000198896991280aa043f9_1280_1280.jpg",
@@ -128177,25 +127896,6 @@
         "price": 38600,
         "addTime": "2026-03-02",
         "stock": 28,
-        "soldText": "1",
-        "soldNum": 1,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "￥10",
-            "tagType": 3
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7744536202",
-        "itemName": "Devil lab Saffiano三角牌皮带/zp料/zp三角牌/zp缝纫线",
-        "image": "https://si.geilicdn.com/wdseller1961510816-5d78000001995cb3fb840a2303ee_750_1000.jpg",
-        "price": 38000,
-        "addTime": "2026-04-21",
-        "stock": 194,
         "soldText": "1",
         "soldNum": 1,
         "originalPrice": 0,
@@ -145925,7 +145625,7 @@
         "image": "https://si.geilicdn.com/wdseller902030527519-6ac30000019f2cf6e71e0a20e284_1320_1320.jpg",
         "price": 93900,
         "addTime": "2026-07-25",
-        "stock": 10,
+        "stock": 9,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -149464,7 +149164,7 @@
         "image": "https://si.geilicdn.com/weidian1477965287-035c0000019f21b81e8c0a2396f4_404_404.jpg",
         "price": 100,
         "addTime": "2026-07-02",
-        "stock": 9983720,
+        "stock": 9983515,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -149483,7 +149183,7 @@
         "image": "https://si.geilicdn.com/pcitem1477965287-6d18000001892cb6d3340a20e273_1080_1080.jpg",
         "price": 4500,
         "addTime": "2026-02-24",
-        "stock": 15104,
+        "stock": 15103,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -149572,7 +149272,7 @@
         "image": "https://si.geilicdn.com/weidian1477965287-1d090000019bfd9108ec0a2102c5_1220_1051.jpg",
         "price": 23900,
         "addTime": "2026-04-18",
-        "stock": 175601,
+        "stock": 175600,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -149670,7 +149370,7 @@
         "image": "https://si.geilicdn.com/weidian1477965287-2d390000019bfb38c6c10a210139_1220_1049.jpg",
         "price": 17000,
         "addTime": "2026-02-24",
-        "stock": 194649,
+        "stock": 194648,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -150034,7 +149734,7 @@
         "image": "https://si.geilicdn.com/weidian1477965287-169a0000019d8396bf2a0a23057e_2160_2160.jpg",
         "price": 18000,
         "addTime": "2026-04-12",
-        "stock": 6134,
+        "stock": 6133,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -150141,12 +149841,12 @@
         "hasSku": true
       },
       {
-        "itemId": "7671483036",
-        "itemName": "dd Batch J1 Discount CollectionZ J1版 特价合集",
-        "image": "https://si.geilicdn.com/weidian1477965287-623b0000019bdbbb2aec0a8134f0_2048_2048.jpg",
-        "price": 17900,
-        "addTime": "2026-02-24",
-        "stock": 50952,
+        "itemId": "7700669158",
+        "itemName": "lp德训男女多款多色合辑 市面第一梯队 详情页实拍",
+        "image": "https://si.geilicdn.com/wdseller901892641193-725e00000196d2d60ebc0a239846_1174_1174.jpg",
+        "price": 40000,
+        "addTime": "2026-02-28",
+        "stock": 29598,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -150155,12 +149855,12 @@
         "hasSku": true
       },
       {
-        "itemId": "7700669158",
-        "itemName": "lp德训男女多款多色合辑 市面第一梯队 详情页实拍",
-        "image": "https://si.geilicdn.com/wdseller901892641193-725e00000196d2d60ebc0a239846_1174_1174.jpg",
-        "price": 40000,
-        "addTime": "2026-02-28",
-        "stock": 29599,
+        "itemId": "7671483036",
+        "itemName": "dd Batch J1 Discount CollectionZ J1版 特价合集",
+        "image": "https://si.geilicdn.com/weidian1477965287-623b0000019bdbbb2aec0a8134f0_2048_2048.jpg",
+        "price": 17900,
+        "addTime": "2026-02-24",
+        "stock": 50952,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -150925,6 +150625,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7730593651",
+        "itemName": "M Batch NB327 Discount CollectionM版本 NB327 特价合集",
+        "image": "https://si.geilicdn.com/weidian1477965287-35c90000019d837698aa0a21146b_2160_2880.jpg",
+        "price": 14000,
+        "addTime": "2026-04-12",
+        "stock": 3379,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7799404631",
         "itemName": "26P出货有男码 A+版本 小香25S/26C/26S/26P 综合链接 新链接",
         "image": "https://si.geilicdn.com/weidian1477965287-58ee0000019f2200a7280a2396f4_2160_2160.jpg",
@@ -150953,16 +150667,21 @@
         "hasSku": true
       },
       {
-        "itemId": "7730593651",
-        "itemName": "M Batch NB327 Discount CollectionM版本 NB327 特价合集",
-        "image": "https://si.geilicdn.com/weidian1477965287-35c90000019d837698aa0a21146b_2160_2880.jpg",
-        "price": 14000,
-        "addTime": "2026-04-12",
-        "stock": 3380,
+        "itemId": "7812714150",
+        "itemName": "迪子 ad SFTM-006 多版本合集",
+        "image": "https://si.geilicdn.com/weidian1477965287-0abe0000019f808ab3420a23057e_2160_2160.jpg",
+        "price": 9900,
+        "addTime": "2026-07-20",
+        "stock": 28195,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
-        "itemTag": [],
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
         "preSale": false,
         "hasSku": true
       },
@@ -150977,25 +150696,6 @@
         "soldNum": 0,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7812714150",
-        "itemName": "迪子 ad SFTM-006 多版本合集",
-        "image": "https://si.geilicdn.com/weidian1477965287-0abe0000019f808ab3420a23057e_2160_2160.jpg",
-        "price": 9900,
-        "addTime": "2026-07-20",
-        "stock": 28197,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -152205,6 +151905,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7815731212",
+        "itemName": "XA 粉色跟灰色出货  Balenciag* 巴黎人家25代 Radar 低帮运动休闲鞋 多版本综合链接  ",
+        "image": "https://si.geilicdn.com/weidian1477965287-55ac0000019f9983e7210a2394a4_1440_1920.jpg",
+        "price": 24000,
+        "addTime": "2026-07-25",
+        "stock": 141768,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7676113142",
         "itemName": "Max Batch - N1ke Air max 90 Collection",
         "image": "https://si.geilicdn.com/weidian1477965287-0ded0000019bfc5a53610a23047e_750_750.jpg",
@@ -152358,25 +152077,6 @@
           {
             "tagTitle": "库存紧张",
             "tagType": 4
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7815731212",
-        "itemName": "XA 粉色跟灰色出货  Balenciag* 巴黎人家25代 Radar 低帮运动休闲鞋 多版本综合链接  ",
-        "image": "https://si.geilicdn.com/weidian1477965287-55ac0000019f9983e7210a2394a4_1440_1920.jpg",
-        "price": 24000,
-        "addTime": "2026-07-25",
-        "stock": 141769,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
           }
         ],
         "preSale": false,
@@ -190448,6 +190148,25 @@
         "hasSku": true
       },
       {
+        "itemId": "6398844694",
+        "itemName": "Onitsuka Tiger鬼冢虎 MEXICO 66 懒人鞋一脚蹬 世面唯一头层皮",
+        "image": "https://si.geilicdn.com/open1771537584-1234478995-391200000188c2b908e30a210559_1179_1179.jpg",
+        "price": 17900,
+        "addTime": "2023-06-16",
+        "stock": 434967,
+        "soldText": "394",
+        "soldNum": 394,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "售后无忧",
+            "tagType": 8
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7683077705",
         "itemName": "买一送一 外贸王牌大厂 PK4.0年终盲盒活动来袭！Air Jordan 1 4盲盒活动 （无售后）（如果有微瑕，接受不了的勿拍！！！）",
         "image": "https://si.geilicdn.com/pcitem1444655371-64240000019c24a03c810a20e2c5_1200_1200.jpg",
@@ -190467,33 +190186,14 @@
         "hasSku": true
       },
       {
-        "itemId": "6398844694",
-        "itemName": "Onitsuka Tiger鬼冢虎 MEXICO 66 懒人鞋一脚蹬 世面唯一头层皮",
-        "image": "https://si.geilicdn.com/open1771537584-1234478995-391200000188c2b908e30a210559_1179_1179.jpg",
-        "price": 17900,
-        "addTime": "2023-06-16",
-        "stock": 434968,
-        "soldText": "393",
-        "soldNum": 393,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "售后无忧",
-            "tagType": 8
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7236928447",
         "itemName": "店主力推 清远T1版 强势归来 Air JORDAN 1 系列 实拍 长期供应 非特价 非库存 全部近期全新做的东西 ",
         "image": "https://si.geilicdn.com/weidian1444655371-4d1700000199cb2cdb6e0a2301b4_2430_3240.jpg",
         "price": 16900,
         "addTime": "2025-11-15",
-        "stock": 49030,
-        "soldText": "392",
-        "soldNum": 392,
+        "stock": 49029,
+        "soldText": "393",
+        "soldNum": 393,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -190752,6 +190452,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7669234249",
+        "itemName": "库存更新 Pandabuy 外贸回流 2002幻影黑 云雨灰",
+        "image": "https://si.geilicdn.com/weidian1444655371-2b9b0000019f006a6da80a20e2c5_1440_1080.jpg",
+        "price": 2690,
+        "addTime": "2026-07-25",
+        "stock": 95,
+        "soldText": "271",
+        "soldNum": 271,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "售后无忧",
+            "tagType": 8
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "6148396154",
         "itemName": "超强性价比倒钩  aj1 low ",
         "image": "https://si.geilicdn.com/weidian1444655371-5bd800000187f25fb22d0a2313a2_1536_2048.jpg",
@@ -190785,25 +190504,6 @@
             "tagTitle": "库存紧张",
             "tagType": 4
           },
-          {
-            "tagTitle": "售后无忧",
-            "tagType": 8
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7669234249",
-        "itemName": "库存更新 Pandabuy 外贸回流 2002幻影黑 云雨灰",
-        "image": "https://si.geilicdn.com/weidian1444655371-2b9b0000019f006a6da80a20e2c5_1440_1080.jpg",
-        "price": 2690,
-        "addTime": "2026-07-25",
-        "stock": 104,
-        "soldText": "262",
-        "soldNum": 262,
-        "originalPrice": 0,
-        "itemTag": [
           {
             "tagTitle": "售后无忧",
             "tagType": 8
@@ -195466,7 +195166,7 @@
         "image": "https://si.geilicdn.com/weidian1444655371-1cfd0000019f646a55ef0a23038e_1272_2772.jpg",
         "price": 29900,
         "addTime": "2026-07-20",
-        "stock": 197,
+        "stock": 198,
         "soldText": "27",
         "soldNum": 27,
         "originalPrice": 0,
@@ -212079,7 +211779,7 @@
         "image": "https://si.geilicdn.com/open1771537584-1234478995-4e28000001950a55890d0aa0834c_2048_1365.jpg",
         "price": 59000,
         "addTime": "2025-02-15",
-        "stock": 9989,
+        "stock": 9990,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -218291,6 +217991,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7810755515",
+        "itemName": "【BB独家福利，知名版本福利特价】倒钩全系列 价格屠夫 吊打市面98%版本 提示：万城皮料商套现批次 版本能看出来的自然能体会 正常退换 数量不多 暂时全码 正常退换",
+        "image": "https://si.geilicdn.com/wdseller1660092210-19880000019f8a0c66430a230417_1320_1760.jpg",
+        "price": 21900,
+        "addTime": "2026-07-24",
+        "stock": 639,
+        "soldText": "9",
+        "soldNum": 9,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7245406270",
         "itemName": "【K13】OnitsukaTiger/鬼塚虎 Mexico 66 全头层皮面低邦休闲跑步鞋  配色陆续开发中 敬请期待 目前市面天花板",
         "image": "https://si.geilicdn.com/wdseller1660092210-29e40000019034fc1a040a2304aa_1086_816.jpg",
@@ -218501,25 +218220,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7810755515",
-        "itemName": "【BB独家福利，知名版本福利特价】倒钩全系列 价格屠夫 吊打市面98%版本 提示：万城皮料商套现批次 版本能看出来的自然能体会 正常退换 数量不多 暂时全码 正常退换",
-        "image": "https://si.geilicdn.com/wdseller1660092210-19880000019f8a0c66430a230417_1320_1760.jpg",
-        "price": 21900,
-        "addTime": "2026-07-24",
-        "stock": 640,
-        "soldText": "8",
-        "soldNum": 8,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7809547119",
         "itemName": "【BB独家福利 某知名版本同源】倒钩 DIY 海外定制配色 老外当zp卖的东西 皮质超级感人 数量不多 暂时全码 部分码数就一两双 产量少 主打海外市场的货 懂得都懂",
         "image": "https://si.geilicdn.com/wdseller1660092210-4ee90000019f813498570a8133cc_1320_1760.jpg",
@@ -218544,7 +218244,7 @@
         "image": "https://si.geilicdn.com/wdseller1621004462-00c0000001998f3536cb0a20e273_1290_1290.jpg",
         "price": 19900,
         "addTime": "2025-10-06",
-        "stock": 220770,
+        "stock": 220769,
         "soldText": "8",
         "soldNum": 8,
         "originalPrice": 0,
@@ -228942,9 +228642,9 @@
         "image": "https://si.geilicdn.com/pcitem1750613183-65390000019bdacb3e460a2304aa-unadjust_2166_2463.png",
         "price": 19000,
         "addTime": "2026-02-28",
-        "stock": 33756,
-        "soldText": "102",
-        "soldNum": 102,
+        "stock": 33755,
+        "soldText": "103",
+        "soldNum": 103,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -228993,26 +228693,26 @@
         "hasSku": true
       },
       {
-        "itemId": "7509901262",
-        "itemName": "【神/LJ/M/PB】华夫Sacai1.0 Sacai2.0 Sacai3.0 走秀",
-        "image": "https://si.geilicdn.com/open1795087742-1234478995-759900000198098113b70a231226_1170_1560.jpg",
-        "price": 24000,
-        "addTime": "2025-07-15",
-        "stock": 29021,
-        "soldText": "91",
-        "soldNum": 91,
+        "itemId": "7800546168",
+        "itemName": "TOP版/全新升级小头 匡威1970s 硫化软蓝底Converse 比虎扑版好 尺码偏大半码到一码",
+        "image": "https://si.geilicdn.com/wdseller1750613183-16300000019f12bf99090a2394a4_1290_1290.jpg",
+        "price": 9900,
+        "addTime": "2026-06-29",
+        "stock": 241041,
+        "soldText": "92",
+        "soldNum": 92,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
       {
-        "itemId": "7800546168",
-        "itemName": "TOP版/全新升级小头 匡威1970s 硫化软蓝底Converse 比虎扑版好 尺码偏大半码到一码",
-        "image": "https://si.geilicdn.com/wdseller1750613183-16300000019f12bf99090a2394a4_1290_1290.jpg",
-        "price": 9900,
-        "addTime": "2026-06-29",
-        "stock": 241042,
+        "itemId": "7509901262",
+        "itemName": "【神/LJ/M/PB】华夫Sacai1.0 Sacai2.0 Sacai3.0 走秀",
+        "image": "https://si.geilicdn.com/open1795087742-1234478995-759900000198098113b70a231226_1170_1560.jpg",
+        "price": 24000,
+        "addTime": "2025-07-15",
+        "stock": 29021,
         "soldText": "91",
         "soldNum": 91,
         "originalPrice": 0,
@@ -229343,6 +229043,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7509972312",
+        "itemName": "空军低帮十六色！从业这么多年这一款第一次做重磅福利特价！正宗日本黑牌外贸冲正版本！品质，价格 售前，售后的四重保证！",
+        "image": "https://si.geilicdn.com/open1795087742-1234478995-48fb000001980a344b6e0a23b4de_2560_2560.jpg",
+        "price": 9900,
+        "addTime": "2025-07-15",
+        "stock": 179170,
+        "soldText": "62",
+        "soldNum": 62,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7510031678",
         "itemName": "【XA版】巴黎世家 XXXL 3xl 十代 合集1 库存在商品详情",
         "image": "https://si.geilicdn.com/open1795087742-1234478995-69d4000001980a5d03240a231226_1242_1242.jpg",
@@ -229441,6 +229155,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7510029906",
+        "itemName": "XP2.0版本/全新升级批次  AJ1 low低帮系列",
+        "image": "https://si.geilicdn.com/open1795087742-1234478995-18cc000001980adfc9390a23b4de_1032_582.jpg",
+        "price": 11000,
+        "addTime": "2025-07-15",
+        "stock": 16765,
+        "soldText": "60",
+        "soldNum": 60,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7508045311",
         "itemName": "PB版本Air Force AF1 07 空军一号经典低帮板鞋",
         "image": "https://si.geilicdn.com/open1795087742-1234478995-7e56000001980a9321340a8115c2_1200_1200.jpg",
@@ -229455,40 +229183,12 @@
         "hasSku": true
       },
       {
-        "itemId": "7509972312",
-        "itemName": "空军低帮十六色！从业这么多年这一款第一次做重磅福利特价！正宗日本黑牌外贸冲正版本！品质，价格 售前，售后的四重保证！",
-        "image": "https://si.geilicdn.com/open1795087742-1234478995-48fb000001980a344b6e0a23b4de_2560_2560.jpg",
-        "price": 9900,
-        "addTime": "2025-07-15",
-        "stock": 179171,
-        "soldText": "61",
-        "soldNum": 61,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7516709266",
         "itemName": "YH版本/巴黎联名赛车鞋  The Open Product x Pu Speedcat ",
         "image": "https://si.geilicdn.com/wdseller901972193461-66dd0000019845da6fdf0a231177_1314_1972.jpg",
         "price": 18000,
         "addTime": "2026-02-07",
         "stock": 14881,
-        "soldText": "59",
-        "soldNum": 59,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7510029906",
-        "itemName": "XP2.0版本/全新升级批次  AJ1 low低帮系列",
-        "image": "https://si.geilicdn.com/open1795087742-1234478995-18cc000001980adfc9390a23b4de_1032_582.jpg",
-        "price": 11000,
-        "addTime": "2025-07-15",
-        "stock": 16766,
         "soldText": "59",
         "soldNum": 59,
         "originalPrice": 0,
@@ -230743,6 +230443,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7795463843",
+        "itemName": "神版 平台爆款出货 亚瑟士 Asics Hypersync 薄底德训鞋",
+        "image": "https://si.geilicdn.com/weidian1918313408-3fd10000019ec6cea49a0a20e284_1440_1920.jpg",
+        "price": 14000,
+        "addTime": "2026-06-25",
+        "stock": 107887,
+        "soldText": "25",
+        "soldNum": 25,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7673031268",
         "itemName": "CS版本年终特价福利/双钩dunk 全系列清仓 细节图在商品详情",
         "image": "https://si.geilicdn.com/pcitem1750613183-1d2a0000019be4d9a51c0a23057e-unadjust_778_936.png",
@@ -230875,20 +230589,6 @@
         "price": 17900,
         "addTime": "2025-09-05",
         "stock": 37992,
-        "soldText": "24",
-        "soldNum": 24,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7795463843",
-        "itemName": "神版 平台爆款出货 亚瑟士 Asics Hypersync 薄底德训鞋",
-        "image": "https://si.geilicdn.com/weidian1918313408-3fd10000019ec6cea49a0a20e284_1440_1920.jpg",
-        "price": 14000,
-        "addTime": "2026-06-25",
-        "stock": 107888,
         "soldText": "24",
         "soldNum": 24,
         "originalPrice": 0,
@@ -233893,6 +233593,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7807887467",
+        "itemName": "神版 **版本 NB新百伦 MT10小红书爆款 稳定可主推",
+        "image": "https://si.geilicdn.com/pcitem2041265854-31b20000019f19d5eaa60a2396f4_1280_2415.jpg",
+        "price": 13000,
+        "addTime": "2026-07-17",
+        "stock": 119853,
+        "soldText": "6",
+        "soldNum": 6,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7508090257",
         "itemName": "【热销款】巴黎世家 橡胶拖系列合集",
         "image": "https://si.geilicdn.com/open1795087742-1234478995-5b0a000001980a4b5e6d0a22d249_1284_1712.jpg",
@@ -234235,20 +233949,6 @@
         "price": 16000,
         "addTime": "2026-05-03",
         "stock": 407585,
-        "soldText": "5",
-        "soldNum": 5,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7807887467",
-        "itemName": "神版 **版本 NB新百伦 MT10小红书爆款 稳定可主推",
-        "image": "https://si.geilicdn.com/pcitem2041265854-31b20000019f19d5eaa60a2396f4_1280_2415.jpg",
-        "price": 13000,
-        "addTime": "2026-07-17",
-        "stock": 119854,
         "soldText": "5",
         "soldNum": 5,
         "originalPrice": 0,
@@ -235215,6 +234915,20 @@
         "price": 18000,
         "addTime": "2026-07-12",
         "stock": 118496,
+        "soldText": "3",
+        "soldNum": 3,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7796189581",
+        "itemName": "YH版本AF-1 x 1V联名官方同步 1比1原装级别  清洁度做工细节拉满 原楦头原纸板 ",
+        "image": "https://si.geilicdn.com/pcitem901878883297-58c90000019f084424fb0a2394a4_1200_1200.jpg",
+        "price": 18000,
+        "addTime": "2026-06-27",
+        "stock": 49997,
         "soldText": "3",
         "soldNum": 3,
         "originalPrice": 0,
@@ -236513,20 +236227,6 @@
         "price": 18000,
         "addTime": "2026-07-03",
         "stock": 70564,
-        "soldText": "1",
-        "soldNum": 1,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7796189581",
-        "itemName": "YH版本AF-1 x 1V联名官方同步 1比1原装级别  清洁度做工细节拉满 原楦头原纸板 ",
-        "image": "https://si.geilicdn.com/pcitem901878883297-58c90000019f084424fb0a2394a4_1200_1200.jpg",
-        "price": 18000,
-        "addTime": "2026-06-27",
-        "stock": 49999,
         "soldText": "1",
         "soldNum": 1,
         "originalPrice": 0,
@@ -238834,9 +238534,9 @@
         "image": "https://si.geilicdn.com/wdseller1468816995-15ef0000019dba4a0ebb0a2103bd_1206_1561.jpg",
         "price": 3680,
         "addTime": "2026-07-12",
-        "stock": 74,
-        "soldText": "235",
-        "soldNum": 235,
+        "stock": 73,
+        "soldText": "236",
+        "soldNum": 236,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -239213,9 +238913,9 @@
         "image": "https://si.geilicdn.com/wdseller1468816995-6e5e000001977dfcedfc0a21146b_750_750.jpg",
         "price": 8900,
         "addTime": "2026-07-20",
-        "stock": 31,
-        "soldText": "182",
-        "soldNum": 182,
+        "stock": 30,
+        "soldText": "183",
+        "soldNum": 183,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -240237,6 +239937,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7635577366",
+        "itemName": "小董同批次 最狠清仓！CH b73底板Remake星空皮十字架伐木水洗做旧蓝牛仔工装裤 ",
+        "image": "https://si.geilicdn.com/wdseller1468816995-54750000019e758357c50a20e273_1138_1585.jpg",
+        "price": 18880,
+        "addTime": "2026-07-16",
+        "stock": 160,
+        "soldText": "119",
+        "soldNum": 119,
+        "originalPrice": 29900,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7261802237",
         "itemName": "【区别市面】ERD忧郁的富二代 24SS新款刺绣鸭舌帽男女同款合集",
         "image": "https://si.geilicdn.com/wdseller901859874384-54940000019bde6fd93a0a239646_1200_1200.jpg",
@@ -240284,20 +239998,6 @@
         "soldText": "118",
         "soldNum": 118,
         "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7635577366",
-        "itemName": "小董同批次 最狠清仓！CH b73底板Remake星空皮十字架伐木水洗做旧蓝牛仔工装裤 ",
-        "image": "https://si.geilicdn.com/wdseller1468816995-54750000019e758357c50a20e273_1138_1585.jpg",
-        "price": 18880,
-        "addTime": "2026-07-16",
-        "stock": 161,
-        "soldText": "118",
-        "soldNum": 118,
-        "originalPrice": 29900,
         "itemTag": [],
         "preSale": false,
         "hasSku": true
@@ -246404,6 +246104,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7768811443",
+        "itemName": "#Satanmade 独家现货秒发 三色 Acn 经典款 1996 短袖 麻棉水洗 马骝破坏",
+        "image": "https://si.geilicdn.com/wdseller1258568610-28d10000019e377244aa0a81347d_900_1100.jpg",
+        "price": 9900,
+        "addTime": "2026-07-23",
+        "stock": 206,
+        "soldText": "24",
+        "soldNum": 24,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7749656635",
         "itemName": "#Piggyrich 独家最狠清仓！！/bal/SS25 红色麦穗B刺绣/蜡染水洗工艺//纯手工破坏短袖T恤 ",
         "image": "https://si.geilicdn.com/wdseller2007878160-74390000019aedb170940a20e2c5_1080_1623.jpg",
@@ -246544,20 +246258,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7768811443",
-        "itemName": "#Satanmade 独家现货秒发 三色 Acn 经典款 1996 短袖 麻棉水洗 马骝破坏",
-        "image": "https://si.geilicdn.com/wdseller1258568610-28d10000019e377244aa0a81347d_900_1100.jpg",
-        "price": 9900,
-        "addTime": "2026-07-23",
-        "stock": 207,
-        "soldText": "23",
-        "soldNum": 23,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7745643628",
         "itemName": "#HFsMade 小马刺绣厚款平纹长袖 灰色",
         "image": "https://si.geilicdn.com/wdseller901876249669-1bec0000019bb45ea8d30a230115_1279_1279.jpg",
@@ -246567,6 +246267,20 @@
         "soldText": "23",
         "soldNum": 23,
         "originalPrice": 8800,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7807899481",
+        "itemName": "#杰尼龟 [购买前一定要看购买须知]自主B纯色字母平角内裤/100%新疆长绒棉/莱赛尔织带/无菌车间生产/四针六线缝纫",
+        "image": "https://si.geilicdn.com/wdseller1405292126-196a0000019510a250dd0a23057e_1290_1388.jpg",
+        "price": 3490,
+        "addTime": "2026-07-17",
+        "stock": 961503,
+        "soldText": "23",
+        "soldNum": 23,
+        "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
         "hasSku": true
@@ -246742,20 +246456,6 @@
             "tagType": 5
           }
         ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7807899481",
-        "itemName": "#杰尼龟 [购买前一定要看购买须知]自主B纯色字母平角内裤/100%新疆长绒棉/莱赛尔织带/无菌车间生产/四针六线缝纫",
-        "image": "https://si.geilicdn.com/wdseller1405292126-196a0000019510a250dd0a23057e_1290_1388.jpg",
-        "price": 3490,
-        "addTime": "2026-07-17",
-        "stock": 961504,
-        "soldText": "22",
-        "soldNum": 22,
-        "originalPrice": 0,
-        "itemTag": [],
         "preSale": false,
         "hasSku": true
       },
@@ -248875,12 +248575,40 @@
         "hasSku": false
       },
       {
+        "itemId": "7810924278",
+        "itemName": "#Dbmade alo弹力提花织带腰头/轻盈速干面料/立体几何剪裁/男女同款运动长裤/砾石色",
+        "image": "https://si.geilicdn.com/wdseller1944535810-3cd10000019dae6aaabd0a23c286_2560_3200.jpg",
+        "price": 13800,
+        "addTime": "2026-07-16",
+        "stock": 790,
+        "soldText": "11",
+        "soldNum": 11,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7677061870",
         "itemName": "卡尔出品-黑红马蹄梵文长袖 现货",
         "image": "https://si.geilicdn.com/wdseller1866963199-3f2f0000019bee4e53140a8133cc_1179_1435.jpg",
         "price": 12900,
         "addTime": "2026-01-27",
         "stock": 23,
+        "soldText": "11",
+        "soldNum": 11,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7809624308",
+        "itemName": "#做货人出品 【已过白鬼】CD风格刺绣短袖/定织定染20S精梳棉/百灵达新机器",
+        "image": "https://si.geilicdn.com/wdseller1774103198-65b50000019de0edce210a230115_1320_1290.jpg",
+        "price": 5900,
+        "addTime": "2026-07-14",
+        "stock": 211,
         "soldText": "11",
         "soldNum": 11,
         "originalPrice": 0,
@@ -249059,20 +248787,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7810924278",
-        "itemName": "#Dbmade alo弹力提花织带腰头/轻盈速干面料/立体几何剪裁/男女同款运动长裤/砾石色",
-        "image": "https://si.geilicdn.com/wdseller1944535810-3cd10000019dae6aaabd0a23c286_2560_3200.jpg",
-        "price": 13800,
-        "addTime": "2026-07-16",
-        "stock": 791,
-        "soldText": "10",
-        "soldNum": 10,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7805306145",
         "itemName": "Earlytom 现货 180G21s环纺高密斜纹/布面碳素磨毛/士林染色/高阶成衣工艺/百灵达刺绣/五金全套开模制作",
         "image": "https://si.geilicdn.com/wdseller1527186771-473f0000019f4bc24ae40a2102c5_1320_1304.jpg",
@@ -249145,20 +248859,6 @@
         "price": 6600,
         "addTime": "2026-07-02",
         "stock": 129,
-        "soldText": "10",
-        "soldNum": 10,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7809624308",
-        "itemName": "#做货人出品 【已过白鬼】CD风格刺绣短袖/定织定染20S精梳棉/百灵达新机器",
-        "image": "https://si.geilicdn.com/wdseller1774103198-65b50000019de0edce210a230115_1320_1290.jpg",
-        "price": 5900,
-        "addTime": "2026-07-14",
-        "stock": 212,
         "soldText": "10",
         "soldNum": 10,
         "originalPrice": 0,
@@ -274780,7 +274480,7 @@
         "image": "https://si.geilicdn.com/wdseller1405292126-72ca0000019a0c1d74df0a2395e9_1290_1200.jpg",
         "price": 25800,
         "addTime": "2026-05-11",
-        "stock": 27,
+        "stock": 28,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -275556,6 +275256,29 @@
           {
             "tagTitle": "库存紧张",
             "tagType": 4
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7815529404",
+        "itemName": "Cola-Dir 黑、白色匹马棉针织宽松榻榻米刺绣短袖",
+        "image": "https://si.geilicdn.com/wdseller902045282507-49b60000019f987dd5ee0a811411_1589_2382.jpg",
+        "price": 18800,
+        "addTime": "2026-07-25",
+        "stock": 38,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "满200减5",
+            "tagType": 2
+          },
+          {
+            "tagTitle": "新品",
+            "tagType": 5
           }
         ],
         "preSale": false,
@@ -291651,29 +291374,6 @@
         "hasSku": false
       },
       {
-        "itemId": "7815529404",
-        "itemName": "Cola-Dir 黑、白色匹马棉针织宽松榻榻米刺绣短袖",
-        "image": "https://si.geilicdn.com/wdseller902045282507-49b60000019f987dd5ee0a811411_1589_2382.jpg",
-        "price": 18800,
-        "addTime": "2026-07-25",
-        "stock": 999999,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "满200减5",
-            "tagType": 2
-          },
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
-        "preSale": false,
-        "hasSku": false
-      },
-      {
         "itemId": "7809999207",
         "itemName": "[Old City]自主ERD十字架蝴蝶结胸针顽主同款",
         "image": "https://si.geilicdn.com/wdseller2060018543-59b00000019e105a069e0a23037f_742_742.jpg",
@@ -293768,9 +293468,9 @@
         "image": "https://si.geilicdn.com/wdseller1928595238-0b610000019f000d31ef0a21146b_1242_1242.jpg",
         "price": 17800,
         "addTime": "2026-07-02",
-        "stock": 66,
-        "soldText": "95",
-        "soldNum": 95,
+        "stock": 65,
+        "soldText": "97",
+        "soldNum": 97,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -296337,6 +296037,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7752910191",
+        "itemName": "【现货】自主On 9\" Core Shorts 短裤 \n",
+        "image": "https://si.geilicdn.com/wdseller1868208264-21120000019f6ee9ceac0a23047e_1179_1179.jpg",
+        "price": 11900,
+        "addTime": "2026-07-19",
+        "stock": 102,
+        "soldText": "48",
+        "soldNum": 48,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7758677666",
         "itemName": "【现货】自主 小马 单排扣亚麻长袖衬衫",
         "image": "https://si.geilicdn.com/wdseller1868208264-59840000019f3b3215680a20e284_1179_1179.jpg",
@@ -296345,20 +296059,6 @@
         "stock": 46,
         "soldText": "47",
         "soldNum": 47,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7752910191",
-        "itemName": "【现货】自主On 9\" Core Shorts 短裤 \n",
-        "image": "https://si.geilicdn.com/wdseller1868208264-21120000019f6ee9ceac0a23047e_1179_1179.jpg",
-        "price": 11900,
-        "addTime": "2026-07-19",
-        "stock": 104,
-        "soldText": "46",
-        "soldNum": 46,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -297765,25 +297465,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7783012203",
-        "itemName": "A1o训练健身速干轻薄透气短裤",
-        "image": "https://si.geilicdn.com/pcitem1511633231-011a0000019eaf06672b0a21146b_1290_1277.jpg",
-        "price": 99900,
-        "addTime": "2026-06-10",
-        "stock": 4,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "库存紧张",
-            "tagType": 4
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7783012133",
         "itemName": "Lu Bowline8寸短裤",
         "image": "https://si.geilicdn.com/pcitem1511633231-59990000019eaefa55200a2396f4_1290_1278.jpg",
@@ -297804,6 +297485,20 @@
         "price": 99900,
         "addTime": "2026-05-31",
         "stock": 8,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "7783012203",
+        "itemName": "A1o训练健身速干轻薄透气短裤",
+        "image": "https://si.geilicdn.com/pcitem1511633231-011a0000019eaf06672b0a21146b_1290_1277.jpg",
+        "price": 7900,
+        "addTime": "2026-06-10",
+        "stock": 835,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -300299,7 +299994,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-655a00000197a0f3b6a70a23c286_1216_1520.jpg",
         "price": 13800,
         "addTime": "2026-07-25",
-        "stock": 747,
+        "stock": 745,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -300593,7 +300288,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-32690000019eb104ac940a2303ea_2560_2560.jpg",
         "price": 12800,
         "addTime": "2026-07-25",
-        "stock": 116,
+        "stock": 114,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -300711,7 +300406,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-29060000019c099bd0050a231177_979_979.jpg",
         "price": 11800,
         "addTime": "2026-07-25",
-        "stock": 631,
+        "stock": 629,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -300787,7 +300482,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-2b6b0000019de97e07c30a230115_1320_1650.jpg",
         "price": 16800,
         "addTime": "2026-07-25",
-        "stock": 500,
+        "stock": 499,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -300806,7 +300501,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-4f190000019e12351f750a8132bd_1080_1350.jpg",
         "price": 13800,
         "addTime": "2026-07-25",
-        "stock": 223,
+        "stock": 224,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -301065,7 +300760,7 @@
         "image": "https://si.geilicdn.com/wdseller1944535810-222c0000019f1207d9650a230115_1320_1320.jpg",
         "price": 13800,
         "addTime": "2026-07-25",
-        "stock": 355,
+        "stock": 354,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -303430,7 +303125,7 @@
         "image": "https://si.geilicdn.com/weidian901918344840-0f3c0000019f2dcd19700a207569_666_672.jpg",
         "price": 16800,
         "addTime": "2026-07-25",
-        "stock": 71,
+        "stock": 70,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -304662,7 +304357,7 @@
         "image": "https://si.geilicdn.com/resource-72c80000019d807c97580a23c1e5-unadjust_750_750.jpg",
         "price": 12080,
         "addTime": "2026-07-24",
-        "stock": 688,
+        "stock": 686,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 12900,
@@ -304681,7 +304376,7 @@
         "image": "https://si.geilicdn.com/resource-72d30000019d807d86210a23c1e5-unadjust_750_750.jpg",
         "price": 14080,
         "addTime": "2025-04-05",
-        "stock": 387,
+        "stock": 385,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 14900,
@@ -304700,7 +304395,7 @@
         "image": "https://si.geilicdn.com/resource-283e0000019d807e90010a2394bb-unadjust_750_750.jpg",
         "price": 22780,
         "addTime": "2025-07-05",
-        "stock": 375,
+        "stock": 374,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 26800,
@@ -304719,7 +304414,7 @@
         "image": "https://si.geilicdn.com/resource-6ffa0000019d807f5b530a23b74b-unadjust_750_750.jpg",
         "price": 5440,
         "addTime": "2026-05-14",
-        "stock": 2130,
+        "stock": 2129,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 6800,
@@ -304738,7 +304433,7 @@
         "image": "https://si.geilicdn.com/resource-399d0000019d66b922670a239852-unadjust_750_750.jpg",
         "price": 17680,
         "addTime": "2025-05-16",
-        "stock": 362,
+        "stock": 361,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 22800,
@@ -304757,7 +304452,7 @@
         "image": "https://si.geilicdn.com/resource-70010000019d8080230f0a23b74b-unadjust_750_750.jpg",
         "price": 5440,
         "addTime": "2026-07-25",
-        "stock": 584,
+        "stock": 582,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 6800,
@@ -304814,7 +304509,7 @@
         "image": "https://si.geilicdn.com/resource-0b480000019d9fb78a450a22d1c2-unadjust_750_750.jpg",
         "price": 16780,
         "addTime": "2026-02-09",
-        "stock": 958,
+        "stock": 956,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 21800,
@@ -304856,7 +304551,7 @@
         "image": "https://si.geilicdn.com/wdseller901980835027-16bb0000019de387a3630a23037f_1320_1320.jpg",
         "price": 5440,
         "addTime": "2026-05-01",
-        "stock": 1245,
+        "stock": 1244,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 6800,
@@ -305016,7 +304711,7 @@
         "image": "https://si.geilicdn.com/wdseller901980835027-74aa0000019e75e0bae70a21146b_1320_1320.jpg",
         "price": 9780,
         "addTime": "2026-05-29",
-        "stock": 18960,
+        "stock": 18957,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 11800,
@@ -305308,9 +305003,9 @@
         "image": "https://si.geilicdn.com/wdseller842488911-73be0000019a625def520a231177_1206_670.jpg",
         "price": 990,
         "addTime": "2026-07-06",
-        "stock": 181,
-        "soldText": "580",
-        "soldNum": 580,
+        "stock": 180,
+        "soldText": "581",
+        "soldNum": 581,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -305633,7 +305328,7 @@
         "image": "https://si.geilicdn.com/wdseller1815436568-2b850000019bd0e77aff0a210256_1080_1440.jpg",
         "price": 990,
         "addTime": "2026-03-21",
-        "stock": 271,
+        "stock": 272,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -305675,9 +305370,9 @@
         "image": "https://si.geilicdn.com/wdseller1815436568-7bf20000019d80cd8e100a23138d_1284_1712.jpg",
         "price": 12900,
         "addTime": "2026-03-09",
-        "stock": 183,
-        "soldText": "428",
-        "soldNum": 428,
+        "stock": 180,
+        "soldText": "430",
+        "soldNum": 430,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -306394,7 +306089,7 @@
         "image": "https://si.geilicdn.com/pcitem1880287800-0baf0000019ab62d40520a20e273_1290_1373.jpg",
         "price": 18800,
         "addTime": "2026-07-08",
-        "stock": 8,
+        "stock": 7,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -306634,8 +306329,8 @@
         "price": 39800,
         "addTime": "2026-03-17",
         "stock": 22,
-        "soldText": "146",
-        "soldNum": 146,
+        "soldText": "147",
+        "soldNum": 147,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -306647,9 +306342,9 @@
         "image": "https://si.geilicdn.com/wdseller1769945528-45760000019f69cf552d0a2315ef_960_969.jpg",
         "price": 18800,
         "addTime": "2026-07-16",
-        "stock": 90,
-        "soldText": "58",
-        "soldNum": 58,
+        "stock": 89,
+        "soldText": "59",
+        "soldNum": 59,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -306689,9 +306384,9 @@
         "image": "https://si.geilicdn.com/wdseller1769945528-21360000019f6b1d583b0a2304aa_960_969.jpg",
         "price": 11800,
         "addTime": "2026-07-16",
-        "stock": 102,
-        "soldText": "21",
-        "soldNum": 21,
+        "stock": 101,
+        "soldText": "22",
+        "soldNum": 22,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -307261,7 +306956,7 @@
         "image": "https://si.geilicdn.com/wdseller1612009983-79d10000019f5a239dce0a22d1a4_1206_1496.jpg",
         "price": 7900,
         "addTime": "2026-07-13",
-        "stock": 796,
+        "stock": 795,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -307972,9 +307667,9 @@
         "image": "https://si.geilicdn.com/wdseller1931833394-1e0c0000019f8989259f0a23b5fa_1170_878.jpg",
         "price": 16800,
         "addTime": "2026-07-25",
-        "stock": 172,
-        "soldText": "18",
-        "soldNum": 18,
+        "stock": 171,
+        "soldText": "19",
+        "soldNum": 19,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -308176,7 +307871,7 @@
         "image": "https://si.geilicdn.com/wdseller1233219081-5b9d00000199529d363e0a210256_768_870.jpg",
         "price": 3600,
         "addTime": "2026-06-30",
-        "stock": 243,
+        "stock": 242,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -308321,7 +308016,7 @@
         "image": "https://si.geilicdn.com/wdseller1233219081-3a6b0000019e834856100a2301b4_1320_2032.jpg",
         "price": 21800,
         "addTime": "2026-07-23",
-        "stock": 133,
+        "stock": 132,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -308495,9 +308190,9 @@
         "image": "https://si.geilicdn.com/wdseller1929506719-25810000019f6b3d92d10a23047e_1320_1745.jpg",
         "price": 16800,
         "addTime": "2026-07-24",
-        "stock": 132,
-        "soldText": "321",
-        "soldNum": 321,
+        "stock": 129,
+        "soldText": "324",
+        "soldNum": 324,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -308949,7 +308644,7 @@
         "image": "https://si.geilicdn.com/pcitem1619607609-3a6e0000019d2e015fd80a81347d_750_999.jpg",
         "price": 4880,
         "addTime": "2026-03-31",
-        "stock": 10014,
+        "stock": 10013,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -309215,7 +308910,7 @@
         "image": "https://si.geilicdn.com/wdseller902067834452-4cb90000019eee0213ae0a23038e_1042_1042.jpg",
         "price": 11800,
         "addTime": "2026-06-22",
-        "stock": 198,
+        "stock": 197,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -310052,7 +309747,7 @@
         "image": "https://si.geilicdn.com/wdseller1527186771-474700000199fb819aa30a23c191_1179_968.jpg",
         "price": 12800,
         "addTime": "2026-04-20",
-        "stock": 173,
+        "stock": 174,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -311724,7 +311419,7 @@
         "image": "https://si.geilicdn.com/wdseller1454264501-79ad0000018eb82cbcb60a239821_1080_1080.jpg",
         "price": 35000,
         "addTime": "2025-11-11",
-        "stock": 323092,
+        "stock": 323091,
         "soldText": "1000+",
         "soldNum": 1000,
         "originalPrice": 0,
@@ -313456,9 +313151,9 @@
         "image": "https://si.geilicdn.com/pcitem1454264501-17a20000018ed11831070a23046c_1280_1280.jpg",
         "price": 16000,
         "addTime": "2025-04-16",
-        "stock": 224578,
-        "soldText": "180",
-        "soldNum": 180,
+        "stock": 224577,
+        "soldText": "181",
+        "soldNum": 181,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -321652,6 +321347,20 @@
         "hasSku": true
       },
       {
+        "itemId": "6154896642",
+        "itemName": "【CS性价比版本】DUNK 85 双钩系列合集！",
+        "image": "https://si.geilicdn.com/pcitem1454264501-4f590000019a628eb6fc0a21146b_1278_1278.jpg",
+        "price": 18800,
+        "addTime": "2025-11-08",
+        "stock": 63931,
+        "soldText": "35",
+        "soldNum": 35,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7322414498",
         "itemName": "LJ渠道福利 AMIRI骨头鞋/细节图详情页相册同步更新 市面T0品质",
         "image": "https://si.geilicdn.com/pcitem901486561814-5d0100000193b9ebcd980a23057e_1184_1184.jpg",
@@ -321896,20 +321605,6 @@
         "price": 18800,
         "addTime": "2025-10-18",
         "stock": 47121,
-        "soldText": "34",
-        "soldNum": 34,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "6154896642",
-        "itemName": "【CS性价比版本】DUNK 85 双钩系列合集！",
-        "image": "https://si.geilicdn.com/pcitem1454264501-4f590000019a628eb6fc0a21146b_1278_1278.jpg",
-        "price": 18800,
-        "addTime": "2025-11-08",
-        "stock": 63932,
         "soldText": "34",
         "soldNum": 34,
         "originalPrice": 0,
@@ -335401,6 +335096,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7782114228",
+        "itemName": "618平台板福利来袭 NK DUNK sup联名系列",
+        "image": "https://si.geilicdn.com/pcitem1454264501-7b260000019e8c9305990a23037f_2948_2948.jpg",
+        "price": 9900,
+        "addTime": "2026-06-03",
+        "stock": 4790,
+        "soldText": "10",
+        "soldNum": 10,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7689499506",
         "itemName": "年终小M版本福利 NK DUNK 系列 市场直播平台专供订单",
         "image": "https://si.geilicdn.com/pcitem1454264501-12630000019c2cca5f520a81347d_1278_1278.jpg",
@@ -336263,20 +335972,6 @@
         "stock": 10980,
         "soldText": "10",
         "soldNum": 10,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7782114228",
-        "itemName": "618平台板福利来袭 NK DUNK sup联名系列",
-        "image": "https://si.geilicdn.com/pcitem1454264501-7b260000019e8c9305990a23037f_2948_2948.jpg",
-        "price": 9900,
-        "addTime": "2026-06-03",
-        "stock": 4791,
-        "soldText": "9",
-        "soldNum": 9,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -346290,7 +345985,7 @@
         "image": "https://si.geilicdn.com/pcitem1217143941-11a50000019e015b2c6d0a23037f_2316_3088.jpg",
         "price": 19900,
         "addTime": "2026-05-07",
-        "stock": 15,
+        "stock": 14,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -346516,6 +346211,25 @@
         "hasSku": true
       },
       {
+        "itemId": "1855791635417871786865",
+        "itemName": "【现货】大王闪钻牛仔短裤",
+        "image": "https://si.geilicdn.com/pcitem902069241008-1cb50000019e782e5e330a20e672_2186_2915.jpg",
+        "price": 29900,
+        "addTime": "2026-05-30",
+        "stock": 88,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "1855791635417847313407",
         "itemName": "【现货】小马短裤 质感很好很好",
         "image": "https://si.geilicdn.com/wdseller1508873863-5de5000001971f34b5820a231316_1288_1288.jpg",
@@ -346526,25 +346240,6 @@
         "soldNum": 0,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "1855791635417871786865",
-        "itemName": "【现货】大王闪钻牛仔短裤",
-        "image": "https://si.geilicdn.com/pcitem902069241008-1cb50000019e782e5e330a20e672_2186_2915.jpg",
-        "price": 29900,
-        "addTime": "2026-05-30",
-        "stock": 92,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "包邮",
-            "tagType": 6
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -347142,6 +346837,44 @@
         "hasSku": true
       },
       {
+        "itemId": "1855791635417859893940",
+        "itemName": "【现货】克罗心后背十字印花修身短袖 ",
+        "image": "https://si.geilicdn.com/pcitem1217143941-35c60000019e1a49f7d50a230115_2623_3497.jpg",
+        "price": 19900,
+        "addTime": "2026-05-12",
+        "stock": 16,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
+        "itemId": "1855791635417847301479",
+        "itemName": "【现货】西太后 针织坑条白色背心 ",
+        "image": "https://si.geilicdn.com/pcitem1508873863-26d70000019d806ec4920a231177_3024_4032.jpg",
+        "price": 19900,
+        "addTime": "2026-05-02",
+        "stock": 17,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "1855791635417847321345",
         "itemName": "【现货】mm6超🔥后腰镂空牛仔裤 年前就入手了  ",
         "image": "https://si.geilicdn.com/pcitem1508873863-32330000019cfa66ae8b0a23913e_1284_1712.jpg",
@@ -347194,50 +346927,12 @@
         "hasSku": true
       },
       {
-        "itemId": "1855791635417859893940",
-        "itemName": "【现货】克罗心后背十字印花修身短袖 ",
-        "image": "https://si.geilicdn.com/pcitem1217143941-35c60000019e1a49f7d50a230115_2623_3497.jpg",
-        "price": 19900,
-        "addTime": "2026-05-12",
-        "stock": 17,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "包邮",
-            "tagType": 6
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "1855791635417856065508",
         "itemName": "【现货】克罗心蓝火焰印花短袖上身太衬肤色啦！！",
         "image": "https://si.geilicdn.com/pcitem1217143941-76be0000019e05ae517a0a811411_3024_4032.jpg",
         "price": 19900,
         "addTime": "2026-05-08",
         "stock": 19,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "包邮",
-            "tagType": 6
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "1855791635417847301479",
-        "itemName": "【现货】西太后 针织坑条白色背心 ",
-        "image": "https://si.geilicdn.com/pcitem1508873863-26d70000019d806ec4920a231177_3024_4032.jpg",
-        "price": 19900,
-        "addTime": "2026-05-02",
-        "stock": 18,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -348769,6 +348464,25 @@
         "hasSku": true
       },
       {
+        "itemId": "1855791635417885589745",
+        "itemName": "【定金链接】大王蓝色烫钻帽衫 此款为宽松版 尾款349现货后429 ⚠️补款会有新链接通知",
+        "image": "https://si.geilicdn.com/pcitem902069241008-6dde0000019ef281f01d0a210256_1216_1622.jpg",
+        "price": 5000,
+        "addTime": "2026-06-23",
+        "stock": 88,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "包邮",
+            "tagType": 6
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "1855791635417893931528",
         "itemName": "【现货】Acne足球胶囊系列 蝴蝶结印花黑色套装  严浩翔同款～",
         "image": "https://si.geilicdn.com/pcitem902069241008-38630000019efe1d08f10a230115_1080_2012.jpg",
@@ -348808,25 +348522,6 @@
         "price": 17900,
         "addTime": "2026-06-16",
         "stock": 166,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "包邮",
-            "tagType": 6
-          }
-        ],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "1855791635417885589745",
-        "itemName": "【定金链接】大王蓝色烫钻帽衫 此款为宽松版 尾款349现货后429 ⚠️补款会有新链接通知",
-        "image": "https://si.geilicdn.com/pcitem902069241008-6dde0000019ef281f01d0a210256_1216_1622.jpg",
-        "price": 5000,
-        "addTime": "2026-06-23",
-        "stock": 89,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -349733,6 +349428,20 @@
         "hasSku": true
       },
       {
+        "itemId": "1855791635417850334640",
+        "itemName": "【现货】AC*NE石墨色宽松长袖T 胸口字母口袋 基础百搭耐穿款",
+        "image": "https://si.geilicdn.com/pcitem1508873863-2d550000019c2208bef70a8133cc_1276_1702.jpg",
+        "price": 22900,
+        "addTime": "2026-05-02",
+        "stock": 32,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "1855791635417847399797",
         "itemName": "【现货】克罗心插肩袖袖国旗长袖",
         "image": "https://si.geilicdn.com/pcitem1508873863-1a460000019ddda05a480a2394a4_3024_4032.jpg",
@@ -349974,20 +349683,6 @@
         "price": 29500,
         "addTime": "2026-05-02",
         "stock": 28,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "1855791635417850334640",
-        "itemName": "【现货】AC*NE石墨色宽松长袖T 胸口字母口袋 基础百搭耐穿款",
-        "image": "https://si.geilicdn.com/pcitem1508873863-2d550000019c2208bef70a8133cc_1276_1702.jpg",
-        "price": 22900,
-        "addTime": "2026-05-02",
-        "stock": 33,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -352303,9 +351998,9 @@
         "image": "https://si.geilicdn.com/wdseller1524730039-13f60000019d28f0fd040a230246_3960_4923.jpg",
         "price": 100,
         "addTime": "2021-08-03",
-        "stock": 99606,
-        "soldText": "118032",
-        "soldNum": 118032,
+        "stock": 99605,
+        "soldText": "118033",
+        "soldNum": 118033,
         "originalPrice": 0,
         "itemTag": [
           {
@@ -352322,7 +352017,7 @@
         "image": "https://si.geilicdn.com/wdseller1524730039-1fc80000019d6fe9928c0a2315ef_1320_1760.jpg",
         "price": 23800,
         "addTime": "2026-06-22",
-        "stock": 67,
+        "stock": 65,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -352850,9 +352545,9 @@
         "image": "https://si.geilicdn.com/wdseller1258568610-138b0000019e36333c6e0a20e7c7_1320_1762.jpg",
         "price": 9900,
         "addTime": "2026-05-28",
-        "stock": 121,
-        "soldText": "493",
-        "soldNum": 493,
+        "stock": 120,
+        "soldText": "494",
+        "soldNum": 494,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -352878,9 +352573,9 @@
         "image": "https://si.geilicdn.com/wdseller1258568610-52da0000019e36769ba00a231177_1320_1320.jpg",
         "price": 9900,
         "addTime": "2026-05-28",
-        "stock": 31,
-        "soldText": "424",
-        "soldNum": 424,
+        "stock": 30,
+        "soldText": "425",
+        "soldNum": 425,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -353149,9 +352844,9 @@
         "image": "https://si.geilicdn.com/wdseller1258568610-49640000019e364872110a23038e_1016_1221.jpg",
         "price": 9900,
         "addTime": "2026-05-28",
-        "stock": 72,
-        "soldText": "158",
-        "soldNum": 158,
+        "stock": 71,
+        "soldText": "159",
+        "soldNum": 159,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -353225,8 +352920,8 @@
         "price": 9900,
         "addTime": "2026-07-08",
         "stock": 125,
-        "soldText": "114",
-        "soldNum": 114,
+        "soldText": "115",
+        "soldNum": 115,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -353483,9 +353178,9 @@
         "image": "https://si.geilicdn.com/wdseller1258568610-28d10000019e377244aa0a81347d_900_1100.jpg",
         "price": 9900,
         "addTime": "2026-07-15",
-        "stock": 171,
-        "soldText": "39",
-        "soldNum": 39,
+        "stock": 170,
+        "soldText": "40",
+        "soldNum": 40,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -354172,7 +353867,7 @@
         "image": "https://si.geilicdn.com/pcitem1961500673-5dd20000019dcd8ab7810a23041a_1024_1024.jpg",
         "price": 13800,
         "addTime": "2026-04-27",
-        "stock": 50,
+        "stock": 49,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -354977,7 +354672,7 @@
         "image": "https://si.geilicdn.com/wdseller1627819857-73be0000018878c22fb00a2102d0_1125_1125.jpg",
         "price": 48500,
         "addTime": "2026-03-02",
-        "stock": 131958,
+        "stock": 131957,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -355014,6 +354709,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7672247652",
+        "itemName": "jimmy经典细钻高跟 最新链接 市面最高随意对比",
+        "image": "https://si.geilicdn.com/wdseller1627819857-60180000019bdf7a25c90a8133cc_1280_1280.jpg",
+        "price": 45500,
+        "addTime": "2026-03-02",
+        "stock": 35263,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7570639413",
         "itemName": "红底皮鞋男士皮鞋合集 因为被大家问的太多所以一下功夫找工厂了1.**包装礼盒送人合适 和市面上所有的盒子都不一样，绝对有面子2.▪️无论是楦型、面料、钻、钉、内里、大底、都尽可能的接近zp",
         "image": "https://si.geilicdn.com/wdseller1627819857-137c0000019900f7000e0a2304aa_1126_1500.jpg",
@@ -355042,20 +354751,6 @@
         "hasSku": true
       },
       {
-        "itemId": "7672247652",
-        "itemName": "jimmy经典细钻高跟 最新链接 市面最高随意对比",
-        "image": "https://si.geilicdn.com/wdseller1627819857-60180000019bdf7a25c90a8133cc_1280_1280.jpg",
-        "price": 45500,
-        "addTime": "2026-03-02",
-        "stock": 35264,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
         "itemId": "7283418222",
         "itemName": "miu乐福2024代购级别看图看实拍 支持正品对比 有比这个做的好的白送",
         "image": "https://si.geilicdn.com/wdseller1627819857-6f9100000199b4cf9c440a2303ee_1124_1414.jpg",
@@ -355075,7 +354770,7 @@
         "image": "https://si.geilicdn.com/wdseller1627819857-59fd0000019f9122ab790a230115_1320_1320.jpg",
         "price": 46500,
         "addTime": "2026-03-02",
-        "stock": 2641146,
+        "stock": 2641145,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -362691,6 +362386,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7812114039",
+        "itemName": "d家拖鞋 全网最高随意对比 ！支持zp对比 ！全网细节最顶的电绣 ！不定时涨价.因为目前这款咱家口碑太好有大批量私人订单工人忙不过来要加班人工费 d家",
+        "image": "https://si.geilicdn.com/wdseller1627819857-52810000019f95523ae60a20e273_1320_1320.jpg",
+        "price": 46500,
+        "addTime": "2026-07-24",
+        "stock": 384881,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7782493456",
         "itemName": "d家DI*R 2026春夏胶囊系列立体刺绣度假字母拖〰️美爆的全新系列，暴走利器🎶原版开发 全系列发售‼️配最新2026顶级全套包装 材质：鞋面对版、对色、对料，原版高精密度立体刺绣工艺➕真皮大底",
         "image": "https://si.geilicdn.com/wdseller1627819857-450d0000019e8dd55f4d0a23037f_1126_1500.jpg",
@@ -364875,6 +364589,25 @@
         "hasSku": true
       },
       {
+        "itemId": "7813569212",
+        "itemName": "H家拖鞋女天花板 保证真皮大底 工人纯手工做的有点慢请谅解 介意勿拍 好货不怕等 市面最高随意对比！不怕你不买就怕你不比！",
+        "image": "https://si.geilicdn.com/wdseller1627819857-007f0000019c001f98b40a2302e6_3234_3630.jpg",
+        "price": 50600,
+        "addTime": "2026-07-22",
+        "stock": 226029,
+        "soldText": "",
+        "soldNum": 0,
+        "originalPrice": 0,
+        "itemTag": [
+          {
+            "tagTitle": "新品",
+            "tagType": 5
+          }
+        ],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7808684079",
         "itemName": "ggdb男士专区配色GGDB经典韩国星星复古做旧\n情侣款休闲小白鞋脏脏鞋\n标志性星星辨识度拉满\n手工做旧复古质感\n情侣款百搭小白鞋\n意大利匠心手工打造\n软弹鞋垫暴走也不累",
         "image": "https://si.geilicdn.com/wdseller1627819857-0ca00000019f7579ce460a239646_1206_1456.jpg",
@@ -365128,25 +364861,6 @@
         "soldNum": 0,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7812114039",
-        "itemName": "d家拖鞋 全网最高随意对比 ！支持zp对比 ！全网细节最顶的电绣 ！不定时涨价.因为目前这款咱家口碑太好有大批量私人订单工人忙不过来要加班人工费 d家",
-        "image": "https://si.geilicdn.com/wdseller1627819857-52810000019f95523ae60a20e273_1320_1320.jpg",
-        "price": 46500,
-        "addTime": "2026-07-24",
-        "stock": 384883,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -366118,25 +365832,6 @@
         "soldNum": 0,
         "originalPrice": 0,
         "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7813569212",
-        "itemName": "H家拖鞋女天花板 保证真皮大底 工人纯手工做的有点慢请谅解 介意勿拍 好货不怕等 市面最高随意对比！不怕你不买就怕你不比！",
-        "image": "https://si.geilicdn.com/wdseller1627819857-007f0000019c001f98b40a2302e6_3234_3630.jpg",
-        "price": 50600,
-        "addTime": "2026-07-22",
-        "stock": 226030,
-        "soldText": "",
-        "soldNum": 0,
-        "originalPrice": 0,
-        "itemTag": [
-          {
-            "tagTitle": "新品",
-            "tagType": 5
-          }
-        ],
         "preSale": false,
         "hasSku": true
       },
@@ -384481,7 +384176,7 @@
         "image": "https://si.geilicdn.com/wdseller1390148631-68ee000001955f5d1d3a0a20e273_1290_1270.jpg",
         "price": 20000,
         "addTime": "2026-06-12",
-        "stock": 13,
+        "stock": 12,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -384692,7 +384387,7 @@
         "image": "https://si.geilicdn.com/wdseller1390148631-4219000001985421ea7d0a20e672_1179_1376.jpg",
         "price": 140000,
         "addTime": "2026-06-12",
-        "stock": 7,
+        "stock": 6,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -429204,7 +428899,7 @@
         "image": "https://si.geilicdn.com/wdseller1699719226-0bf50000019f69b436100a231316_1260_1243.jpg",
         "price": 18800,
         "addTime": "2026-07-24",
-        "stock": 31,
+        "stock": 35,
         "soldText": "165",
         "soldNum": 165,
         "originalPrice": 0,
@@ -429691,11 +429386,16 @@
         "image": "https://si.geilicdn.com/pcitem1660599255-497b0000019f526c3e780a2303ee-unadjust_870_792.png",
         "price": 4990,
         "addTime": "2026-07-16",
-        "stock": 6,
+        "stock": 4,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
-        "itemTag": [],
+        "itemTag": [
+          {
+            "tagTitle": "库存紧张",
+            "tagType": 4
+          }
+        ],
         "preSale": false,
         "hasSku": true
       },
@@ -432570,7 +432270,7 @@
         "image": "https://si.geilicdn.com/wdseller901854283271-39160000019c5f3bdd3e0a23041a_1179_1560.jpg",
         "price": 109900,
         "addTime": "2026-02-15",
-        "stock": 9,
+        "stock": 8,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
@@ -433151,6 +432851,20 @@
         "hasSku": true
       },
       {
+        "itemId": "7626196142",
+        "itemName": "两件95折四件9折/补货2.0版本/小马白色圆领绞花/面料升级/40S精梳棉/百灵达刺绣/6×6阿兰绞花",
+        "image": "https://si.geilicdn.com/wdseller1438793263-58300000019ade9c72e60a23c191_1320_890.jpg",
+        "price": 14800,
+        "addTime": "2025-12-02",
+        "stock": 121,
+        "soldText": "49",
+        "soldNum": 49,
+        "originalPrice": 0,
+        "itemTag": [],
+        "preSale": false,
+        "hasSku": true
+      },
+      {
         "itemId": "7782725311",
         "itemName": "夏季口粮款/gyms  ARRIVAL 5 SHORTS/75D380T高密度平纹/运动速干短裤/可调节抽绳",
         "image": "https://si.geilicdn.com/wdseller1438793263-46560000019eabe354df0a207569_1320_1270.jpg",
@@ -433173,20 +432887,6 @@
         "stock": 11,
         "soldText": "49",
         "soldNum": 49,
-        "originalPrice": 0,
-        "itemTag": [],
-        "preSale": false,
-        "hasSku": true
-      },
-      {
-        "itemId": "7626196142",
-        "itemName": "两件95折四件9折/补货2.0版本/小马白色圆领绞花/面料升级/40S精梳棉/百灵达刺绣/6×6阿兰绞花",
-        "image": "https://si.geilicdn.com/wdseller1438793263-58300000019ade9c72e60a23c191_1320_890.jpg",
-        "price": 14800,
-        "addTime": "2025-12-02",
-        "stock": 122,
-        "soldText": "48",
-        "soldNum": 48,
         "originalPrice": 0,
         "itemTag": [],
         "preSale": false,
@@ -440645,7 +440345,7 @@
         "image": "https://si.geilicdn.com/weidian1438984764-08830000019f60d9667f0a22d535_800_800.jpg",
         "price": 14900,
         "addTime": "2026-07-17",
-        "stock": 290,
+        "stock": 289,
         "soldText": "67",
         "soldNum": 67,
         "originalPrice": 24900,
@@ -440857,7 +440557,7 @@
         "image": "https://si.geilicdn.com/wdseller1674796402-628e0000019ebbe6a6cf0a811411_1080_1080.jpg",
         "price": 66800,
         "addTime": "2026-06-16",
-        "stock": 43,
+        "stock": 44,
         "soldText": "",
         "soldNum": 0,
         "originalPrice": 0,
