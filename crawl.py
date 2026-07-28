@@ -215,6 +215,11 @@ def norm_item(it):
         "itemTag": it.get("itemTag") or [],
         "preSale": bool(it.get("preSale")),
         "hasSku": bool(it.get("hasSku")),
+        "status": it.get("status"),
+        "freeShip": any(
+            (t.get("tagTitle") == "包邮") for t in (it.get("itemTag") or [])
+        ),
+        "itemComment": it.get("itemComment") or "",
     }
 
 

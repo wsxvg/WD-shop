@@ -75,8 +75,18 @@
   .sentinel{height:1px;}
   /* 商品卡片升级 */
   .pimg-wrap{position:relative;overflow:hidden;}
-  .pbadge-discount{position:absolute;top:8px;left:0;background:var(--brand);color:#fff;
-    font-size:11px;font-weight:700;padding:2px 8px;border-radius:0 8px 8px 0;}
+  .pbadges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;
+    gap:4px;align-items:flex-start;pointer-events:none;}
+  .pbadge-discount,.pbadge-freeship,.pbadge-new{
+    font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;color:#fff;line-height:1.5;}
+  .pbadge-discount{background:var(--brand);}
+  .pbadge-freeship{background:#07c160;}
+  .pbadge-new{background:#ff8f1f;}
+  .pcard.soldout{filter:grayscale(.85);opacity:.62;}
+  .pcard.soldout:hover{filter:grayscale(.55);opacity:.85;}
+  .pbadge-soldout{position:absolute;top:8px;right:8px;background:rgba(31,35,41,.8);color:#fff;
+    font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px;letter-spacing:1px;
+    backdrop-filter:blur(2px);}
   .pprice-row{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
   .pprice{color:var(--brand);font-weight:700;font-size:16px;}
   .pprice-original{font-size:12px;color:var(--sub);text-decoration:line-through;}
@@ -181,6 +191,8 @@
       <input type="number" id="pMin" placeholder="最低" min="0" style="width:100px">
       <label class="lbl">~ ¥</label>
       <input type="number" id="pMax" placeholder="最高" min="0" style="width:100px">
+      <label class="toggle"><input type="checkbox" id="pHideSold"> 隐藏售罄</label>
+      <label class="toggle"><input type="checkbox" id="pFreeShip"> 仅包邮</label>
     </div>
     <div class="row" id="priceBtns" style="padding-top:4px">
       <span class="pbtn active" data-min="" data-max="">全部</span>
@@ -205,6 +217,7 @@ if (TOKEN_EXPIRED) {
 }
 const SHOPS = [];  // 数据将通过 fetch 异步加载
 const PRODUCTS = [];
+let TOTAL_SOLD = 0;  // 全量已售罄商品数
 // 品类快速筛选
 const CATE_RULES = [
   { name: '短袖', kws: ['短袖','t恤','tee','体恤','短t'], exclude: ['长袖','长t'] },
@@ -252,6 +265,16 @@ const fmtRate = r => (r==null?0:(r*100).toFixed(2)) + '%';
 const fmtPrice = p => '¥' + ((p==null?0:p)/100).toLocaleString('zh-CN',{maximumFractionDigits:((p/100)%1)?2:0});
 const itemUrl = it => 'https://weidian.com/item.html?itemID=' + it.itemId;
 const fmtDate = ts => ts? new Date(ts).toISOString().slice(0,10):'';
+// 上架天数：支持已归一化的 "YYYY-MM-DD" 字符串或毫秒时间戳
+const daysSince = v => {
+  if (v == null || v === '') return null;
+  let ms;
+  if (typeof v === 'number') ms = v > 1e12 ? v : v * 1000;
+  else if (/^\d{4}-\d{2}-\d{2}$/.test(v)) ms = new Date(v + 'T00:00:00').getTime();
+  else return null;
+  if (isNaN(ms)) return null;
+  return Math.max(0, Math.floor((Date.now() - ms) / 86400000));
+};
 
 const grid=document.getElementById('grid');
 const empty=document.getElementById('empty');
@@ -306,16 +329,28 @@ function shopCard(d){
 }
 
 function productCard(p){
+  const off = (p.status||1) !== 1;            // 已下架/失效（getItemList 一般不返回，做前向兼容）
+  const soldout = !off && (p.stock||0) === 0;
+  const invalid = off || soldout;
   const tags = (p.itemTag||[]).map(t => `<span class="ptag">${t.tagTitle||''}</span>`).join('');
   const hasOrig = p.originalPrice && p.originalPrice > p.price;
   const discount = hasOrig ? Math.round((1 - p.price/p.originalPrice) * 100) : 0;
-  const meta = [p.soldText, p.stock ? `库存 ${p.stock}` : ''].filter(Boolean).join(' · ');
-  return `<a class="pcard" href="${itemUrl(p)}" target="_blank" rel="noopener">
+  const days = daysSince(p.addTime);
+  const isNew = days != null && days <= 14;
+  const stockText = off ? '已下架' : (soldout ? '已售罄' : (p.stock ? `库存 ${p.stock}` : ''));
+  const meta = [p.soldText, stockText, (days != null ? `在售${days}天` : '')].filter(Boolean).join(' · ');
+  return `<a class="pcard${invalid?' soldout':''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
       <img class="pimg" src="${p.image||''}" loading="lazy" decoding="async"
         onload="this.classList.add('loaded')"
         onerror="this.style.background='#eef0f3';this.classList.add('loaded')">
-      ${discount ? `<span class="pbadge-discount">-${discount}%</span>` : ''}
+      <div class="pbadges">
+        ${discount ? `<span class="pbadge-discount">-${discount}%</span>` : ''}
+        ${p.freeShip ? `<span class="pbadge-freeship">包邮</span>` : ''}
+        ${isNew ? `<span class="pbadge-new">新上架</span>` : ''}
+      </div>
+      ${off ? `<span class="pbadge-soldout">已下架</span>`
+            : (soldout ? `<span class="pbadge-soldout">已售罄</span>` : '')}
     </div>
     <div class="pbody">
       <div class="pname">${p.itemName||''}</div>
@@ -363,8 +398,12 @@ function renderProduct(reset){
     const min=parseFloat(document.getElementById('pMin').value)||0;
     const max=parseFloat(document.getElementById('pMax').value)||Infinity;
     const sort=document.getElementById('pSort').value;
+    const hideSold=document.getElementById('pHideSold').checked;
+    const freeShip=document.getElementById('pFreeShip').checked;
     const cate = document.querySelector('#cateBtns .cate-btn.active')?.dataset.cate || '';
     pAll=PRODUCTS.filter(p=>{
+      if(hideSold&&(p.stock||0)===0)return false;
+      if(freeShip&&!p.freeShip)return false;
       if(mid&&String(p.shopId)!==mid)return false;
       if((p.priceYuan||0)<min)return false;
       if((p.priceYuan||0)>max)return false;
@@ -385,7 +424,7 @@ function renderProduct(reset){
   grid.insertAdjacentHTML('beforeend', batch.map(productCard).join(''));
   pShown+=batch.length;
   empty.classList.toggle('hide', pAll.length>0);
-  visStat.textContent=`显示 ${Math.min(pShown,pAll.length)} / ${pAll.length} 件商品`;
+  visStat.textContent=`显示 ${Math.min(pShown,pAll.length)} / ${pAll.length} 件商品${TOTAL_SOLD?` · 已售罄 ${fmtNum(TOTAL_SOLD)}`:''}`;
   sentinel.classList.toggle('hide', pShown>=pAll.length || view!=='product');
 }
 
@@ -440,7 +479,7 @@ document.querySelectorAll('.tab').forEach(t=>{
   document.getElementById(id).addEventListener('input',()=>view==='shop'&&render());
   document.getElementById(id).addEventListener('change',()=>view==='shop'&&render());
 });
-['pSearch','pMerchant','pSort','pMin','pMax'].forEach(id=>{
+['pSearch','pMerchant','pSort','pMin','pMax','pHideSold','pFreeShip'].forEach(id=>{
   document.getElementById(id).addEventListener('input',()=>view==='product'&&render());
   document.getElementById(id).addEventListener('change',()=>view==='product'&&render());
 });
@@ -487,9 +526,11 @@ document.getElementById('cateBtns').addEventListener('click', e => {
         price: p.p, priceYuan: (p.p || 0) / 100, addTime: p.t || '',
         stock: p.k || 0, soldText: p.d || '', soldNum: p.u || 0,
         originalPrice: p.o || 0, itemTag: p.a || [],
-        preSale: p.r || false, hasSku: p.h || false
+        preSale: p.r || false, hasSku: p.h || false,
+        status: p.m || 1, freeShip: !!p.f, comment: p.c || ''
       });
     });
+    TOTAL_SOLD = PRODUCTS.reduce((a, p) => a + ((p.stock || 0) === 0 ? 1 : 0), 0);
   }
 
   try {

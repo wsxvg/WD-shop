@@ -554,6 +554,9 @@ def main():
                 "a": it.get("itemTag", []),
                 "r": it.get("preSale", False),
                 "h": it.get("hasSku", False),
+                "f": it.get("freeShip", False),
+                "m": it.get("status", 1),
+                "c": it.get("itemComment", ""),
             })
     # shops_products — 按 7000 件/块分段，首块秒出，其余后台排队
     CHUNK = 7000
