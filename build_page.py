@@ -4,6 +4,7 @@
 - shops_index.json（店铺元数据，~50KB，秒开）
 - shops_products.json（全量商品，扁平化，~5MB，后台加载）
 - shops_data.json（旧格式，保留兼容）"""
+import glob
 import json
 import os
 import time
@@ -505,30 +506,26 @@ document.getElementById('cateBtns').addEventListener('click', e => {
 def main():
     data = load_data()
     data_path = os.path.join(HERE, "data", "shops_data.json")
-    # 读取 token 状态，决定是否显示过期提示
+    # status.json：token 状态沿用 crawl 的写入，但店铺/商品数从本次数据重新统计，
+    # 避免与实际数据不一致（此前曾出现 status 159/27687 而实际 165/18472）
     expired = False
     status_path = os.path.join(HERE, "data", "status.json")
+    st = {}
     if os.path.exists(status_path):
         try:
             st = json.load(open(status_path, encoding="utf-8"))
-            expired = bool(st.get("token_expired"))
+            if not isinstance(st, dict):
+                st = {}
         except Exception:
-            pass
-    # 更新 status.json 用于页面端读取 token 状态
-    if os.path.exists(status_path):
-        try:
-            st = json.load(open(status_path, encoding="utf-8"))
-            st["build_time"] = int(time.time())
-            with open(status_path, "w", encoding="utf-8") as f:
-                json.dump(st, f, ensure_ascii=False, indent=2)
-        except Exception:
-            pass
+            st = {}
+    expired = bool(st.get("token_expired"))
 
     # 拆分数据：店铺索引（不含商品）+ 商品数据，实现秒开
     # shops_index.json — 店铺元数据（~50KB），页面秒开
     idx = []
     for s in data:
         sc = dict(s)
+        sc["itemCount"] = len(s.get("items") or [])  # 页面「查看全部 N 件商品」用
         sc["items"] = []  # 不嵌入商品，仅保留店铺信息
         idx.append(sc)
     idx_path = os.path.join(HERE, "data", "shops_index.json")
@@ -562,6 +559,11 @@ def main():
     CHUNK = 7000
     total_prods = len(products)
     n_chunks = (total_prods + CHUNK - 1) // CHUNK
+    # 先清掉所有旧分块：分块数变少时（如 4 块 → 3 块）残留的旧文件会被页面
+    # 的「fetch 到 404 为止」逻辑加载，混入上万件过期幽灵商品
+    for old in glob.glob(os.path.join(HERE, "data", "shops_products_*.json")):
+        os.remove(old)
+        print(f"  [clean] 删除旧分块 {os.path.basename(old)}")
     for ci in range(n_chunks):
         chunk = products[ci*CHUNK : (ci+1)*CHUNK]
         cp = os.path.join(HERE, f"data/shops_products_{ci}.json")
@@ -580,6 +582,15 @@ def main():
         json.dump(data, f, ensure_ascii=False)
 
     n_items = sum(1 for d in data if d.get("items"))
+    # 回写 status.json：店铺/商品数与本次数据保持一致
+    st["shops"] = len(data)
+    st["products"] = total_prods
+    st.setdefault("token_expired", False)
+    st.setdefault("token_source", "none")
+    st.setdefault("updated_at", "")
+    st["build_time"] = int(time.time())
+    with open(status_path, "w", encoding="utf-8") as f:
+        json.dump(st, f, ensure_ascii=False, indent=2)
     print(f"shops: {len(data)} with items: {n_items} products: {total_prods}")
     print("token 提示:", "已过期（页面将显示提示）" if expired else "正常")
 

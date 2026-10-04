@@ -4,5 +4,7 @@ data/context.json
 
 # 运行日志 / 缓存
 crawl.log
+crawl_run.log
 __pycache__/
 *.pyc
+.playwright-mcp/

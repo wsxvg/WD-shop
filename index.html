@@ -104,6 +104,34 @@
     background:var(--card);cursor:pointer;color:var(--sub);user-select:none;transition:all .15s;white-space:nowrap;}
   .cate-btn:hover{border-color:var(--brand);color:var(--brand);}
   .cate-btn.active{background:var(--text);color:#fff;border-color:var(--text);font-weight:600;}
+  /* 屏蔽 */
+  .block-link{font-size:12px;color:var(--sub);cursor:pointer;font-weight:600;user-select:none;}
+  .block-link:hover{color:var(--brand);}
+  .pmerchant .block-link{font-size:11px;margin-left:2px;padding:0 3px;border-radius:4px;}
+  .pmerchant .block-link:hover{background:var(--brand-soft);}
+  #manageMask{position:fixed;inset:0;background:rgba(15,20,26,.45);display:flex;align-items:center;
+    justify-content:center;z-index:100;padding:16px;}
+  .manage-box{background:#fff;border-radius:16px;padding:18px;max-width:440px;width:100%;
+    max-height:75vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+  .manage-head{font-weight:700;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+  .manage-head .close{cursor:pointer;color:var(--sub);font-size:16px;padding:2px 6px;}
+  .manage-head .close:hover{color:var(--text);}
+  .manage-note{font-size:12px;color:var(--sub);background:#f6f7f9;border-radius:8px;padding:8px 10px;margin-bottom:10px;line-height:1.7;}
+  .manage-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+  .manage-item .mi-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .manage-item .mi-restore{color:var(--brand);cursor:pointer;font-size:12px;font-weight:600;flex:none;}
+  .manage-actions{margin-top:12px;display:flex;gap:8px;justify-content:flex-end;}
+  .manage-btn{display:inline-block;background:var(--brand-soft);color:var(--brand);font-size:12px;
+    font-weight:700;padding:3px 10px;border-radius:999px;cursor:pointer;vertical-align:middle;}
+  .manage-btn:hover{background:var(--brand);color:#fff;}
+  #toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:200;
+    background:var(--text);color:#fff;font-size:13px;padding:10px 14px;border-radius:10px;
+    box-shadow:0 8px 30px rgba(0,0,0,.3);display:flex;align-items:center;gap:12px;
+    max-width:90vw;opacity:0;pointer-events:none;transition:opacity .2s;}
+  #toast.show{opacity:1;pointer-events:auto;}
+  #toast .t-name{max-width:50vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;}
+  #toast .t-act{color:#7ee7a2;font-weight:700;cursor:pointer;flex:none;}
+  #toast .t-act:hover{text-decoration:underline;}
   /* 移动端优化 */
   @media (max-width:480px){
     .wrap{padding:12px 8px 40px;}
@@ -143,8 +171,11 @@
   <header>
     <h1>⭐ 我关注的微店</h1>
     <div class="stat">数据来自微店抓包全量爬取 · 共 <span class="count" id="total">0</span> 个店铺 ·
-      其中在售 <span class="count" id="withItems">0</span> 个 · 商品 <span class="count" id="totalItems">0</span> 件</div>
+      其中在售 <span class="count" id="withItems">0</span> 个 · 商品 <span class="count" id="totalItems">0</span> 件
+      <span id="updatedAt"></span></div>
   </header>
+
+  <div class="stat" id="blockBar" style="margin:-8px 0 14px">🚫 已隐藏 <span class="count" id="hiddenNum">0</span> 家 · <a id="manageLink" class="manage-btn">🛠 管理屏蔽 / 恢复</a></div>
 
   <div id="tokenWarn" class="banner hide">⚠️ Token 已过期，无法获取新关注店铺，请及时更新（已爬取的商品数据不受影响）</div>
 
@@ -210,11 +241,20 @@
   <div class="stat" id="visStat" style="margin-top:14px"></div>
 </div>
 
+<!-- 屏蔽管理面板 -->
+<div id="manageMask" class="hide">
+  <div class="manage-box">
+    <div class="manage-head">🚫 屏蔽管理 <span class="close" id="closeManage">✕</span></div>
+    <div class="manage-note" id="deadNote"></div>
+    <div id="manageList"></div>
+    <div class="manage-actions"><span class="pbtn" id="clearBlocked">清空手动屏蔽名单</span></div>
+  </div>
+</div>
+
+<!-- 屏蔽即时提示 -->
+<div id="toast"><span>已屏蔽</span><span class="t-name" id="toastName"></span><span class="t-act" id="toastUndo">↩ 撤销</span></div>
+
 <script>
-const TOKEN_EXPIRED = false;
-if (TOKEN_EXPIRED) {
-  document.getElementById('tokenWarn').classList.remove('hide');
-}
 const SHOPS = [];  // 数据将通过 fetch 异步加载
 const PRODUCTS = [];
 let TOTAL_SOLD = 0;  // 全量已售罄商品数
@@ -263,7 +303,7 @@ function tokenMatch(text, kw) {
 const fmtNum = n => (n==null?0:n).toLocaleString('zh-CN');
 const fmtRate = r => (r==null?0:(r*100).toFixed(2)) + '%';
 const fmtPrice = p => '¥' + ((p==null?0:p)/100).toLocaleString('zh-CN',{maximumFractionDigits:((p/100)%1)?2:0});
-const itemUrl = it => 'https://weidian.com/item.html?itemID=' + it.itemId;
+const itemUrl = it => 'https://weidian.com/item.html?itemID=' + encodeURIComponent(it.itemId||'');
 const fmtDate = ts => ts? new Date(ts).toISOString().slice(0,10):'';
 // 上架天数：支持已归一化的 "YYYY-MM-DD" 字符串或毫秒时间戳
 const daysSince = v => {
@@ -276,12 +316,104 @@ const daysSince = v => {
   return Math.max(0, Math.floor((Date.now() - ms) / 86400000));
 };
 
+// HTML 转义（店铺名/商品名可能含 < > & 等字符，防止渲染坏裂）
+const ESC_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ESC_MAP[c]);
+
+// ---- 店铺屏蔽（页面本地，localStorage 持久化）----
+const BLOCK_KEY = 'wd_blocked_shops';
+// 死店名称关键词（自动屏蔽，始终生效）
+const DEAD_NAME_RULES = ['注销','关闭','不再使用','已换新店','已更换新店','已更换至新店','暂停上新','停业'];
+let blocked = (() => {
+  try {
+    const raw = JSON.parse(localStorage.getItem(BLOCK_KEY) || '[]');
+    return Array.isArray(raw) ? raw.filter(x => x && x.shopId != null) : [];
+  } catch (e) { return []; }
+})();
+const blockedSet = new Set(blocked.map(x => String(x.shopId)));
+function saveBlocked() { try { localStorage.setItem(BLOCK_KEY, JSON.stringify(blocked)); } catch (e) {} }
+const isDeadShop = name => DEAD_NAME_RULES.some(k => String(name || '').includes(k));
+const shouldHideShop = s => !!s && (blockedSet.has(String(s.shopId)) || isDeadShop(s.name));
+const shouldHideProduct = p => !!p && (blockedSet.has(String(p.shopId)) || isDeadShop(p.shopName));
+const visibleShops = () => SHOPS.filter(s => !shouldHideShop(s));
+
+let toastTimer = null;
+let toastShopId = null;
+function showToast(name, id) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastName').textContent = name || id;
+  toastShopId = String(id);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 8000);
+}
+function blockShop(id, name) {
+  id = String(id);
+  if (blockedSet.has(id)) return;
+  blocked.push({ shopId: id, name: name || '' });
+  blockedSet.add(id);
+  saveBlocked(); onBlockChanged();
+  showToast(name, id);
+}
+document.getElementById('toastUndo').addEventListener('click', () => {
+  if (toastShopId) unblockShop(toastShopId);
+  toastShopId = null;
+  document.getElementById('toast').classList.remove('show');
+});
+function unblockShop(id) {
+  id = String(id);
+  blocked = blocked.filter(b => String(b.shopId) !== id);
+  blockedSet.delete(id);
+  saveBlocked(); onBlockChanged();
+}
+function clearBlockedList() {
+  blocked = []; blockedSet.clear();
+  try { localStorage.removeItem(BLOCK_KEY); } catch (e) {}
+  onBlockChanged();
+}
+function onBlockChanged() { rebuildMerchants(); updateStats(); render(); renderManageList(); }
+
+function rebuildMerchants() {
+  const pM = document.getElementById('pMerchant');
+  const cur = pM.value;
+  pM.innerHTML = '<option value="">全部商家</option>';
+  visibleShops().filter(s => s.hasShelfItems).forEach(s => {
+    const o = document.createElement('option'); o.value = s.shopId; o.textContent = s.name; pM.appendChild(o);
+  });
+  pM.value = [...pM.options].some(o => o.value === cur) ? cur : '';
+}
+
+function updateStats() {
+  const vs = visibleShops();
+  document.getElementById('total').textContent = SHOPS.length ? vs.length : 0;
+  document.getElementById('withItems').textContent = vs.filter(s => s.hasShelfItems).length;
+  document.getElementById('totalItems').textContent = PRODUCTS.length ? PRODUCTS.filter(p => !shouldHideProduct(p)).length : '...';
+  document.getElementById('hiddenNum').textContent = SHOPS.length - vs.length;
+  TOTAL_SOLD = PRODUCTS.reduce((a, p) => a + (!shouldHideProduct(p) && (p.stock || 0) === 0 ? 1 : 0), 0);
+}
+
+function renderManageList() {
+  const deadN = SHOPS.filter(s => isDeadShop(s.name)).length;
+  document.getElementById('deadNote').innerHTML =
+    `死店关键词自动屏蔽（始终生效）：<b>${DEAD_NAME_RULES.join(' / ')}</b><br>已按名称自动隐藏 ${deadN} 家 · 手动屏蔽 ${blocked.length} 家`;
+  document.getElementById('manageList').innerHTML = blocked.length
+    ? blocked.map(b => `<div class="manage-item"><span class="mi-name">${esc(b.name || b.shopId)}</span><span class="mi-restore" data-unblock="${esc(b.shopId)}">恢复</span></div>`).join('')
+    : '<div class="manage-item" style="color:var(--sub)">暂无手动屏蔽的店铺（点店铺卡片上的「屏蔽」即可加入）</div>';
+}
+
 const grid=document.getElementById('grid');
 const empty=document.getElementById('empty');
 const visStat=document.getElementById('visStat');
 document.getElementById('total').textContent=SHOPS.length;
 document.getElementById('withItems').textContent=SHOPS.filter(d=>d.hasShelfItems).length;
 document.getElementById('totalItems').textContent=PRODUCTS.length;
+// 屏蔽按钮事件委托（卡片重渲染后依然有效）
+grid.addEventListener('click', e => {
+  const b = e.target.closest('[data-block]');
+  if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  blockShop(b.dataset.block, b.dataset.name);
+});
 
 // 商品视角分批懒加载（避免一次性渲染上万张卡片卡死页面）
 const sentinel = document.getElementById('sentinel');
@@ -294,29 +426,27 @@ const io = new IntersectionObserver(es => {
 }, { rootMargin: '800px' });
 io.observe(sentinel);
 
-// 商家下拉
+// 商家下拉（数据加载后由 rebuildMerchants 填充）
 const pMerchant=document.getElementById('pMerchant');
-SHOPS.filter(s=>s.hasShelfItems).forEach(s=>{
-  const o=document.createElement('option');o.value=s.shopId;o.textContent=s.name;pMerchant.appendChild(o);
-});
 
 let view='product';
 
 function shopCard(d){
-  const cnt = (d.items||[]).length;
-  const btn = cnt ? `<span class="toggle-items" data-goshop="${d.shopId}">查看全部 ${cnt} 件商品 ›</span>` : '';
+  const cnt = d.itemCount != null ? d.itemCount : (d.items||[]).length;
+  const btn = cnt ? `<span class="toggle-items" data-goshop="${esc(d.shopId)}">查看全部 ${cnt} 件商品 ›</span>` : '';
   return `<div class="card">
     <div class="top">
-      <img class="avatar" src="${d.headImage||''}" loading="lazy" onerror="this.style.background='#eef0f3'">
+      <img class="avatar" src="${esc(d.headImage||'')}" loading="lazy" onerror="this.style.background='#eef0f3'">
       <div style="min-width:0;flex:1">
-        <div class="name">${d.name||'(未命名)'}</div>
-        <div class="sid">ID: ${d.shopId||''}</div>
+        <div class="name">${esc(d.name||'(未命名)')}</div>
+        <div class="sid">ID: ${esc(d.shopId||'')}</div>
       </div>
       ${d.focusFlag?'<span class="badge">特别关注</span>':''}
     </div>
     <div class="badges">
       ${d.hasShelfItems?'<span class="badge">有在售</span>':''}
       ${cnt?`<span class="badge" style="background:#eef0f3;color:#5a6068">在售 ${cnt}</span>`:''}
+      <span class="block-link" data-block="${esc(d.shopId)}" data-name="${esc(d.name||'')}">🚫 屏蔽</span>
     </div>
     <div class="metrics">
       <div>粉丝<b>${fmtNum(d.followCount)}</b></div>
@@ -332,7 +462,7 @@ function productCard(p){
   const off = (p.status||1) !== 1;            // 已下架/失效（getItemList 一般不返回，做前向兼容）
   const soldout = !off && (p.stock||0) === 0;
   const invalid = off || soldout;
-  const tags = (p.itemTag||[]).map(t => `<span class="ptag">${t.tagTitle||''}</span>`).join('');
+  const tags = (p.itemTag||[]).map(t => `<span class="ptag">${esc(t.tagTitle||'')}</span>`).join('');
   const hasOrig = p.originalPrice && p.originalPrice > p.price;
   const discount = hasOrig ? Math.round((1 - p.price/p.originalPrice) * 100) : 0;
   const days = daysSince(p.addTime);
@@ -341,7 +471,7 @@ function productCard(p){
   const meta = [p.soldText, stockText, (days != null ? `在售${days}天` : '')].filter(Boolean).join(' · ');
   return `<a class="pcard${invalid?' soldout':''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
-      <img class="pimg" src="${p.image||''}" loading="lazy" decoding="async"
+      <img class="pimg" src="${esc(p.image||'')}" loading="lazy" decoding="async"
         onload="this.classList.add('loaded')"
         onerror="this.style.background='#eef0f3';this.classList.add('loaded')">
       <div class="pbadges">
@@ -353,14 +483,14 @@ function productCard(p){
             : (soldout ? `<span class="pbadge-soldout">已售罄</span>` : '')}
     </div>
     <div class="pbody">
-      <div class="pname">${p.itemName||''}</div>
+      <div class="pname">${esc(p.itemName||'')}</div>
       <div class="pprice-row">
         <span class="pprice">${fmtPrice(p.price)}</span>
         ${hasOrig ? `<span class="pprice-original">${fmtPrice(p.originalPrice)}</span>` : ''}
       </div>
       ${meta ? `<div class="pmeta">${meta}</div>` : ''}
       ${tags ? `<div class="ptags">${tags}</div>` : ''}
-      <span class="pmerchant"><img src="${p.shopAvatar||''}" onerror="this.style.display='none'">${p.shopName||''}</span>
+      <span class="pmerchant"><img src="${esc(p.shopAvatar||'')}" onerror="this.style.display='none'">${esc(p.shopName||'')}<span class="block-link" data-block="${esc(p.shopId)}" data-name="${esc(p.shopName||'')}" title="屏蔽此店铺">🚫</span></span>
     </div>
   </a>`;
 }
@@ -372,6 +502,7 @@ function renderShop(){
   const minRate=parseFloat(document.getElementById('fMinRate').value)||0;
   const sort=document.getElementById('sort').value;
   let list=SHOPS.filter(d=>{
+    if(shouldHideShop(d))return false;
     if(onlyItems&&!d.hasShelfItems)return false;
     if((d.followCount||0)<minFans)return false;
     if((d.turningRate||0)<minRate)return false;
@@ -388,7 +519,7 @@ function renderShop(){
   list.sort(sorters[sort]||sorters.followTime);
   grid.innerHTML=list.map(shopCard).join('');
   bindToggles();
-  finish(list.length,SHOPS.length,'个店铺');
+  finish(list.length,visibleShops().length,'个店铺');
 }
 
 function renderProduct(reset){
@@ -402,6 +533,7 @@ function renderProduct(reset){
     const freeShip=document.getElementById('pFreeShip').checked;
     const cate = document.querySelector('#cateBtns .cate-btn.active')?.dataset.cate || '';
     pAll=PRODUCTS.filter(p=>{
+      if(shouldHideProduct(p))return false;
       if(hideSold&&(p.stock||0)===0)return false;
       if(freeShip&&!p.freeShip)return false;
       if(mid&&String(p.shopId)!==mid)return false;
@@ -502,11 +634,30 @@ document.getElementById('cateBtns').addEventListener('click', e => {
   if (view === 'product') render();
 });
 
+// 屏蔽管理面板
+document.getElementById('manageLink').addEventListener('click', () => {
+  renderManageList();
+  document.getElementById('manageMask').classList.remove('hide');
+});
+document.getElementById('closeManage').addEventListener('click', () => {
+  document.getElementById('manageMask').classList.add('hide');
+});
+document.getElementById('manageMask').addEventListener('click', e => {
+  if (e.target.id === 'manageMask') e.target.classList.add('hide');
+});
+document.getElementById('manageList').addEventListener('click', e => {
+  const u = e.target.closest('[data-unblock]');
+  if (u) unblockShop(u.dataset.unblock);
+});
+document.getElementById('clearBlocked').addEventListener('click', () => {
+  if (blocked.length && confirm(`清空 ${blocked.length} 家手动屏蔽的店铺？`)) clearBlockedList();
+});
+
 // 异步加载数据：店铺索引秒开 → 商品分块首块秒出 → 其余后台排队
 (async () => {
   grid.innerHTML = '<div class="empty">⏳ 加载店铺数据...</div>';
   const start = performance.now();
-  const VER = 'v=2';
+  const VER = 'v=3';
   const TIMEOUT = 30000; // 单块超时30秒
   const shopMap = {};
 
@@ -516,6 +667,19 @@ document.getElementById('cateBtns').addEventListener('click', e => {
     try { return await fetch(url, { signal: ctrl.signal }); }
     finally { clearTimeout(timer); }
   }
+
+  // token 状态 / 数据更新时间（status.json）
+  try {
+    const sr = await fetchWithTimeout('data/status.json?' + VER);
+    if (sr.ok) {
+      const stt = await sr.json();
+      if (stt.token_expired) document.getElementById('tokenWarn').classList.remove('hide');
+      if (stt.updated_at) {
+        const dd = new Date(stt.updated_at);
+        if (!isNaN(dd)) document.getElementById('updatedAt').textContent = '· 数据更新于 ' + dd.toLocaleString('zh-CN', { hour12: false });
+      }
+    }
+  } catch (e) {}
 
   function addProducts(raw) {
     raw.forEach(p => {
@@ -540,15 +704,9 @@ document.getElementById('cateBtns').addEventListener('click', e => {
     const idx = await idxResp.json();
     SHOPS.push(...idx);
     SHOPS.forEach(s => { shopMap[s.shopId] = s; });
-    // 立即显示店铺统计
-    document.getElementById('total').textContent = SHOPS.length;
-    document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
-    document.getElementById('totalItems').textContent = '...';
-    const pM = document.getElementById('pMerchant');
-    pM.innerHTML = '<option value="">全部商家</option>';
-    SHOPS.filter(s => s.hasShelfItems).forEach(s => {
-      const o = document.createElement('option'); o.value = s.shopId; o.textContent = s.name; pM.appendChild(o);
-    });
+    // 立即显示店铺统计（含死店/屏蔽过滤）
+    rebuildMerchants();
+    updateStats();
     console.log(`店铺索引 ${(performance.now()-start).toFixed(0)}ms，${SHOPS.length} 店`);
 
     // 第二步：加载第一块商品（~2MB），立即渲染
@@ -558,7 +716,7 @@ document.getElementById('cateBtns').addEventListener('click', e => {
     const r0 = await c0.json();
     addProducts(r0);
     console.log(`首块 ${(performance.now()-start).toFixed(0)}ms · ${r0.length} 件 → 总${PRODUCTS.length}件`);
-    document.getElementById('totalItems').textContent = PRODUCTS.length;
+    updateStats();
     render();
 
     // 第三步：后台排队加载剩余块
@@ -572,9 +730,9 @@ document.getElementById('cateBtns').addEventListener('click', e => {
           const raw = await resp.json();
           addProducts(raw);
           console.log(`块${ci} ${(performance.now()-start).toFixed(0)}ms · +${raw.length} 件 → 总${PRODUCTS.length}件`);
-          document.getElementById('totalItems').textContent = PRODUCTS.length;
-          // 如果在商品视图且当前滚动可见，静默刷新
-          if (window.view === 'product') render();
+          updateStats();
+          // 如果在商品视图，静默刷新（注意：此处必须用词法作用域的 view，window.view 恒为 undefined）
+          if (view === 'product') render();
           ci++;
         } catch (e) { break; }
       }
@@ -597,9 +755,8 @@ document.getElementById('cateBtns').addEventListener('click', e => {
         originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
         preSale:it.preSale||false, hasSku:it.hasSku||false
       }); }); });
-      document.getElementById('total').textContent = SHOPS.length;
-      document.getElementById('withItems').textContent = SHOPS.filter(s => s.hasShelfItems).length;
-      document.getElementById('totalItems').textContent = PRODUCTS.length;
+      rebuildMerchants();
+      updateStats();
       render();
     } catch (e2) {
       grid.innerHTML = `<div class="empty">数据加载失败<br><small>${e2.message}</small><br><br><button onclick="location.reload()" style="padding:8px 24px;background:#4a6cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">🔄 重试</button></div>`;
