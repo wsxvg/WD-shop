@@ -468,7 +468,7 @@ function productCard(p){
   const days = daysSince(p.addTime);
   const isNew = days != null && days <= 14;
   const stockText = off ? '已下架' : (soldout ? '已售罄' : (p.stock ? `库存 ${p.stock}` : ''));
-  const meta = [p.soldText, stockText, (days != null ? `在售${days}天` : '')].filter(Boolean).join(' · ');
+  const meta = [(p.soldText ? `已售${p.soldText}` : ''), stockText, (days != null ? `在售${days}天` : '')].filter(Boolean).join(' · ');
   return `<a class="pcard${invalid?' soldout':''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
       <img class="pimg" src="${esc(p.image||'')}" loading="lazy" decoding="async"

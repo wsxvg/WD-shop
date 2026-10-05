@@ -225,7 +225,11 @@ def norm_item(it):
 
 def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_pages=50):
     """用 decorate.shopDetail.tab.getItemList 分页拉取某店铺全部在售商品。
-    limit=100（API 不支持 >100）；max_pages=50 防止 API 死循环。"""
+    limit=100（API 不支持 >100）；max_pages=50 防止 API 死循环。
+    返回 (items, state)：
+      state=True  确定结果（API 正常应答；items 可能为空 = 真的无在售）
+      state=False 失败（异常/业务错误，结果不可信，应重试）
+      state=None  不确定（首页静默空，无法区分限频与全下架，需元数据辅助判断）"""
     items = []
     offset = 0
     page_count = 0
@@ -233,7 +237,7 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_page
         page_count += 1
         if page_count > max_pages:
             print(f"    shop {shop_id} 翻页 {max_pages} 次仍无结束信号，强制停止")
-            return items
+            return items, True
         param = {"shopId": str(shop_id), "tabId": 0, "sortOrder": "desc",
                  "offset": offset, "limit": limit, "from": "wdplus",
                  "showItemTag": True}
@@ -241,21 +245,21 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_page
             d = call_api_get(context, "shopDetail.tab.getItemList/1.0", param, headers)
         except Exception as e:
             print(f"    shop {shop_id} 请求异常: {type(e).__name__}: {e}")
-            return items
+            return items, False
         st = d.get("status", {}).get("code")
         res = d.get("result")
         if st != 0 or not isinstance(res, dict):
             print(f"    shop {shop_id} 业务错误: code={st}, res_type={type(res).__name__}")
-            return items
+            return items, False
         lst = res.get("itemList", [])
         if offset == 0 and len(lst) == 0 and not res.get("hasData", False):
-            return items  # 首页静默空 → 限频
+            return [], None  # 首页静默空 → 限频或全下架，不确定
         items.extend(lst)
         if len(lst) < limit or not res.get("hasData", False):
             break
         offset += limit
         time.sleep(1.0)  # 翻页间隔（降频）
-    return items
+    return items, True
 
 
 def save_progress(shops, out):
@@ -300,6 +304,16 @@ def main():
 
     token_ok = fresh is not None
 
+    # 历史数据兜底：token 有效时 by_id 来自 API（不含 items 字段），
+    # 若某店因限频/异常没爬到，必须保留历史商品，否则会被误判为"无在售"清空
+    hist_map = {}
+    if os.path.exists(OUT):
+        try:
+            with open(OUT, "r", encoding="utf-8") as f:
+                hist_map = {r["shopId"]: r for r in json.load(f) if "shopId" in r}
+        except Exception as ex:
+            print("  [warn] 读取历史数据失败:", ex)
+
     # 阶段3：决定店铺名单
     if token_ok:
         shops_all, with_items = fresh
@@ -311,8 +325,16 @@ def main():
                 shelf_ids.add(sid)
                 if sid in by_id:
                     by_id[sid]["shopAddTime"] = r.get("addTime")
+        # 预填历史商品：本次没成功爬到的店铺不至于被清空（限频静默空 ≠ 无商品）
+        prefilled = 0
+        for sid, s in by_id.items():
+            h = hist_map.get(sid)
+            if h and h.get("items") and "items" not in s:
+                s["items"] = h["items"]
+                prefilled += 1
         shops = shops_all
-        print(f"已用 token 刷新关注列表：{len(shops)} 个店铺")
+        print(f"已用 token 刷新关注列表：{len(shops)} 个店铺"
+              f"（预填历史商品 {prefilled} 家）")
     else:
         if os.path.exists(OUT):
             existing = json.load(open(OUT, encoding="utf-8"))
@@ -340,7 +362,7 @@ def main():
     while pending:
         sid = pending.pop(0)
         shop_name = str(by_id.get(sid, {}).get("name") or sid)[:18]
-        raw = crawl_shop_items(context, headers, sid)
+        raw, state = crawl_shop_items(context, headers, sid)
         if raw:
             by_id[sid]["items"] = [norm_item(it) for it in raw]
             by_id[sid]["hasShelfItems"] = True
@@ -355,6 +377,16 @@ def main():
             print(f"  [{bar}] {done_count}/{total} {pct:.1f}% | "
                   f"{shop_name} {len(raw)}件 | 剩{total-done_count}家 "
                   f"已用{elapsed:.0f}s 预计还需{eta:.0f}s", flush=True)
+        elif state is True:
+            # API 明确正常应答但商品列表为空 → 该店确实无在售商品
+            # （state=None 的静默空是限频，onShelfItemNum 字段在 API 中不可靠，
+            #   不能用来判断全下架，故一律保留旧数据并重试，避免误清空）
+            by_id[sid]["items"] = []
+            by_id[sid]["hasShelfItems"] = False
+            consecutive_empty = 0
+            done_count += 1
+            print(f"  [清空] {shop_name} API确认已无在售商品 "
+                  f"({done_count}/{total})", flush=True)
         else:
             tries = retry_count.get(sid, 0) + 1
             retry_count[sid] = tries
@@ -362,6 +394,7 @@ def main():
                 print(f"  [跳过] {shop_name} 连续 {tries} 次无数据，跳过此店", flush=True)
                 if by_id.get(sid, {}).get("items") is None:
                     by_id[sid]["items"] = []
+                done_count += 1  # 跳过也计入进度，否则进度条永远走不满
                 continue  # 不再重试，继续下一家
             pending.append(sid)  # 限频，放回队尾稍后重试
             print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 (第{tries}次, "
