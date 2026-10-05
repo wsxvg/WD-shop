@@ -1,9 +1,9 @@
 {
-  "token_expired": false,
-  "token_source": "context.json",
-  "follow_refreshed": true,
-  "updated_at": "2026-10-05T09:48:25.994198+00:00",
+  "token_expired": true,
+  "token_source": "none",
+  "follow_refreshed": false,
+  "updated_at": "2026-10-05T18:05:40.967040+00:00",
   "shops": 170,
-  "products": 31011,
-  "build_time": 1791193705
+  "products": 30843,
+  "build_time": 1791223542
 }
