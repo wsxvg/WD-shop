@@ -187,6 +187,11 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px 72px;}
 .g-product{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));}
 .g-shop{display:flex;flex-direction:column;gap:10px;}
+/* 窗口化占位块：撑出已回收区域的高度，保证滚动条长度不变 */
+.wpad{grid-column:1/-1;width:100%;}
+.g-shop .wpad{display:none;}
+/* 筛选区不吸顶，滚动时随内容走，只留上面那条紧凑搜索行 */
+.filter-inline{position:relative;z-index:1;}
 
 /* ---------- 商品卡 ---------- */
 .pcard{
@@ -339,6 +344,7 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 .blk-item .bi-meta{font-size:11.5px;color:var(--ink-3);font-weight:400;flex:none;}
 .blk-item .bi-why{font-size:10.5px;color:var(--amber);background:var(--amber-soft);
   padding:2px 6px;border-radius:5px;font-weight:600;flex:none;}
+.blk-item .bi-why.is-new{color:var(--brand);background:var(--brand-soft);}
 .blk-none{font-size:12.5px;color:var(--ink-3);padding:10px 2px;line-height:1.7;}
 
 /* 关键词规则 */
@@ -481,7 +487,6 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 
 <div class="controls" id="controls">
   <div class="controls-in">
-
     <div class="ctl-row">
       <div class="seg" role="tablist" aria-label="视图切换">
         <button role="tab" data-view="shop" aria-selected="false">店铺</button>
@@ -497,7 +502,12 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
         筛选 <span class="badge-n" id="filterBadge">0</span>
       </button>
     </div>
+  </div>
+</div>
 
+<!-- 筛选区不吸顶：滚动时让位，只保留上面那条紧凑的搜索行 -->
+<div class="filter-inline">
+ <div class="controls-in">
     <div class="filter-panel" id="filterPanel">
 
       <!-- 店铺视角筛选 -->
@@ -553,14 +563,15 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
         <button class="btn btn-primary" style="flex:1;justify-content:center" id="fpApply">查看结果</button>
       </div>
     </div>
-
-  </div>
+ </div>
 </div>
 
 <div class="drawer-mask" id="drawerMask"></div>
 <div class="wrap">
-  <main class="grid g-product" id="grid"></main>
-  <div id="sentinel" style="height:1px"></div>
+  <main class="grid g-product" id="grid">
+    <div class="wpad" id="padTop"></div>
+    <div class="wpad" id="padBot"></div>
+  </main>
   <div class="empty hide" id="empty"></div>
   <div class="foot-stat" id="footStat"></div>
 </div>
@@ -577,12 +588,18 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
     <div class="sheet-body">
       <div class="blk-group">
         <div class="blk-title">全局屏蔽 <span class="tagno" id="gCount"></span></div>
-        <div class="blk-desc">写在仓库 <code>data/blocklist.json</code> 里，爬虫不再抓取这些店，<b>所有设备一致</b>。</div>
+        <div class="blk-desc">写入仓库 <code>data/blocklist.json</code>，爬虫不再抓取这些店，<b>电脑和手机完全一致</b>。
+          点卡片上的「屏蔽」即加入这里，<b>点下方「导出并提交」后所有设备生效</b>。</div>
         <div id="globalList"></div>
       </div>
       <div class="blk-group">
-        <div class="blk-title">本机隐藏 <span class="tagno" id="lCount"></span></div>
-        <div class="blk-desc">只存在这台设备的浏览器里，仅用于临时不想看。换个设备访问依然可见。</div>
+        <div class="blk-title">仅本机隐藏 <span class="tagno" id="lCount"></span></div>
+        <div class="blk-desc">只存在这台设备的浏览器里，适合「暂时不想看」。换设备访问依然可见，数据仍在仓库。</div>
+        <div class="rulebox" style="margin-bottom:8px">
+          <input type="text" id="localAdd" placeholder="输入店铺名或 ID，本机隐藏"
+            style="flex:1;min-width:0;height:34px;padding:0 11px;font-size:13px;border:1px dashed var(--line);border-radius:999px;background:transparent;color:var(--ink);outline:none">
+          <button class="rule-add" id="localAddBtn" style="flex:none">添加</button>
+        </div>
         <div id="localList"></div>
       </div>
       <div class="blk-group">
@@ -592,7 +609,7 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
         <button class="rule-add" id="addRule">+ 添加关键词</button>
       </div>
       <div class="sheet-actions">
-        <button class="btn btn-primary" id="openExport">导出 blocklist.json</button>
+        <button class="btn btn-primary" id="openExport">导出并提交</button>
         <button class="btn" id="clearLocal">清空本机隐藏</button>
       </div>
     </div>
@@ -628,7 +645,8 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 </div>
 
 <div id="toast">
-  <span>已加入本机隐藏</span><span class="t-name" id="toastName"></span><span class="t-act" id="toastUndo">撤销</span>
+  <span>已加入全局屏蔽</span><span class="t-name" id="toastName"></span>
+  <span class="t-act" id="toastUndo">撤销</span>
 </div>
 
 <script>
@@ -749,12 +767,32 @@ function recomputeHiddenIds() {
     if (rules.some(k => k && String(s.name || '').includes(k))) hiddenShopIds.add(String(s.shopId));
   }
 }
-const hiddenCount = () => hiddenShopIds.size + localIds.size;
+const hiddenCount = () => new Set([...hiddenShopIds, ...localIds]).size;
 
+// 卡片上的「屏蔽」= 写入全局名单（待导出），所有设备一致。
+// 「仅本机隐藏」是另一条路径，只在当前浏览器生效。
+let pendingBlock = [];   // 本次会话新增、尚未导出的全局屏蔽
+
+function addGlobal(id, name) {
+  id = String(id);
+  if (globalIds.has(id)) return false;
+  BLOCKLIST.shops.push({ shopId: id, name: name || '', blocked_at: todayStr(), _pending: true });
+  pendingBlock.push(id);
+  globalIds.add(id);
+  onHideChanged();
+  return true;
+}
+function removeGlobal(id) {
+  id = String(id);
+  BLOCKLIST.shops = BLOCKLIST.shops.filter(s => String(s.shopId) !== id);
+  pendingBlock = pendingBlock.filter(x => x !== id);
+  globalIds.delete(id);
+  onHideChanged();
+}
 function addLocal(id, name) {
   id = String(id);
   if (localIds.has(id)) return false;
-  localHidden.push({ shopId: id, name: name || '', at: new Date().toISOString().slice(0, 10) });
+  localHidden.push({ shopId: id, name: name || '', at: todayStr() });
   localIds.add(id); saveLocal(); onHideChanged();
   return true;
 }
@@ -763,26 +801,22 @@ function removeLocal(id) {
   localHidden = localHidden.filter(h => String(h.shopId) !== id);
   localIds.delete(id); saveLocal(); onHideChanged();
 }
-function removeGlobal(id) {
-  id = String(id);
-  BLOCKLIST.shops = BLOCKLIST.shops.filter(s => String(s.shopId) !== id);
-  globalIds.delete(id); onHideChanged();
-}
 function removeRule(kw) {
   BLOCKLIST.name_rules = nameRules().filter(r => r !== kw);
   onHideChanged(); renderManage();
 }
+const todayStr = () => new Date().toISOString().slice(0, 10);
 
 let toastTimer = null, toastId = null;
-function toast(name, id) {
+function blockToast(name, id) {
   $('toastName').textContent = name || id;
   toastId = String(id);
   $('toast').classList.add('on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => $('toast').classList.remove('on'), 7000);
+  toastTimer = setTimeout(() => $('toast').classList.remove('on'), 9000);
 }
 $('toastUndo').addEventListener('click', () => {
-  if (toastId) removeLocal(toastId);
+  if (toastId) removeGlobal(toastId);
   toastId = null; $('toast').classList.remove('on');
 });
 
@@ -851,7 +885,7 @@ function shopRow(s) {
     </div>
     <div class="shop-act">
       <button class="shop-go" data-goshop="${esc(s.shopId)}">看商品 ›</button>
-      <button class="btn-x" data-hide="${esc(s.shopId)}" data-name="${esc(s.name || '')}" title="加入本机隐藏">隐藏</button>
+      <button class="btn-x" data-block="${esc(s.shopId)}" data-name="${esc(s.name || '')}" title="加入全局屏蔽名单，所有设备生效">屏蔽</button>
     </div>
   </div>`;
 }
@@ -893,7 +927,7 @@ function productCard(p) {
         <span class="pmerchant">
           <img src="${esc(p.shopAvatar || BLANK)}" loading="lazy" onerror="this.src=BLANK">
           <span class="m-name">${esc(p.shopName || '')}</span>
-          <span class="btn-x" data-hide="${esc(p.shopId)}" data-name="${esc(p.shopName || '')}" title="隐藏此店铺">隐藏</span>
+          <span class="btn-x" data-block="${esc(p.shopId)}" data-name="${esc(p.shopName || '')}" title="屏蔽此店铺（所有设备生效）">屏蔽</span>
         </span>
       </div>
     </div>
@@ -904,20 +938,68 @@ function productCard(p) {
    渲染
    ========================================================================== */
 const grid = $('grid'), emptyEl = $('empty'), footStat = $('footStat');
+const padTop = $('padTop'), padBot = $('padBot');
 const shopMap = new Map();
-let shopList = [], prodList = [], prodShown = 0;
-const BATCH = 36;
+let shopList = [], prodList = [];
 
-function renderSkeleton(n) {
-  const one = `<div class="skel"><div class="s-img"></div><div class="s-b">
-    <div class="s-l w80"></div><div class="s-l"></div><div class="s-l w30"></div></div></div>`;
-  grid.innerHTML = one.repeat(n);
-  grid.className = 'grid ' + (S.view === 'shop' ? 'g-shop' : 'g-product');
+// ---- 窗口化渲染 ----
+// 3 万件商品全部塞进 DOM，光节点就 60 万个，滚几屏浏览器就卡死。
+// 这里只渲染「当前滚动位置附近」的一段，上下各多留 2 行，其余用占位块撑高度。
+// 好处不只是省内存：滚动条长度一次性就是完整列表，拖到哪都能立刻看到内容。
+const BATCH = 24;
+const OVERSCAN = 2;
+let domStart = 0, domEnd = 0, rowH = 0, cols = 1;
+
+function measure() {
+  const c = grid.querySelector('.pcard');
+  if (!c) return;
+  const cs = getComputedStyle(grid);
+  const cg = parseFloat(cs.columnGap) || 16;
+  const h = c.getBoundingClientRect().height + (parseFloat(cs.rowGap) || 16);
+  if (h > 40) rowH = h;
+  const w = c.getBoundingClientRect().width;
+  if (w) cols = Math.max(1, Math.round((grid.clientWidth + cg) / (w + cg)));
+}
+
+function drawRange(start, end) {
+  grid.querySelectorAll('.pcard').forEach(n => n.remove());
+  const slice = prodList.slice(start, end);
+  if (slice.length) padBot.insertAdjacentHTML('beforebegin', slice.map(productCard).join(''));
+  domStart = start; domEnd = end;
+  measure();
+  padTop.style.height = Math.floor(start / cols) * rowH + 'px';
+  padBot.style.height = Math.max(0, Math.ceil((prodList.length - end) / cols)) * rowH + 'px';
+}
+
+/** 按滚动位置算出该渲染哪一段。已被覆盖就跳过，避免滚动时反复重绘。 */
+function renderWindow(force) {
+  if (S.view !== 'product' || !prodList.length || !rowH) return;
+  const gridTop = grid.getBoundingClientRect().top + window.scrollY;
+  const firstRow = Math.max(0, Math.floor((window.scrollY - gridTop) / rowH) - OVERSCAN);
+  const lastRow = Math.ceil((window.scrollY + window.innerHeight - gridTop) / rowH) + OVERSCAN;
+  const start = Math.min(prodList.length, firstRow * cols);
+  const end = Math.min(prodList.length, Math.max(lastRow * cols, start + cols));
+  if (!force && start >= domStart && end <= domEnd) return;
+  drawRange(start, end);
+  updateFoot();
 }
 
 function activeCate() {
   const b = document.querySelector('#cateBtns .pill.on');
   return b ? b.dataset.cate : '';
+}
+
+/** 测出单行高度（卡片高 + 行间距）与列数，用于把下标换算成像素位置 */
+function measureRow() {
+  const c = grid.querySelector('.pcard');
+  if (!c) return rowH;
+  const cs = getComputedStyle(grid);
+  const cg = parseFloat(cs.columnGap) || 16;
+  const rg = parseFloat(cs.rowGap) || 16;
+  const r = c.getBoundingClientRect();
+  if (r.height + rg > 40) rowH = r.height + rg;
+  if (r.width) cols = Math.max(1, Math.round((grid.clientWidth + cg) / (r.width + cg)));
+  return rowH;
 }
 
 function renderShop() {
@@ -940,52 +1022,49 @@ function renderShop() {
   list.sort(sorters[S.sort] || sorters.followTime);
   shopList = list;
   grid.className = 'grid g-shop';
-  grid.innerHTML = list.length
-    ? list.map(shopRow).join('')
-    : '';
+  padTop.style.height = '0px'; padBot.style.height = '0px';
+  grid.querySelectorAll('.shop').forEach(n => n.remove());
+  padTop.insertAdjacentHTML('afterend', list.length ? list.map(shopRow).join('') : '');
   if (!list.length) showEmpty('没有符合条件的店铺', '试试放宽筛选，或清空搜索词');
   footStat.textContent = `显示 ${fmtInt(list.length)} / ${fmtInt(visibleShops().length)} 个店铺`;
 }
 
-function renderProduct(reset) {
-  if (reset) {
-    const kw = S.qProd.trim().toLowerCase();
-    const min = parseFloat(S.min) || 0;
-    const max = S.max === '' ? Infinity : (parseFloat(S.max) || Infinity);
-    const cate = activeCate();
-    prodList = PRODUCTS.filter(p => {
-      if (hiddenShopIds.has(String(p.shopId))) return false;
-      if (S.hideSold && (p.stock || 0) === 0 && (p.status || 1) === 1) return false;
-      if (S.freeShip && !p.freeShip) return false;
-      if (S.isNew) { const d = daysSince(p.addTime); if (d == null || d > 14) return false; }
-      if (S.merchant && String(p.shopId) !== S.merchant) return false;
-      if ((p.priceYuan || 0) < min || (p.priceYuan || 0) > max) return false;
-      if (kw && !tokenMatch((p.itemName || '').toLowerCase(), kw)) return false;
-      if (cate && !matchCategory((p.itemName || '').toLowerCase(), cate)) return false;
-      return true;
-    });
-    const cutOf = p => (p.originalPrice && p.originalPrice > p.price)
-      ? (1 - p.price / p.originalPrice) : -1;
-    const sorters = {
-      newest: (a, b) => String(b.addTime).localeCompare(String(a.addTime)),
-      sold: (a, b) => (b.soldNum || 0) - (a.soldNum || 0),
-      cut: (a, b) => cutOf(b) - cutOf(a),
-      priceAsc: (a, b) => (a.priceYuan || 0) - (b.priceYuan || 0),
-      priceDesc: (a, b) => (b.priceYuan || 0) - (a.priceYuan || 0),
-      shop: (a, b) => String(a.shopName || '').localeCompare(String(b.shopName || ''), 'zh')
-        || (b.addTime > a.addTime ? 1 : -1),
-    };
-    prodList.sort(sorters[S.pSort] || sorters.newest);
-    prodShown = 0;
-    grid.className = 'grid g-product';
-    grid.innerHTML = '';
-  }
-  const batch = prodList.slice(prodShown, prodShown + BATCH);
-  if (batch.length) grid.insertAdjacentHTML('beforeend', batch.map(productCard).join(''));
-  prodShown += batch.length;
-  if (!prodList.length) showEmpty('没有符合条件的商品', '试试放宽价格区间，或清空搜索词');
-  else emptyEl.classList.add('hide');
-  updateFoot();
+/** 重新过滤 + 排序（不碰 DOM） */
+function computeList() {
+  const kw = S.qProd.trim().toLowerCase();
+  const min = parseFloat(S.min) || 0;
+  const max = S.max === '' ? Infinity : (parseFloat(S.max) || Infinity);
+  const cate = activeCate();
+  prodList = PRODUCTS.filter(p => {
+    if (hiddenShopIds.has(String(p.shopId))) return false;
+    if (S.hideSold && (p.stock || 0) === 0 && (p.status || 1) === 1) return false;
+    if (S.freeShip && !p.freeShip) return false;
+    if (S.isNew) { const d = daysSince(p.addTime); if (d == null || d > 14) return false; }
+    if (S.merchant && String(p.shopId) !== S.merchant) return false;
+    if ((p.priceYuan || 0) < min || (p.priceYuan || 0) > max) return false;
+    if (kw && !tokenMatch((p.itemName || '').toLowerCase(), kw)) return false;
+    if (cate && !matchCategory((p.itemName || '').toLowerCase(), cate)) return false;
+    return true;
+  });
+  const cutOf = p => (p.originalPrice && p.originalPrice > p.price)
+    ? (1 - p.price / p.originalPrice) : -1;
+  const sorters = {
+    newest: (a, b) => String(b.addTime).localeCompare(String(a.addTime)),
+    sold: (a, b) => (b.soldNum || 0) - (a.soldNum || 0),
+    cut: (a, b) => cutOf(b) - cutOf(a),
+    priceAsc: (a, b) => (a.priceYuan || 0) - (b.priceYuan || 0),
+    priceDesc: (a, b) => (b.priceYuan || 0) - (a.priceYuan || 0),
+    shop: (a, b) => String(a.shopName || '').localeCompare(String(b.shopName || ''), 'zh')
+      || (b.addTime > a.addTime ? 1 : -1),
+  };
+  prodList.sort(sorters[S.pSort] || sorters.newest);
+}
+
+function renderSkeleton(n) {
+  const one = `<div class="skel"><div class="s-img"></div><div class="s-b">
+    <div class="s-l w80"></div><div class="s-l"></div><div class="s-l w30"></div></div></div>`;
+  padTop.style.height = '0px'; padBot.style.height = '0px';
+  grid.insertAdjacentHTML('afterbegin', one.repeat(n));
 }
 
 function showEmpty(title, sub) {
@@ -993,16 +1072,33 @@ function showEmpty(title, sub) {
   emptyEl.innerHTML = `<b>${esc(title)}</b>${esc(sub || '')}`;
 }
 
+/** 重算列表并按当前滚动位置重画窗口 */
+function renderProduct(reset) {
+  if (!reset) return;
+  computeList();
+  grid.className = 'grid g-product';
+  grid.querySelectorAll('.pcard').forEach(n => n.remove());
+  domStart = 0; domEnd = 0; rowH = 0;
+  if (!prodList.length) {
+    padTop.style.height = '0px'; padBot.style.height = '0px';
+    showEmpty('没有符合条件的商品', '试试放宽价格区间，或清空搜索词');
+    updateFoot(); return;
+  }
+  emptyEl.classList.add('hide');
+  drawRange(0, BATCH);        // 先画一批，顺带量出 rowH / cols
+  renderWindow(true);         // 再对齐到当前滚动位置
+  updateFoot();
+}
+
 function updateFoot() {
-  const shown = Math.min(prodShown, prodList.length);
   let soldOut = 0;
   for (const p of prodList) if ((p.stock || 0) === 0 && (p.status || 1) === 1) soldOut++;
-  footStat.innerHTML = `显示 <b>${fmtInt(shown)}</b> / ${fmtInt(prodList.length)} 件商品`
+  footStat.innerHTML = `已浏览 <b>${fmtInt(Math.min(domEnd, prodList.length))}</b> / ${fmtInt(prodList.length)} 件商品`
     + (soldOut ? ` · <button class="lk" id="footSold">${fmtInt(soldOut)} 件已售罄，点此隐藏</button>` : '')
     + `<br>数据来自微店公开接口全量爬取${hiddenCount() ? ` · 已屏蔽 ${fmtInt(hiddenCount())} 家店铺` : ''}`;
   const lk = $('footSold');
   if (lk) lk.addEventListener('click', () => {
-    S.hideSold = true; $('pHideSold').checked = true; syncCheckLabels(); renderProduct(true);
+    S.hideSold = true; $('pHideSold').checked = true; syncCheckLabels(); render();
   });
 }
 
@@ -1011,7 +1107,6 @@ function render() {
   S.view === 'shop' ? renderShop() : renderProduct(true);
   writeURL();
   updateFilterBadge();
-  $('sentinel').style.height = (S.view === 'product' && prodShown < prodList.length) ? '1px' : '0px';
 }
 
 /* ==========================================================================
@@ -1071,22 +1166,20 @@ function renderManage() {
 
   // 全局：blocklist.json 的 ID 名单（可一键移除）+ 关键词自动命中的店铺
   const gItems = BLOCKLIST.shops.map(s => ({
-    id: String(s.shopId), name: s.name || named(s.shopId), why: '已写入仓库', kw: '',
+    id: String(s.shopId), name: s.name || named(s.shopId),
+    why: s._pending ? '本次新增，待导出' : '已写入仓库', kw: '',
   }));
   const gIds = new Set(gItems.map(x => x.id));
   SHOPS.filter(s => !gIds.has(String(s.shopId)) && isGlobalBlocked(s)).forEach(s => {
-    gItems.push({
-      id: String(s.shopId), name: s.name || '',
-      why: `含「${nameRules().find(k => k && String(s.name).includes(k))}」`,
-      kw: nameRules().find(k => k && String(s.name).includes(k)),
-    });
+    const kw = nameRules().find(k => k && String(s.name).includes(k));
+    gItems.push({ id: String(s.shopId), name: s.name || '', why: `含「${kw}」`, kw });
   });
   $('gCount').textContent = `（${gItems.length}）`;
   $('globalList').innerHTML = gItems.length
     ? gItems.map(x => `<div class="blk-item">
         <span class="bi-name">${esc(x.name || x.id)}</span>
-        <span class="bi-why">${esc(x.why)}</span>
-        <button class="btn-x" data-unhide="${esc(x.id)}" data-kw="${esc(x.kw)}">恢复</button>
+        <span class="bi-why${x.why.indexOf('待导出') > 0 ? ' is-new' : ''}">${esc(x.why)}</span>
+        <button class="btn-x" data-unhide="${esc(x.id)}" data-kw="${esc(x.kw)}">移除</button>
       </div>`).join('')
     : '<div class="blk-none">暂无全局屏蔽的店铺。</div>';
 
@@ -1149,31 +1242,46 @@ $('clearLocal').addEventListener('click', () => {
   localHidden = []; localIds.clear(); saveLocal(); onHideChanged();
 });
 
+// 「仅本机隐藏」输入框
+function doLocalAdd() {
+  const inp = $('localAdd');
+  const kw = inp.value.trim().toLowerCase();
+  if (!kw) return;
+  const hit = SHOPS.find(s => !isHidden(s)
+    && (String(s.name || '').toLowerCase().includes(kw) || String(s.shopId) === kw));
+  if (!hit) { inp.value = ''; alert('没找到匹配的店铺（可搜店铺名或店铺 ID）'); return; }
+  addLocal(hit.shopId, hit.name);
+  inp.value = '';
+  renderManage();
+}
+$('localAddBtn').addEventListener('click', doLocalAdd);
+$('localAdd').addEventListener('keydown', e => { if (e.key === 'Enter') doLocalAdd(); });
+
 /* ==========================================================================
    导出 blocklist.json
    ========================================================================== */
 function buildExport() {
   const shops = new Map();
-  BLOCKLIST.shops.forEach(s => shops.set(String(s.shopId), {
-    shopId: String(s.shopId), name: s.name || '', blocked_at: s.blocked_at || todayStr(),
-  }));
+  // 全局名单 = 文件里已有的 + 本次新增的（页面屏蔽按钮加进来的）
+  BLOCKLIST.shops.forEach(s => {
+    const id = String(s.shopId);
+    shops.set(id, { shopId: id, name: s.name || '', blocked_at: s.blocked_at || todayStr() });
+  });
   if ($('includeLocal').checked) {
     localHidden.forEach(h => {
       const id = String(h.shopId);
       if (!shops.has(id)) shops.set(id, { shopId: id, name: h.name || '', blocked_at: h.at || todayStr() });
     });
   }
-  const rules = nameRules();
   const doc = {
     version: 1,
     updated_at: todayStr(),
     _readme: '全局屏蔽名单。shops=按店铺ID屏蔽(不再同步、不再爬取，所有设备一致)；name_rules=按店铺名关键词自动屏蔽死店。页面「屏蔽管理」面板可直接编辑并导出覆盖本文件。',
     shops: [...shops.values()],
-    name_rules: rules,
+    name_rules: nameRules(),
   };
   return JSON.stringify(doc, null, 2);
 }
-const todayStr = () => new Date().toISOString().slice(0, 10);
 
 $('openExport').addEventListener('click', () => {
   $('exportTa').value = buildExport();
@@ -1317,10 +1425,10 @@ function updateFilterBadge() {
 
 // 卡片内交互（事件委托，重渲染后依然有效）
 grid.addEventListener('click', e => {
-  const h = e.target.closest('[data-hide]');
+  const h = e.target.closest('[data-block]');
   if (h) {
     e.preventDefault(); e.stopPropagation();
-    if (addLocal(h.dataset.hide, h.dataset.name)) toast(h.dataset.name, h.dataset.hide);
+    if (addGlobal(h.dataset.block, h.dataset.name)) blockToast(h.dataset.name, h.dataset.block);
     return;
   }
   const g = e.target.closest('[data-goshop]');
@@ -1342,17 +1450,20 @@ grid.addEventListener('click', e => {
 
 // 返回顶部
 $('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-window.addEventListener('scroll', () => {
-  $('toTop').classList.toggle('on', window.scrollY > 900);
-}, { passive: true });
 
-// 无限滚动
-new IntersectionObserver(es => {
-  if (S.view === 'product' && es[0].isIntersecting && prodShown < prodList.length) {
-    renderProduct(false);
-    $('sentinel').style.height = (prodShown < prodList.length) ? '1px' : '0px';
-  }
-}, { rootMargin: '900px' }).observe($('sentinel'));
+// 滚动：按位置重算可视窗口（DOM 恒定，滚动条长度由 padBot 一次性撑满）
+let scrollTick = false;
+function onScroll() {
+  $('toTop').classList.toggle('on', window.scrollY > 900);
+  if (scrollTick) return;
+  scrollTick = true;
+  requestAnimationFrame(() => { scrollTick = false; renderWindow(false); });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', debounce(() => {
+  cols = 1; rowH = 0;
+  if (S.view === 'product' && prodList.length) { renderProduct(true); }
+}, 200));
 
 /* ==========================================================================
    启动
@@ -1429,7 +1540,8 @@ async function boot() {
         catch (e) { break; }
         addProducts(raw);
         updateStats(); updateFilterBadge();
-        if (S.view === 'product') renderProduct(true);
+        // 列表变长了：只有当用户还在顶部时才重画，否则会把他正在看的位置冲掉
+        if (S.view === 'product' && window.scrollY < window.innerHeight * 1.5) renderProduct(true);
         console.log(`块${ci} · 累计 ${PRODUCTS.length} 件`);
       }
     })();
