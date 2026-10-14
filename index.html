@@ -58,6 +58,14 @@ img{display:block;max-width:100%;}
 .tb-actions{display:flex;gap:8px;align-items:center;flex:none;}
 .sm-only{display:none;}
 .drawer-mask{display:none;}
+/* 直连状态：常驻小圆点 + 临时提示条 */
+.sync-mode{display:none;font-size:11.5px;font-weight:700;color:var(--ok);
+  background:var(--ok-soft);padding:4px 9px;border-radius:999px;white-space:nowrap;}
+.sync-mode.on{display:inline-block;}
+.sync-chip{display:block;margin-top:4px;font-size:11.5px;font-weight:600;line-height:1.5;
+  color:var(--ink-2);}
+.sync-chip.is-ok{color:var(--ok);}
+.sync-chip.is-bad{color:var(--brand);}
 
 /* ---------- 按钮 ---------- */
 .btn{
@@ -470,6 +478,7 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
         <h1>我关注的微店</h1>
         <p class="brand-sub" id="brandSub">正在加载数据…</p>
         <p class="brand-sub" id="brandSubSm">正在加载…</p>
+        <span class="sync-chip hide" id="syncChip"></span>
       </div>
     </div>
     <div class="tb-actions">
@@ -477,6 +486,7 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
         <span class="lg-only">屏蔽管理</span><span class="sm-only">屏蔽</span>
         <span class="badge-n" id="blockBadge">0</span>
       </button>
+      <span class="sync-mode" id="syncMode"></span>
     </div>
   </div>
 </header>
@@ -588,8 +598,7 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
     <div class="sheet-body">
       <div class="blk-group">
         <div class="blk-title">全局屏蔽 <span class="tagno" id="gCount"></span></div>
-        <div class="blk-desc">写入仓库 <code>data/blocklist.json</code>，爬虫不再抓取这些店，<b>电脑和手机完全一致</b>。
-          点卡片上的「屏蔽」即加入这里，<b>点下方「导出并提交」后所有设备生效</b>。</div>
+        <div class="blk-desc" id="gDesc">写入仓库 <code>data/blocklist.json</code>，爬虫不再抓取这些店，<b>电脑和手机完全一致</b>。</div>
         <div id="globalList"></div>
       </div>
       <div class="blk-group">
@@ -659,6 +668,13 @@ const PRODUCTS = [];   // 全量商品（shops_products_*.json 分块）
 let BLOCKLIST = { shops: [], name_rules: [] };   // 全局屏蔽（blocklist.json）
 let LOCAL_KEY = 'wd_hidden_shops';               // 本机隐藏（localStorage）
 let TOTAL_CHUNKS = 1;                            // 商品分块数，来自 status.json
+
+// ---- 直连写入 ----
+// GitHub Pages 是纯静态页，页面本身没有任何可写接口（也不能把 GitHub Token
+// 放进 JS —— 那等于公开仓库写权限）。所以「点一下就落盘」只能由本机进程代劳：
+// 运行 `python block_server.py` 后，这里探测到服务就自动切成直连模式。
+const SYNC_URL = 'http://127.0.0.1:8766/api/blocklist';
+let SYNC_OK = false;
 
 const VER = 'v=4';   // 缓存版本号：改数据结构时 +1，绕开 GitHub Pages 缓存
 const DEAD_FALLBACK = ['注销', '关闭', '停业', '不再使用'];  // blocklist.json 缺失时的兜底
@@ -773,6 +789,51 @@ const hiddenCount = () => new Set([...hiddenShopIds, ...localIds]).size;
 // 「仅本机隐藏」是另一条路径，只在当前浏览器生效。
 let pendingBlock = [];   // 本次会话新增、尚未导出的全局屏蔽
 
+/** 直连模式下把名单写入本地仓库文件；不可用时返回 false，页面回退到导出流程 */
+async function syncToDisk() {
+  if (!SYNC_OK) return false;
+  try {
+    const r = await fetch(SYNC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: buildExport(),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    await r.json();
+    syncChip('已写入 data/blocklist.json ✓ 执行 git push 即全设备生效', true);
+    return true;
+  } catch (e) {
+    SYNC_OK = false;
+    syncChip('直连写入失败：' + e.message + '（已回退到导出流程）', false);
+    return false;
+  }
+}
+
+function syncChip(msg, ok) {
+  const el = $('syncChip');
+  el.textContent = msg;
+  el.classList.toggle('is-ok', !!ok);
+  el.classList.toggle('is-bad', !ok);
+  el.classList.remove('hide');
+  clearTimeout(syncChip._t);
+  syncChip._t = setTimeout(() => el.classList.add('hide'), 9000);
+}
+
+async function probeSync() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 700);
+    const r = await fetch(SYNC_URL.replace('/api/blocklist', '/api/status'), { signal: ctrl.signal });
+    clearTimeout(t);
+    SYNC_OK = r.ok;
+  } catch (e) { SYNC_OK = false; }
+  $('syncMode').classList.toggle('on', SYNC_OK);
+  $('syncMode').textContent = SYNC_OK ? '🔗 直连已开启' : '';
+  $('syncMode').title = SYNC_OK
+    ? '点「屏蔽」会立即写入本地 data/blocklist.json'
+    : '未检测到 block_server.py —— 点屏蔽后需在面板里点「导出并提交」';
+}
+
 function addGlobal(id, name) {
   id = String(id);
   if (globalIds.has(id)) return false;
@@ -813,7 +874,10 @@ function blockToast(name, id) {
   toastId = String(id);
   $('toast').classList.add('on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => $('toast').classList.remove('on'), 9000);
+  // 直连可用时直接落盘，一步到位；否则提示走导出流程
+  if (SYNC_OK) syncToDisk();
+  else syncChip('已加入屏蔽名单，点右上角「导出并提交」让它对所有设备生效', true);
+  toastTimer = setTimeout(() => $('toast').classList.remove('on'), SYNC_OK ? 4000 : 9000);
 }
 $('toastUndo').addEventListener('click', () => {
   if (toastId) removeGlobal(toastId);
@@ -1133,7 +1197,6 @@ function updateStats() {
   const badge = $('blockBadge');
   badge.textContent = total;
   badge.classList.toggle('on', total > 0);
-  $('clearLocal').style.opacity = localIds.size ? '1' : '.45';
 }
 
 function rebuildMerchantOptions() {
@@ -1163,6 +1226,11 @@ function onHideChanged() {
    ========================================================================== */
 function renderManage() {
   const named = id => (SHOPS.find(s => String(s.shopId) === String(id)) || {}).name || '';
+  $('gDesc').innerHTML = SYNC_OK
+    ? '<b style="color:var(--ok)">🔗 直连已开启</b> —— 点「屏蔽」会立即写入本地 <code>data/blocklist.json</code>，' +
+      '之后只需 <code>git push</code> 即可让所有设备生效。'
+    : '写入仓库 <code>data/blocklist.json</code>，爬虫不再抓取这些店，<b>电脑和手机完全一致</b>。' +
+      '运行 <code>python block_server.py</code> 后，点「屏蔽」即可直接落盘，无需手动导出提交。';
 
   // 全局：blocklist.json 的 ID 名单（可一键移除）+ 关键词自动命中的店铺
   const gItems = BLOCKLIST.shops.map(s => ({
@@ -1182,6 +1250,7 @@ function renderManage() {
         <button class="btn-x" data-unhide="${esc(x.id)}" data-kw="${esc(x.kw)}">移除</button>
       </div>`).join('')
     : '<div class="blk-none">暂无全局屏蔽的店铺。</div>';
+  $('clearLocal').style.opacity = localIds.size ? '1' : '.45';
 
   $('lCount').textContent = `（${localHidden.length}）`;
   $('localList').innerHTML = localHidden.length
@@ -1283,9 +1352,14 @@ function buildExport() {
   return JSON.stringify(doc, null, 2);
 }
 
-$('openExport').addEventListener('click', () => {
+$('openExport').addEventListener('click', async () => {
   $('exportTa').value = buildExport();
   closeMask('manageMask'); openMask('exportMask');
+  // 直接把内容放进剪贴板，省掉一次「复制」点击
+  if (navigator.clipboard && window.isSecureContext) {
+    try { await navigator.clipboard.writeText($('exportTa').value); flash($('copyExport'), '已复制 ✓'); }
+    catch (e) {}
+  }
 });
 $('includeLocal').addEventListener('change', () => { $('exportTa').value = buildExport(); });
 $('copyExport').addEventListener('click', async () => {
@@ -1471,6 +1545,7 @@ window.addEventListener('resize', debounce(() => {
 async function boot() {
   readURL();
   loadLocal();
+  probeSync();
   syncResponsive();
   syncCheckLabels();
   setPricePills();
