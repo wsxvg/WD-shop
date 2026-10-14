@@ -4,6 +4,9 @@
 并用公开接口 /decorate/shopDetail.tab.getItemList 补全每个店铺的【全量在售商品】
 （关注流接口只返回每店前 9 件预览，此接口按 offset/limit 分页返回完整列表）。
 
+同时应用【全局屏蔽名单】data/blocklist.json：命中的店铺既不写入产物、
+也不再爬商品（省掉大部分无效请求），屏蔽档案写入 data/blocked_shops.json。
+
 输出 data/follow_shops.json（与 build_page.py 共用）。
 
 用法:
@@ -26,6 +29,8 @@ DEFAULT_HAR = os.path.join(HERE, "thor.weidian.com_2026_07_13_18_46_45.har")
 OUT = os.path.join(HERE, "data", "follow_shops.json")
 STATUS = os.path.join(HERE, "data", "status.json")
 CONTEXT_FILE = os.path.join(HERE, "data", "context.json")
+BLOCKLIST = os.path.join(HERE, "data", "blocklist.json")
+BLOCKED_ARCHIVE = os.path.join(HERE, "data", "blocked_shops.json")
 
 # 当 token 来自独立的 context.json（而非 HAR）时使用的默认请求头
 DEFAULT_HEADERS = {
@@ -91,7 +96,7 @@ def load_context(har_path=None):
     return None, None, None
 
 
-def save_status(out_path, token_ok, source, shops, total_products):
+def save_status(out_path, token_ok, source, shops, total_products, blocked=0):
     """写入 data/status.json，供页面展示 token 是否过期。"""
     status = {
         "token_expired": not token_ok,
@@ -100,6 +105,7 @@ def save_status(out_path, token_ok, source, shops, total_products):
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "shops": len(shops),
         "products": total_products,
+        "blocked_shops": blocked,
     }
     try:
         with open(STATUS, "w", encoding="utf-8") as f:
@@ -113,6 +119,105 @@ def _decode(resp):
     if resp.headers.get("Content-Encoding", "").lower() == "gzip":
         raw = gzip.decompress(raw)
     return json.loads(raw.decode("utf-8"))
+
+
+# ---------- 全局屏蔽名单（data/blocklist.json，提交进仓库，所有设备一致）----------
+
+def load_blocklist(path=None):
+    """读取全局屏蔽名单。返回 (ids:set[str], name_rules:list[str])。
+
+    - ids：按店铺 ID 屏蔽的名单（页面「导出名单」写回本文件）
+    - name_rules：按店铺名关键词自动屏蔽的死店规则
+    文件缺失/损坏时返回空集合 —— 即「不屏蔽任何店」，绝不因配置问题中断爬取。
+    """
+    path = path or BLOCKLIST
+    ids, rules = set(), []
+    if not os.path.exists(path):
+        return ids, rules
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            d = json.load(f)
+    except Exception as ex:
+        print("  [warn] 读取 blocklist.json 失败（本次不屏蔽任何店）:", ex)
+        return ids, rules
+    if not isinstance(d, dict):
+        return ids, rules
+    for s in d.get("shops") or []:
+        # 兼容 [{shopId, name}] 与 ["123"] 两种写法
+        sid = s.get("shopId") if isinstance(s, dict) else s
+        if sid is not None and str(sid).strip():
+            ids.add(str(sid).strip())
+    rules = [r.strip() for r in (d.get("name_rules") or []) if str(r).strip()]
+    return ids, rules
+
+
+def block_reason(shop, ids, rules):
+    """判断店铺是否命中屏蔽名单。返回 (是否屏蔽, 原因说明)。
+    ID 命中优先于名称关键词，便于区分「手动屏蔽」与「死店自动屏蔽」。"""
+    if str(shop.get("shopId")) in ids:
+        return True, "手动屏蔽"
+    name = str(shop.get("name") or "")
+    for kw in rules:
+        if kw and kw in name:
+            return True, f"名称含「{kw}」"
+    return False, ""
+
+
+def load_archive(path=None):
+    """读上次的屏蔽档案，返回 {shopId: entry}，用于保留首次屏蔽日期。"""
+    path = path or BLOCKED_ARCHIVE
+    out = {}
+    if not os.path.exists(path):
+        return out
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        for e in (d.get("shops") or []):
+            if isinstance(e, dict) and e.get("shopId") is not None:
+                out[str(e["shopId"])] = e
+    except Exception as ex:
+        print("  [warn] 读取 blocked_shops.json 失败:", ex)
+    return out
+
+
+def save_archive(entries, path=None):
+    """写屏蔽档案（轻量：仅 ID/名称/原因/屏蔽日期，不含商品）。"""
+    path = path or BLOCKED_ARCHIVE
+    data = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "count": len(entries),
+        "shops": sorted(entries, key=lambda e: e.get("blocked_at") or "", reverse=True),
+    }
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception as ex:
+        print("  [warn] 写入 blocked_shops.json 失败:", ex)
+
+
+def apply_blocklist(shops, ids, rules):
+    """把命中屏蔽名单的店铺从 shops 中剔除。
+    返回 (保留的店铺列表, 屏蔽档案列表, 被屏蔽的历史商品件数)。"""
+    prev = load_archive()
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    kept, archive, saved_items = [], [], 0
+    for s in shops:
+        hit, why = block_reason(s, ids, rules)
+        sid = str(s.get("shopId"))
+        if not hit:
+            kept.append(s)
+            continue
+        saved_items += len(s.get("items") or [])
+        archive.append({
+            "shopId": sid,
+            "name": s.get("name") or "",
+            "reason": why,
+            "followCount": s.get("followCount") or 0,
+            "itemCount": len(s.get("items") or []),
+            "blocked_at": (prev.get(sid) or {}).get("blocked_at") or today,
+        })
+    return kept, archive, saved_items
 
 
 def call_api(context, path, page_num, page_size, headers):
@@ -348,6 +453,24 @@ def main():
             print("  [!] 无 token 且无历史数据，无法爬取。请更新 data/context.json 后重试。")
             return
 
+    # 阶段3.5：应用全局屏蔽名单（data/blocklist.json）
+    # 放在商品补全之前 —— 命中的店铺既不写产物，也一个请求都不发。
+    blk_ids, blk_rules = load_blocklist()
+    archive, saved_items = [], 0
+    if blk_ids or blk_rules:
+        shops, archive, saved_items = apply_blocklist(shops, blk_ids, blk_rules)
+        dropped = len(archive)
+        if dropped:
+            print(f"🚫 全局屏蔽生效：隐藏 {dropped} 个店铺"
+                  f"（{len(blk_ids)} 条 ID 规则 + {len(blk_rules)} 条名称规则命中），"
+                  f"省下 {saved_items} 件历史商品的重复爬取")
+        else:
+            print(f"🚫 全局屏蔽名单已加载（{len(blk_ids)} 店 + {len(blk_rules)} 关键词），本次无命中")
+        save_archive(archive)
+    by_id = {s["shopId"]: s for s in shops if "shopId" in s}
+    # shelf_ids 必须与最终名单取交集：否则会对着已屏蔽的店空跑一轮
+    shelf_ids &= set(by_id.keys())
+
     # 阶段4：商品补全（getItemList 公开接口，无需 token，可增量刷新）
     total = len(shelf_ids)
     print(f"刷新 {total} 个店铺的全量商品 (getItemList)…", flush=True)
@@ -423,9 +546,15 @@ def main():
 
     n_items = sum(1 for r in shops if r.get("items"))
     total_products = sum(len(r.get("items", [])) for r in shops)
-    save_status(OUT, token_ok, source, shops, total_products)
+    save_status(OUT, token_ok, source, shops, total_products, blocked=len(archive))
     print(f"\n完成: {len(shops)} 个店铺, 其中 {n_items} 个有在售商品, "
           f"共 {total_products} 件全量商品 -> {OUT}")
+    if archive:
+        print(f"  🚫 已屏蔽 {len(archive)} 个店铺（未写入产物），档案见 {BLOCKED_ARCHIVE}")
+        for a in archive[:8]:
+            print(f"       - {a['name'] or a['shopId']}  ({a['reason']})")
+        if len(archive) > 8:
+            print(f"       … 另有 {len(archive) - 8} 家")
     print("  token 状态:", "有效（已刷新关注列表）" if token_ok
           else "已过期/缺失（仅刷新已有商品，未获取新关注店铺）")
 

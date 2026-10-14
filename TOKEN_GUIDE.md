@@ -90,7 +90,7 @@ context = {...你的 token JSON...}          # JSON 字符串（就是登录态�
    ```powershell
    python extract_token.py xxx.har   # 写入 data/context.json
    python crawl.py                   # 用新 token 拉最新关注列表 + 全量商品
-   python build_page.py              # 重新生成 index.html
+   python build_page.py              # 重建页面数据产物（index.html 人工维护，不由脚本生成）
    git add data/follow_shops.json data/status.json index.html
    git commit -m "更新关注列表"
    git push
@@ -104,3 +104,12 @@ GitHub 上**没有你的 token**（`context.json` 被 `.gitignore` 挡住、也�
 
 - **推荐·手动**：按 7.2 每隔一段时间本地跑一次并 push（token 一般能活几周到几个月）。安全，不泄露账号。
 - **进阶·自动**：把 token 存成 GitHub Secret 注入 Actions（方便但有风险——一旦仓库或日志泄露，token 等于账号密码外泄）。如需这么做再单独找 AI 配置，务必清楚风险。
+
+---
+
+## 八、屏蔽店铺
+
+不想同步 / 不想看到的店，写进 **`data/blocklist.json`**。
+这份名单提交进仓库，所以**电脑和手机看到的屏蔽结果完全一致**，爬虫也会直接跳过这些店不再抓取。
+
+完整说明见 **[BLOCKLIST_GUIDE.md](BLOCKLIST_GUIDE.md)**。

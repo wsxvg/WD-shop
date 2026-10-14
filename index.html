@@ -2,310 +2,665 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7f5f2">
+<meta name="description" content="我关注的微店 · 全量在售商品聚合浏览">
 <link rel="preconnect" href="https://si.geilicdn.com" crossorigin>
 <link rel="dns-prefetch" href="https://si.geilicdn.com">
 <title>我关注的微店</title>
 <style>
-  :root{
-    --bg:#f5f6f8; --card:#fff; --text:#1f2329; --sub:#8a9099;
-    --line:#ebedf0; --brand:#ff5b4a; --brand-soft:#fff0ee; --chip:#eef0f3;
-    --shadow:0 1px 3px rgba(0,0,0,.06),0 6px 18px rgba(0,0,0,.04);
+/* ============================================================
+   设计系统
+   暖白纸感底 + 克制朱红点缀；商品图是主角，界面退到背景里。
+   ============================================================ */
+:root{
+  --paper:#f7f5f2; --surface:#fff; --surface-2:#fbfaf8;
+  --ink:#191b1f; --ink-2:#585e69; --ink-3:#98a0ab;
+  --line:#e7e3dd; --line-2:#f0ede8;
+  --brand:#e23744; --brand-soft:#fdecee;
+  --ok:#1f9d63; --ok-soft:#e8f6ef;
+  --amber:#b5761a; --amber-soft:#fdf3e2;
+  --r-lg:16px; --r-md:10px; --r-sm:7px;
+  --sh-1:0 1px 2px rgba(25,27,31,.05);
+  --sh-2:0 10px 28px -10px rgba(25,27,31,.18), 0 2px 6px rgba(25,27,31,.04);
+  --ctrl-h:38px;
+  --font:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB",
+         "Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;font-family:var(--font);background:var(--paper);color:var(--ink);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-variant-numeric:tabular-nums;
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;}
+img{display:block;max-width:100%;}
+.hide{display:none!important;}
+
+/* ---------- 顶栏 ---------- */
+.topbar{background:var(--surface);border-bottom:1px solid var(--line);}
+.topbar-in{max-width:1240px;margin:0 auto;padding:14px 20px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:11px;min-width:0;flex:1;}
+.brand-mark{
+  width:38px;height:38px;border-radius:11px;flex:none;
+  background:linear-gradient(150deg,var(--brand),#f2735c);
+  color:#fff;display:grid;place-items:center;
+  font-size:12px;font-weight:800;letter-spacing:.3px;
+}
+.brand h1{margin:0;font-size:17px;font-weight:700;letter-spacing:-.2px;line-height:1.25;}
+.brand-sub{margin:2px 0 0;font-size:12.5px;color:var(--ink-3);line-height:1.4;}
+.brand-sub b{color:var(--ink-2);font-weight:600;}
+/* #brandSubSm 默认隐藏，移动端由媒体查询接管（见文件末尾） */
+#brandSubSm{display:none;}
+.tb-actions{display:flex;gap:8px;align-items:center;flex:none;}
+.sm-only{display:none;}
+.drawer-mask{display:none;}
+
+/* ---------- 按钮 ---------- */
+.btn{
+  height:var(--ctrl-h);padding:0 14px;border-radius:var(--r-md);
+  border:1px solid var(--line);background:var(--surface);
+  font-size:13.5px;font-weight:600;color:var(--ink-2);
+  display:inline-flex;align-items:center;gap:6px;
+  transition:border-color .15s,color .15s,background .15s;
+}
+.btn:hover{border-color:#cfc9c0;color:var(--ink);}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff;}
+.btn-primary:hover{background:#cd2b38;border-color:#cd2b38;color:#fff;}
+.btn-icon{padding:0 11px;}
+.btn-x{
+  border:1px solid transparent;background:transparent;color:var(--ink-3);
+  font-size:12px;font-weight:600;padding:4px 8px;border-radius:var(--r-sm);
+  transition:all .15s;white-space:nowrap;
+}
+.btn-x:hover{background:var(--brand-soft);color:var(--brand);}
+.badge-n{
+  min-width:17px;height:17px;padding:0 5px;border-radius:999px;
+  background:var(--brand);color:#fff;font-size:11px;font-weight:700;
+  display:none;place-items:center;line-height:1;
+}
+.badge-n.on{display:grid;}
+
+/* ---------- 提示条 ---------- */
+.banner{
+  max-width:1240px;margin:14px auto 0;padding:10px 14px;
+  background:var(--amber-soft);border:1px solid #f0dcb8;color:#8a5a10;
+  border-radius:var(--r-md);font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ---------- 控制区（吸顶） ---------- */
+.controls{
+  position:sticky;top:0;z-index:40;margin-top:16px;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+}
+/* 毛玻璃只给宽屏用。backdrop-filter 会为 position:fixed 后代创建包含块，
+   移动端筛选抽屉就 fixed 在这个吸顶条里而不是视口，必须避开。 */
+@media (min-width:861px){
+  .controls{background:rgba(247,245,242,.86);backdrop-filter:saturate(1.6) blur(12px);
+    -webkit-backdrop-filter:saturate(1.6) blur(12px);}
+}
+.controls-in{max-width:1240px;margin:0 auto;padding:10px 20px;}
+.ctl-row{display:flex;gap:10px;align-items:center;}
+.ctl-row + .ctl-row{margin-top:9px;}
+
+/* 分段控件 */
+.seg{display:inline-flex;background:#ebe7e1;border-radius:var(--r-md);padding:3px;gap:2px;flex:none;}
+.seg button{
+  border:0;background:transparent;padding:0 16px;height:32px;border-radius:8px;
+  font-size:13.5px;font-weight:600;color:var(--ink-2);transition:all .18s;white-space:nowrap;
+}
+.seg button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:var(--sh-1);}
+
+/* 搜索 */
+.search{position:relative;flex:1;min-width:0;}
+.search input{
+  width:100%;height:var(--ctrl-h);padding:0 34px 0 34px;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface);color:var(--ink);font-size:14px;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.search input::placeholder{color:var(--ink-3);}
+.search input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft);}
+.search .s-ico{
+  position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  color:var(--ink-3);pointer-events:none;display:flex;
+}
+.search .s-clear{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;color:var(--ink-3);font-size:16px;
+  line-height:1;padding:4px 6px;border-radius:6px;display:none;
+}
+.search .s-clear:hover{background:var(--line-2);color:var(--ink);}
+.search.has-value .s-clear{display:block;}
+
+input[type=number],select{
+  height:var(--ctrl-h);padding:0 10px;font-size:13.5px;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s;
+}
+input[type=number]:focus,select:focus{border-color:var(--brand);}
+input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
+/* 价格区间：两个输入框锁在同一个盒子里，窄屏换行时不会被拆散 */
+.range{display:inline-flex;align-items:center;gap:2px;height:var(--ctrl-h);
+  padding:0 4px;border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface);transition:border-color .15s;}
+.range:focus-within{border-color:var(--brand);}
+.range input{width:62px;height:calc(var(--ctrl-h) - 2px);border:0;background:transparent;padding:0 6px;}
+.range input:focus{outline:none;}
+.range-sep{color:var(--ink-3);font-size:13px;}
+.field-lbl{font-size:12.5px;color:var(--ink-3);font-weight:600;white-space:nowrap;}
+
+.check{
+  display:inline-flex;align-items:center;gap:6px;height:var(--ctrl-h);
+  padding:0 11px;border:1px solid var(--line);border-radius:var(--r-md);
+  background:var(--surface);font-size:13px;font-weight:600;color:var(--ink-2);
+  cursor:pointer;user-select:none;white-space:nowrap;transition:all .15s;
+}
+.check:hover{border-color:#cfc9c0;}
+.check input{accent-color:var(--brand);margin:0;}
+.check.on{background:var(--brand-soft);border-color:#f7ccd1;color:var(--brand);}
+
+/* 价格快捷 + 品类：横向滚动，移动端不换行不占高度 */
+.scrollrow{
+  display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;
+  scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;
+}
+.scrollrow::-webkit-scrollbar{display:none;}
+/* 价格 + 品类合并成一条横向滚动带：省掉整整一行竖向空间 */
+.facet-group{display:flex;gap:7px;flex:none;}
+.facet-div{width:1px;background:var(--line);flex:none;margin:4px 3px;}
+.pill{
+  flex:none;padding:6px 13px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);font-size:12.5px;font-weight:600;color:var(--ink-2);
+  user-select:none;white-space:nowrap;transition:all .15s;
+}
+.pill:hover{border-color:var(--brand);color:var(--brand);}
+.pill.on{background:var(--ink);border-color:var(--ink);color:#fff;}
+
+/* ---------- 网格 ---------- */
+.grid{display:grid;gap:16px;padding:18px 0 8px;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px 72px;}
+.g-product{grid-template-columns:repeat(auto-fill,minmax(178px,1fr));}
+.g-shop{display:flex;flex-direction:column;gap:10px;}
+
+/* ---------- 商品卡 ---------- */
+.pcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--sh-1);display:flex;flex-direction:column;
+  content-visibility:auto;contain-intrinsic-size:auto 330px;
+  transition:transform .2s cubic-bezier(.2,.8,.3,1),box-shadow .2s,border-color .2s;
+}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--sh-2);border-color:#ddd7cf;}
+.pimg-wrap{position:relative;aspect-ratio:1/1;background:var(--line-2);overflow:hidden;}
+.pimg{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;}
+.pimg.loaded{opacity:1;}
+.pbadges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;
+  gap:4px;align-items:flex-start;pointer-events:none;}
+.flag{font-size:10.5px;font-weight:700;padding:2.5px 7px;border-radius:6px;
+  color:#fff;line-height:1.45;letter-spacing:.2px;
+  box-shadow:0 1px 3px rgba(0,0,0,.16);}
+.flag-cut{background:var(--brand);}
+.flag-ship{background:var(--ok);}
+.flag-new{background:var(--amber);}
+.flag-out{
+  position:absolute;top:8px;right:8px;background:rgba(25,27,31,.76);color:#fff;
+  font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px;
+  letter-spacing:.5px;backdrop-filter:blur(3px);
+}
+.pcard.dim{filter:grayscale(.7);opacity:.6;}
+.pcard.dim:hover{filter:grayscale(.4);opacity:.85;}
+.pbody{padding:10px 12px 12px;display:flex;flex-direction:column;gap:7px;flex:1;}
+.pname{
+  font-size:13px;line-height:1.4;font-weight:500;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;min-height:36px;
+}
+.prow{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
+.pprice{color:var(--brand);font-weight:700;font-size:16.5px;letter-spacing:-.3px;}
+.pprice-o{font-size:12px;color:var(--ink-3);text-decoration:line-through;}
+.pmeta{font-size:11.5px;color:var(--ink-3);display:flex;gap:5px;flex-wrap:wrap;}
+.pmeta .sep{color:#d8d3cc;}
+.ptags{display:flex;gap:4px;flex-wrap:wrap;}
+.ptag{font-size:10px;padding:1.5px 6px;border-radius:5px;
+  background:var(--brand-soft);color:var(--brand);font-weight:600;white-space:nowrap;}
+.pfoot{margin-top:auto;padding-top:4px;}
+.pmerchant{
+  display:inline-flex;align-items:center;gap:6px;max-width:100%;
+  font-size:11.5px;color:var(--ink-2);background:var(--surface-2);
+  border:1px solid var(--line-2);padding:3px 4px 3px 3px;border-radius:999px;
+}
+.pmerchant img{width:17px;height:17px;border-radius:50%;object-fit:cover;flex:none;background:var(--line-2);}
+.pmerchant .m-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ---------- 店铺行 ---------- */
+/* grid-template-areas：宽屏一行铺开，手机自动折成「头 / 数据」两行 */
+.shop{
+  display:grid;gap:0 16px;align-items:center;padding:12px 16px;
+  grid-template-columns:44px minmax(0,1fr) auto auto;
+  grid-template-areas:"av id stats act";
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);transition:border-color .2s,box-shadow .2s;
+}
+.shop:hover{border-color:#ddd7cf;box-shadow:var(--sh-2);}
+.shop-av{grid-area:av;width:44px;height:44px;border-radius:12px;
+  object-fit:cover;background:var(--line-2);flex:none;}
+.shop-id{grid-area:id;min-width:0;}
+.shop-name{font-size:15px;font-weight:700;letter-spacing:-.2px;line-height:1.35;
+  word-break:break-word;}
+.shop-name a:hover{color:var(--brand);}
+.tag{
+  display:inline-block;vertical-align:2px;margin-left:7px;
+  font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:5px;
+  background:var(--amber-soft);color:var(--amber);letter-spacing:.2px;
+}
+.shop-sub{font-size:11.5px;color:var(--ink-3);margin-top:3px;
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.shop-sub .sep{color:#dcd7d0;}
+.shop-sub .pref{white-space:nowrap;}
+.shop-stats{grid-area:stats;display:flex;gap:22px;}
+.shop-stats span{display:flex;flex-direction:column;gap:1px;min-width:54px;}
+.shop-stats i{font-size:11px;color:var(--ink-3);font-style:normal;}
+.shop-stats b{font-size:14px;color:var(--ink);font-weight:700;line-height:1.2;}
+.shop-act{grid-area:act;display:flex;align-items:center;gap:4px;}
+.shop-go{
+  display:inline-flex;align-items:center;gap:3px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;
+  transition:all .15s;white-space:nowrap;
+}
+.shop-go:hover{border-color:var(--brand);color:var(--brand);background:var(--brand-soft);}
+
+/* ---------- 空态 / 骨架 ---------- */
+.empty{text-align:center;color:var(--ink-3);padding:72px 20px;font-size:14px;line-height:1.9;}
+.empty b{display:block;color:var(--ink-2);font-size:15px;margin-bottom:4px;font-weight:600;}
+.skel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;}
+.skel .s-img{aspect-ratio:1/1;background:linear-gradient(100deg,#efece7 30%,#f7f5f2 50%,#efece7 70%);
+  background-size:220% 100%;animation:shimmer 1.3s infinite linear;}
+.skel .s-b{padding:12px;display:flex;flex-direction:column;gap:8px;}
+.skel .s-l{height:11px;border-radius:4px;background:#eeeae4;}
+.skel .s-l.w80{width:80%;}.skel .s-l.w45{width:45%;}.skel .s-l.w30{width:30%;height:15px;}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+
+.foot-stat{
+  text-align:center;color:var(--ink-3);font-size:12.5px;padding:26px 0 0;
+  border-top:1px solid var(--line-2);margin-top:24px;line-height:2;
+}
+.foot-stat .lk{border:0;background:transparent;color:var(--brand);font-size:12.5px;font-weight:700;padding:0;}
+
+/* 返回顶部 */
+.totop{
+  position:fixed;right:20px;bottom:26px;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  box-shadow:var(--sh-2);display:grid;place-items:center;font-size:17px;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:45;
+}
+.totop.on{opacity:1;pointer-events:auto;}
+.totop:hover{color:var(--brand);border-color:var(--brand);transform:translateY(-2px);}
+
+/* ---------- 弹层 ---------- */
+.mask{
+  position:fixed;inset:0;background:rgba(20,18,16,.45);backdrop-filter:blur(2px);
+  z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.mask.on{opacity:1;pointer-events:auto;}
+.sheet{
+  background:var(--surface);border-radius:18px;width:100%;max-width:470px;
+  max-height:82vh;overflow:auto;box-shadow:0 24px 64px -12px rgba(0,0,0,.32);
+  transform:translateY(14px) scale(.985);transition:transform .24s cubic-bezier(.2,.8,.3,1);
+  display:flex;flex-direction:column;
+}
+.mask.on .sheet{transform:none;}
+.sheet-head{
+  display:flex;align-items:center;gap:10px;padding:16px 18px 12px;
+  border-bottom:1px solid var(--line-2);position:sticky;top:0;background:var(--surface);z-index:2;
+}
+.sheet-head h2{margin:0;font-size:15.5px;font-weight:700;letter-spacing:-.2px;flex:1;}
+.sheet-close{border:0;background:var(--surface-2);color:var(--ink-2);
+  width:28px;height:28px;border-radius:8px;font-size:15px;line-height:1;flex:none;}
+.sheet-close:hover{background:var(--line-2);color:var(--ink);}
+.sheet-body{padding:14px 18px 18px;}
+
+/* 屏蔽分组 */
+.blk-group + .blk-group{margin-top:16px;}
+.blk-title{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;
+  color:var(--ink-2);margin-bottom:4px;}
+.blk-title .tagno{font-size:11px;color:var(--ink-3);font-weight:600;}
+.blk-desc{font-size:12px;color:var(--ink-3);line-height:1.75;margin-bottom:9px;}
+.blk-item{display:flex;align-items:center;gap:10px;padding:9px 11px;
+  background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r-md);margin-bottom:6px;}
+.blk-item .bi-name{flex:1;min-width:0;font-size:13px;font-weight:600;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.blk-item .bi-meta{font-size:11.5px;color:var(--ink-3);font-weight:400;flex:none;}
+.blk-item .bi-why{font-size:10.5px;color:var(--amber);background:var(--amber-soft);
+  padding:2px 6px;border-radius:5px;font-weight:600;flex:none;}
+.blk-none{font-size:12.5px;color:var(--ink-3);padding:10px 2px;line-height:1.7;}
+
+/* 关键词规则 */
+.rulebox{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.rule{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  background:var(--amber-soft);color:var(--amber);padding:4px 5px 4px 10px;border-radius:999px;}
+.rule button{border:0;background:transparent;color:inherit;font-size:13px;
+  line-height:1;padding:2px 4px;border-radius:50%;opacity:.65;}
+.rule button:hover{opacity:1;background:rgba(0,0,0,.08);}
+.rule-add{border:1px dashed var(--line);background:transparent;color:var(--ink-3);
+  font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;}
+.rule-add:hover{border-color:var(--brand);color:var(--brand);}
+
+.export-ta{
+  width:100%;height:210px;margin-top:10px;padding:11px 12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:11.5px;line-height:1.65;color:var(--ink);resize:vertical;
+  border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface-2);outline:none;
+}
+.export-ta:focus{border-color:var(--brand);}
+.note{font-size:12px;color:var(--ink-3);line-height:1.85;background:var(--surface-2);
+  border:1px solid var(--line-2);border-radius:var(--r-md);padding:10px 12px;margin-top:10px;}
+.note code{background:#f1ede7;padding:1px 5px;border-radius:4px;font-size:11.5px;}
+.sheet-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:32px;transform:translate(-50%,14px);z-index:200;
+  background:var(--ink);color:#fff;font-size:13px;font-weight:500;
+  padding:11px 15px;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.3);
+  display:flex;align-items:center;gap:12px;max-width:92vw;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;
+}
+#toast.on{opacity:1;pointer-events:auto;transform:translate(-50%,0);}
+#toast .t-name{max-width:46vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;}
+#toast .t-act{color:#8ef0b4;font-weight:700;cursor:pointer;flex:none;font-size:13px;}
+#toast .t-act:hover{text-decoration:underline;}
+
+/* ============================================================
+   移动端
+   ============================================================ */
+@media (max-width:860px){
+  .wrap{padding:0 12px 60px;}
+  .controls-in{padding:8px 12px;}
+  .topbar-in{padding:11px 12px;}
+
+  /* 筛选区折叠成底部抽屉 */
+  .filter-panel{display:none;}
+  .drawer-mask{display:block;position:fixed;inset:0;z-index:85;
+    background:rgba(20,18,16,.35);opacity:0;pointer-events:none;transition:opacity .22s;}
+  .drawer-mask.on{opacity:1;pointer-events:auto;}
+  .filter-panel.open{
+    display:flex;flex-direction:column;gap:10px;
+    position:fixed;left:0;right:0;bottom:0;z-index:90;
+    background:var(--surface);border-top:1px solid var(--line);
+    border-radius:18px 18px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));
+    box-shadow:0 -12px 40px -8px rgba(0,0,0,.24);
+    max-height:78vh;overflow:auto;animation:sheetUp .24s cubic-bezier(.2,.8,.3,1);
   }
-  *{box-sizing:border-box;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
-    background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px;}
-  header h1{font-size:22px;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
-  header .stat{color:var(--sub);font-size:13px;margin-bottom:16px;}
-  .tabs{display:flex;gap:8px;margin-bottom:14px;}
-  .tab{padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);
-    cursor:pointer;font-size:14px;font-weight:600;color:var(--sub);}
-  .tab.active{background:var(--brand);color:#fff;border-color:var(--brand);}
-  .toolbar{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;
-    box-shadow:var(--shadow);margin-bottom:18px;position:sticky;top:0;z-index:5;}
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-  .row + .row{margin-top:10px;}
-  input[type=text],input[type=number],select{font-size:14px;padding:9px 12px;border:1px solid var(--line);
-    border-radius:10px;background:#fafbfc;color:var(--text);outline:none;transition:border-color .15s;}
-  input:focus,select:focus{border-color:var(--brand);background:#fff;}
-  #search,#pSearch{flex:1;min-width:200px;}
-  .toggle{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);cursor:pointer;
-    user-select:none;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fafbfc;}
-  .toggle input{accent-color:var(--brand);}
-  label.lbl{font-size:12px;color:var(--sub);}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px;}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;
-    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;}
-  .card.link{cursor:pointer;text-decoration:none;color:inherit;}
-  .card.link:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.08),0 12px 28px rgba(0,0,0,.06);}
-  .top{display:flex;gap:11px;align-items:center;}
-  .avatar{width:48px;height:48px;border-radius:12px;object-fit:cover;background:var(--chip);flex:none;}
-  .name{font-weight:600;font-size:15px;line-height:1.25;word-break:break-word;}
-  .sid{font-size:11px;color:var(--sub);margin-top:2px;}
-  .badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-weight:600;}
-  .badges{display:flex;gap:6px;flex-wrap:wrap;}
-  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:12px;color:var(--sub);}
-  .metrics b{color:var(--text);font-weight:600;font-size:13px;display:block;}
-  .items{display:none;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px;}
-  .items.open{display:flex;}
-  .item{display:flex;gap:8px;align-items:center;text-decoration:none;color:inherit;}
-  .item img{width:42px;height:42px;border-radius:8px;object-fit:cover;background:var(--chip);flex:none;}
-  .item .it-name{font-size:12px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .item .it-price{font-size:12px;color:var(--brand);font-weight:600;white-space:nowrap;}
-  .toggle-items{font-size:12px;color:var(--brand);cursor:pointer;align-self:flex-start;font-weight:600;}
-  /* 商品视角 */
-  .pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
-    box-shadow:var(--shadow);display:flex;flex-direction:column;text-decoration:none;color:inherit;
-    content-visibility:auto;contain-intrinsic-size:auto 280px;}
-  .pcard:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.08),0 12px 28px rgba(0,0,0,.06);}
-  .pcard .pimg{width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--chip);
-    transition:opacity .3s;opacity:0;}
-  .pcard .pimg.loaded{opacity:1;}
-  .pcard .pname{font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px;}
-  .pcard .pprice{color:var(--brand);font-weight:700;font-size:16px;}
-  .pcard .pmerchant{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);
-    background:var(--chip);padding:4px 8px;border-radius:999px;align-self:flex-start;}
-  .pcard .pmerchant img{width:18px;height:18px;border-radius:5px;object-fit:cover;}
-  .empty{text-align:center;color:var(--sub);padding:60px 0;font-size:14px;}
-  .banner{background:#fff4e5;border:1px solid #ffd8a8;color:#b54708;border-radius:12px;
-    padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-  .count{font-weight:600;color:var(--text);}
-  .hide{display:none!important;}
-  .sentinel{height:1px;}
-  /* 商品卡片升级 */
-  .pimg-wrap{position:relative;overflow:hidden;}
-  .pbadges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;
-    gap:4px;align-items:flex-start;pointer-events:none;}
-  .pbadge-discount,.pbadge-freeship,.pbadge-new{
-    font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;color:#fff;line-height:1.5;}
-  .pbadge-discount{background:var(--brand);}
-  .pbadge-freeship{background:#07c160;}
-  .pbadge-new{background:#ff8f1f;}
-  .pcard.soldout{filter:grayscale(.85);opacity:.62;}
-  .pcard.soldout:hover{filter:grayscale(.55);opacity:.85;}
-  .pbadge-soldout{position:absolute;top:8px;right:8px;background:rgba(31,35,41,.8);color:#fff;
-    font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px;letter-spacing:1px;
-    backdrop-filter:blur(2px);}
-  .pprice-row{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
-  .pprice{color:var(--brand);font-weight:700;font-size:16px;}
-  .pprice-original{font-size:12px;color:var(--sub);text-decoration:line-through;}
-  .pmeta{font-size:11px;color:var(--sub);display:flex;gap:4px;flex-wrap:wrap;}
-  .pmeta .dot{color:#d0d3d8;}
-  .ptags{display:flex;gap:4px;flex-wrap:wrap;}
-  .ptag{font-size:10px;padding:1px 6px;border-radius:4px;background:var(--brand-soft);color:var(--brand);font-weight:600;white-space:nowrap;}
-  .pbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-  .pbtn{font-size:12px;padding:5px 14px;border-radius:999px;border:1px solid var(--line);
-    background:var(--card);cursor:pointer;color:var(--sub);user-select:none;transition:all .15s;white-space:nowrap;}
-  .pbtn:hover{border-color:var(--brand);color:var(--brand);}
-  .pbtn.active{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:600;}
-  .cate-btns{display:flex;gap:6px;flex-wrap:wrap;padding:4px 0;border-top:1px solid var(--line);margin-top:4px;}
-  .cate-btn{font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid var(--line);
-    background:var(--card);cursor:pointer;color:var(--sub);user-select:none;transition:all .15s;white-space:nowrap;}
-  .cate-btn:hover{border-color:var(--brand);color:var(--brand);}
-  .cate-btn.active{background:var(--text);color:#fff;border-color:var(--text);font-weight:600;}
-  /* 屏蔽 */
-  .block-link{font-size:12px;color:var(--sub);cursor:pointer;font-weight:600;user-select:none;}
-  .block-link:hover{color:var(--brand);}
-  .pmerchant .block-link{font-size:11px;margin-left:2px;padding:0 3px;border-radius:4px;}
-  .pmerchant .block-link:hover{background:var(--brand-soft);}
-  #manageMask{position:fixed;inset:0;background:rgba(15,20,26,.45);display:flex;align-items:center;
-    justify-content:center;z-index:100;padding:16px;}
-  .manage-box{background:#fff;border-radius:16px;padding:18px;max-width:440px;width:100%;
-    max-height:75vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}
-  .manage-head{font-weight:700;font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
-  .manage-head .close{cursor:pointer;color:var(--sub);font-size:16px;padding:2px 6px;}
-  .manage-head .close:hover{color:var(--text);}
-  .manage-note{font-size:12px;color:var(--sub);background:#f6f7f9;border-radius:8px;padding:8px 10px;margin-bottom:10px;line-height:1.7;}
-  .manage-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;}
-  .manage-item .mi-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .manage-item .mi-restore{color:var(--brand);cursor:pointer;font-size:12px;font-weight:600;flex:none;}
-  .manage-actions{margin-top:12px;display:flex;gap:8px;justify-content:flex-end;}
-  .manage-btn{display:inline-block;background:var(--brand-soft);color:var(--brand);font-size:12px;
-    font-weight:700;padding:3px 10px;border-radius:999px;cursor:pointer;vertical-align:middle;}
-  .manage-btn:hover{background:var(--brand);color:#fff;}
-  #toast{position:fixed;left:50%;bottom:40px;transform:translateX(-50%);z-index:200;
-    background:var(--text);color:#fff;font-size:13px;padding:10px 14px;border-radius:10px;
-    box-shadow:0 8px 30px rgba(0,0,0,.3);display:flex;align-items:center;gap:12px;
-    max-width:90vw;opacity:0;pointer-events:none;transition:opacity .2s;}
-  #toast.show{opacity:1;pointer-events:auto;}
-  #toast .t-name{max-width:50vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;}
-  #toast .t-act{color:#7ee7a2;font-weight:700;cursor:pointer;flex:none;}
-  #toast .t-act:hover{text-decoration:underline;}
-  /* 移动端优化 */
-  @media (max-width:480px){
-    .wrap{padding:12px 8px 40px;}
-    header h1{font-size:18px;}
-    .grid{grid-template-columns:repeat(3,1fr);gap:6px;}
-    .pcard .pbody{padding:6px 8px;gap:4px;}
-    .pcard .pname{font-size:11px;min-height:28px;-webkit-line-clamp:2;}
-    .pcard .pprice{font-size:13px;}
-    .pcard .pmerchant{font-size:10px;padding:2px 6px;}
-    .pcard .pmerchant img{width:14px;height:14px;}
-    .pprice-row{gap:3px;}
-    .pprice-original{font-size:10px;}
-    .pmeta{font-size:10px;}
-    .ptag{font-size:9px;padding:1px 4px;}
-    .pbadge-discount{font-size:10px;padding:1px 6px;}
-    .toolbar{padding:10px;border-radius:10px;}
-    .toolbar .row{gap:6px;}
-    input[type=text],input[type=number],select{font-size:13px;padding:7px 10px;}
-    #search,#pSearch{min-width:120px;}
-    .pbtn{font-size:11px;padding:4px 10px;}
-    .cate-btn{font-size:11px;padding:3px 10px;}
-    .tabs{gap:6px;}
-    .tab{font-size:13px;padding:6px 12px;}
-    .card{padding:10px;}
-    .card .avatar{width:40px;height:40px;}
-    .card .name{font-size:13px;}
-    .badges{gap:4px;}
-    .badge{font-size:10px;padding:2px 6px;}
-    .metrics{font-size:11px;}
-    .metrics b{font-size:12px;}
-    .pbtns{gap:4px;}
-  }
+  @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+  .filter-panel.open .ctl-row{flex-wrap:wrap;}
+  .filter-panel.open .field-lbl{flex:none;}
+
+  .grid{gap:9px;padding:12px 0 6px;}
+  .g-product{grid-template-columns:repeat(2,1fr);}
+
+  .pcard{border-radius:13px;contain-intrinsic-size:auto 250px;}
+  .pbody{padding:8px 9px 10px;gap:5px;}
+  .pname{font-size:12px;min-height:32px;line-height:1.38;}
+  .pprice{font-size:15px;}
+  .pprice-o{font-size:11px;}
+  .pmeta{font-size:10.5px;gap:4px;}
+  .ptag{font-size:9px;padding:1px 5px;}
+  .flag{font-size:10px;padding:2px 6px;}
+  .pmerchant{font-size:10.5px;}
+  .pmerchant img{width:15px;height:15px;}
+
+  /* 店铺行在窄屏折成「头像+名称+操作 / 数据」两行，不会被挤成一条细缝 */
+  .shop{padding:11px 12px;border-radius:13px;row-gap:9px;column-gap:11px;
+    grid-template-columns:40px minmax(0,1fr) auto;
+    grid-template-areas:"av id act" "av stats stats";}
+  .shop-av{width:40px;height:40px;border-radius:11px;align-self:start;}
+  .shop-name{font-size:14.5px;}
+  /* 「关注于」在窄屏是废话（日期本身已够自明），去掉后日期才不会被截断 */
+  .shop-sub{font-size:11px;margin-top:2px;gap:3px;flex-wrap:nowrap;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap;max-width:100%;}
+  .shop-sub .pref{display:none;}
+  .shop-stats{gap:14px;padding-left:2px;}
+  .shop-stats span{flex-direction:row;align-items:baseline;gap:4px;}
+  .shop-stats i{font-size:11px;}
+  .shop-stats b{font-size:13px;}
+  .shop-go{padding:5px 10px;font-size:12px;}
+
+  .totop{right:12px;bottom:16px;width:38px;height:38px;}
+  .sheet{max-width:100%;max-height:88vh;border-radius:18px 18px 0 0;align-self:flex-end;}
+  .mask{padding:0;align-items:flex-end;}
+  .brand h1{font-size:16px;}
+  .brand-sub{font-size:11.5px;}
+  /* 标题下换成紧凑版统计，避免在窄屏折成三行 */
+  #brandSub{display:none;}
+  #brandSubSm{display:block;font-size:11.5px;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+  .lg-only{display:none;}
+  .sm-only{display:inline;}
+  #openManage{padding:0 11px;}
+}
+@media (max-width:400px){
+  .g-product{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .shop-stats{gap:10px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important;}
+}
 </style>
 </head>
 <body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-mark">WD</div>
+      <div>
+        <h1>我关注的微店</h1>
+        <p class="brand-sub" id="brandSub">正在加载数据…</p>
+        <p class="brand-sub" id="brandSubSm">正在加载…</p>
+      </div>
+    </div>
+    <div class="tb-actions">
+      <button class="btn" id="openManage">
+        <span class="lg-only">屏蔽管理</span><span class="sm-only">屏蔽</span>
+        <span class="badge-n" id="blockBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="banner hide" id="tokenWarn">
+  Token 已过期，暂时无法发现新关注的店铺（已爬取的商品数据不受影响）
+</div>
+
+<div class="controls" id="controls">
+  <div class="controls-in">
+
+    <div class="ctl-row">
+      <div class="seg" role="tablist" aria-label="视图切换">
+        <button role="tab" data-view="shop" aria-selected="false">店铺</button>
+        <button role="tab" data-view="product" aria-selected="true">商品</button>
+      </div>
+      <div class="search" id="searchWrap">
+        <span class="s-ico" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"
+          stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg></span>
+        <input type="text" id="q" placeholder="搜索商品名…" autocomplete="off" aria-label="搜索">
+        <button class="s-clear" id="qClear" aria-label="清空搜索">✕</button>
+      </div>
+      <button class="btn btn-icon" id="openFilters" style="display:none">
+        筛选 <span class="badge-n" id="filterBadge">0</span>
+      </button>
+    </div>
+
+    <div class="filter-panel" id="filterPanel">
+
+      <!-- 店铺视角筛选 -->
+      <div class="ctl-row" data-for="shop">
+        <select id="sort" aria-label="排序">
+          <option value="followTime">最近关注</option>
+          <option value="itemCount">商品最多</option>
+          <option value="followCount">粉丝最多</option>
+          <option value="turningRate">转化最高</option>
+          <option value="name">名称 A→Z</option>
+        </select>
+        <label class="check" id="fItemsWrap"><input type="checkbox" id="fItems">有在售商品</label>
+        <span class="field-lbl">粉丝≥</span><input type="number" id="fMinFans" placeholder="0" min="0" aria-label="最低粉丝">
+        <span class="field-lbl">转化≥</span><input type="number" id="fMinRate" placeholder="0" min="0" step="0.01" aria-label="最低转化率">
+      </div>
+
+      <!-- 商品视角筛选 -->
+      <div class="ctl-row" data-for="product">
+        <select id="pMerchant" aria-label="商家"><option value="">全部商家</option></select>
+        <select id="pSort" aria-label="排序">
+          <option value="newest">最新上架</option>
+          <option value="sold">销量最高</option>
+          <option value="cut">折扣力度</option>
+          <option value="priceAsc">价格从低到高</option>
+          <option value="priceDesc">价格从高到低</option>
+          <option value="shop">按店铺</option>
+        </select>
+        <span class="range">
+          <input type="number" id="pMin" placeholder="最低" min="0" aria-label="最低价">
+          <span class="range-sep">–</span>
+          <input type="number" id="pMax" placeholder="最高" min="0" aria-label="最高价">
+        </span>
+        <label class="check" id="pHideSoldWrap"><input type="checkbox" id="pHideSold">隐藏售罄</label>
+        <label class="check" id="pFreeShipWrap"><input type="checkbox" id="pFreeShip">仅包邮</label>
+        <label class="check" id="pNewWrap"><input type="checkbox" id="pNew">近14天上新</label>
+      </div>
+
+      <div class="ctl-row" data-for="product">
+        <div class="scrollrow" id="facetRow">
+          <div class="facet-group" id="pricePills">
+            <span class="pill on" data-min="" data-max="">全部价格</span>
+            <span class="pill" data-min="0" data-max="50">¥50 以下</span>
+            <span class="pill" data-min="50" data-max="200">¥50–200</span>
+            <span class="pill" data-min="200" data-max="500">¥200–500</span>
+            <span class="pill" data-min="500" data-max="">¥500 以上</span>
+          </div>
+          <span class="facet-div"></span>
+          <div class="facet-group" id="cateBtns"></div>
+        </div>
+      </div>
+
+      <div class="ctl-row" style="display:none" id="fpDone">
+        <button class="btn btn-primary" style="flex:1;justify-content:center" id="fpApply">查看结果</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="drawer-mask" id="drawerMask"></div>
 <div class="wrap">
-  <header>
-    <h1>⭐ 我关注的微店</h1>
-    <div class="stat">数据来自微店抓包全量爬取 · 共 <span class="count" id="total">0</span> 个店铺 ·
-      其中在售 <span class="count" id="withItems">0</span> 个 · 商品 <span class="count" id="totalItems">0</span> 件
-      <span id="updatedAt"></span></div>
-  </header>
-
-  <div class="stat" id="blockBar" style="margin:-8px 0 14px">🚫 已隐藏 <span class="count" id="hiddenNum">0</span> 家 · <a id="manageLink" class="manage-btn">🛠 管理屏蔽 / 恢复</a></div>
-
-  <div id="tokenWarn" class="banner hide">⚠️ Token 已过期，无法获取新关注店铺，请及时更新（已爬取的商品数据不受影响）</div>
-
-  <div class="tabs">
-    <div class="tab" data-view="shop">🏪 店铺视角</div>
-    <div class="tab active" data-view="product">🛍 商品视角</div>
-  </div>
-
-  <!-- 店铺视角工具栏 -->
-  <div class="toolbar hide" id="shopBar">
-    <div class="row">
-      <input type="text" id="search" placeholder="🔍 搜索店铺名 / 店铺ID…">
-      <select id="sort">
-        <option value="followTime">最近关注</option>
-        <option value="followCount">粉丝最多</option>
-        <option value="turningRate">转化最高</option>
-        <option value="onShelfItemNum">在售最多</option>
-        <option value="name">名称 A→Z</option>
-      </select>
-    </div>
-    <div class="row">
-      <label class="toggle"><input type="checkbox" id="fItems"> 只看有在售商品</label>
-      <label class="lbl">粉丝≥</label>
-      <input type="number" id="fMinFans" placeholder="0" min="0" style="width:100px">
-      <label class="lbl">转化≥</label>
-      <input type="number" id="fMinRate" placeholder="0" min="0" step="0.01" style="width:90px">
-    </div>
-  </div>
-
-  <!-- 商品视角工具栏 -->
-  <div class="toolbar" id="productBar">
-    <div class="row">
-      <input type="text" id="pSearch" placeholder="🔍 搜索商品名…">
-      <select id="pMerchant"><option value="">全部商家</option></select>
-      <select id="pSort">
-        <option value="newest">最新上架</option>
-        <option value="sold">销量最高</option>
-        <option value="priceAsc">价格从低到高</option>
-        <option value="priceDesc">价格从高到低</option>
-      </select>
-    </div>
-    <div class="row">
-      <label class="lbl">价格 ¥</label>
-      <input type="number" id="pMin" placeholder="最低" min="0" style="width:100px">
-      <label class="lbl">~ ¥</label>
-      <input type="number" id="pMax" placeholder="最高" min="0" style="width:100px">
-      <label class="toggle"><input type="checkbox" id="pHideSold"> 隐藏售罄</label>
-      <label class="toggle"><input type="checkbox" id="pFreeShip"> 仅包邮</label>
-    </div>
-    <div class="row" id="priceBtns" style="padding-top:4px">
-      <span class="pbtn active" data-min="" data-max="">全部</span>
-      <span class="pbtn" data-min="0" data-max="50">&lt; ¥50</span>
-      <span class="pbtn" data-min="50" data-max="200">¥50-200</span>
-      <span class="pbtn" data-min="200" data-max="500">¥200-500</span>
-      <span class="pbtn" data-min="500" data-max="">&gt; ¥500</span>
-    </div>
-    <div class="cate-btns" id="cateBtns"></div>
-  </div>
-
-  <div class="grid" id="grid"></div>
-  <div id="sentinel" class="sentinel"></div>
-  <div class="empty hide" id="empty">没有符合条件的结果</div>
-  <div class="stat" id="visStat" style="margin-top:14px"></div>
+  <main class="grid g-product" id="grid"></main>
+  <div id="sentinel" style="height:1px"></div>
+  <div class="empty hide" id="empty"></div>
+  <div class="foot-stat" id="footStat"></div>
 </div>
 
-<!-- 屏蔽管理面板 -->
-<div id="manageMask" class="hide">
-  <div class="manage-box">
-    <div class="manage-head">🚫 屏蔽管理 <span class="close" id="closeManage">✕</span></div>
-    <div class="manage-note" id="deadNote"></div>
-    <div id="manageList"></div>
-    <div class="manage-actions"><span class="pbtn" id="clearBlocked">清空手动屏蔽名单</span></div>
+<button class="totop" id="toTop" aria-label="回到顶部">↑</button>
+
+<!-- 屏蔽管理 -->
+<div class="mask" id="manageMask" role="dialog" aria-modal="true" aria-labelledby="manageTitle">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 id="manageTitle">屏蔽管理</h2>
+      <button class="sheet-close" data-close="manageMask" aria-label="关闭">✕</button>
+    </div>
+    <div class="sheet-body">
+      <div class="blk-group">
+        <div class="blk-title">全局屏蔽 <span class="tagno" id="gCount"></span></div>
+        <div class="blk-desc">写在仓库 <code>data/blocklist.json</code> 里，爬虫不再抓取这些店，<b>所有设备一致</b>。</div>
+        <div id="globalList"></div>
+      </div>
+      <div class="blk-group">
+        <div class="blk-title">本机隐藏 <span class="tagno" id="lCount"></span></div>
+        <div class="blk-desc">只存在这台设备的浏览器里，仅用于临时不想看。换个设备访问依然可见。</div>
+        <div id="localList"></div>
+      </div>
+      <div class="blk-group">
+        <div class="blk-title">死店关键词 <span class="tagno" id="rCount"></span></div>
+        <div class="blk-desc">店铺名命中任一关键词即自动屏蔽（全局生效）。</div>
+        <div class="rulebox" id="ruleBox"></div>
+        <button class="rule-add" id="addRule">+ 添加关键词</button>
+      </div>
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="openExport">导出 blocklist.json</button>
+        <button class="btn" id="clearLocal">清空本机隐藏</button>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- 屏蔽即时提示 -->
-<div id="toast"><span>已屏蔽</span><span class="t-name" id="toastName"></span><span class="t-act" id="toastUndo">↩ 撤销</span></div>
+<!-- 导出 -->
+<div class="mask" id="exportMask" role="dialog" aria-modal="true" aria-labelledby="exportTitle">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 id="exportTitle">导出全局屏蔽名单</h2>
+      <button class="sheet-close" data-close="exportMask" aria-label="关闭">✕</button>
+    </div>
+    <div class="sheet-body">
+      <label class="check" id="includeLocalWrap" style="height:auto;padding:9px 11px;align-items:flex-start;white-space:normal">
+        <input type="checkbox" id="includeLocal" checked style="margin-top:2px">
+        <span>把「本机隐藏」的店铺也写进全局名单<br>
+          <small style="color:var(--ink-3);font-weight:400">勾选后它们将从所有设备消失并停止爬取</small>
+        </span>
+      </label>
+      <textarea class="export-ta" id="exportTa" spellcheck="false" readonly></textarea>
+      <div class="sheet-actions">
+        <button class="btn btn-primary" id="copyExport">复制到剪贴板</button>
+        <button class="btn" id="downloadExport">下载 blocklist.json</button>
+      </div>
+      <div class="note">
+        生效步骤：把上面的内容覆盖到 <code>data/blocklist.json</code>，然后
+        <code>git add data/blocklist.json && git commit -m "更新屏蔽名单" && git push</code>。
+        下一次爬取起，被屏蔽的店铺将不再被抓取，商品数据也不会再出现在页面里。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast">
+  <span>已加入本机隐藏</span><span class="t-name" id="toastName"></span><span class="t-act" id="toastUndo">撤销</span>
+</div>
 
 <script>
-const SHOPS = [];  // 数据将通过 fetch 异步加载
-const PRODUCTS = [];
-let TOTAL_SOLD = 0;  // 全量已售罄商品数
-// 品类快速筛选
-const CATE_RULES = [
-  { name: '短袖', kws: ['短袖','t恤','tee','体恤','短t'], exclude: ['长袖','长t'] },
-  { name: '长袖', kws: ['长袖','长t'], exclude: [] },
-  { name: '卫衣', kws: ['卫衣','hoodie','帽衫','连帽'], exclude: [] },
-  { name: '外套', kws: ['外套','夹克','风衣','大衣','棉服','冲锋衣','牛仔外套'], exclude: [] },
-  { name: '毛衣', kws: ['毛衣','针织','羊毛','开衫'], exclude: [] },
-  { name: '短裤', kws: ['短裤','热裤','沙滩裤'], exclude: ['长裤'] },
-  { name: '长裤', kws: ['长裤','休闲裤','工装裤','牛仔裤','西裤','阔腿裤','拖地裤'], exclude: ['短裤'] },
-  { name: '裙子', kws: ['裙子','连衣裙','半身裙','蓬蓬裙','仙女裙','百褶裙','小黑裙'], exclude: [] },
-  { name: '鞋子', kws: ['鞋','运动鞋','板鞋','帆布','拖鞋','凉鞋','靴子','德训鞋'], exclude: [] },
-  { name: '配饰', kws: ['配饰','项链','手链','耳环','戒指','手表','腰带','墨镜','帽子','包包','背包','袜子','眼镜'], exclude: [] },
-];
-(()=>{
-  const box = document.getElementById('cateBtns');
-  const all = document.createElement('span');
-  all.className = 'cate-btn active'; all.textContent = '全部'; all.dataset.cate = '';
-  box.appendChild(all);
-  CATE_RULES.forEach(c => {
-    const b = document.createElement('span');
-    b.className = 'cate-btn'; b.textContent = c.name; b.dataset.cate = c.name;
-    box.appendChild(b);
-  });
-})();
-function matchCategory(name, cate) {
-  if (!cate) return true;
-  const nl = name.toLowerCase();
-  const rule = CATE_RULES.find(c => c.name === cate);
-  if (!rule) return true;
-  // 先检查排除关键词（例：短袖中排除含"长袖"的商品）
-  if (rule.exclude && rule.exclude.some(kw => nl.includes(kw))) return false;
-  // 再检查匹配关键词
-  return rule.kws.some(kw => nl.includes(kw));
-}
+'use strict';
+/* ==========================================================================
+   数据层
+   ========================================================================== */
+const SHOPS = [];      // 店铺元数据（shops_index.json）
+const PRODUCTS = [];   // 全量商品（shops_products_*.json 分块）
+let BLOCKLIST = { shops: [], name_rules: [] };   // 全局屏蔽（blocklist.json）
+let LOCAL_KEY = 'wd_hidden_shops';               // 本机隐藏（localStorage）
+let TOTAL_CHUNKS = 1;                            // 商品分块数，来自 status.json
 
-// 分词搜索：把关键词按中英文边界拆成token，全部命中才算匹配
-// 如 "ac短袖" → ["ac","短袖"] → "acne 2024短袖" 同时命中 ac 和 短袖
-function tokenMatch(text, kw) {
-  const tokens = kw.split(/(?<=[\u4e00-\u9fff])(?=[^\u4e00-\u9fff])|(?<=[^\u4e00-\u9fff])(?=[\u4e00-\u9fff])|\s+/);
-  return tokens.filter(Boolean).every(t => text.includes(t));
-}
+const VER = 'v=4';   // 缓存版本号：改数据结构时 +1，绕开 GitHub Pages 缓存
+const DEAD_FALLBACK = ['注销', '关闭', '停业', '不再使用'];  // blocklist.json 缺失时的兜底
 
-const fmtNum = n => (n==null?0:n).toLocaleString('zh-CN');
-const fmtRate = r => (r==null?0:(r*100).toFixed(2)) + '%';
-const fmtPrice = p => '¥' + ((p==null?0:p)/100).toLocaleString('zh-CN',{maximumFractionDigits:((p/100)%1)?2:0});
-const itemUrl = it => 'https://weidian.com/item.html?itemID=' + encodeURIComponent(it.itemId||'');
-const fmtDate = ts => ts? new Date(ts).toISOString().slice(0,10):'';
-// 上架天数：支持已归一化的 "YYYY-MM-DD" 字符串或毫秒时间戳
+/* ==========================================================================
+   工具
+   ========================================================================== */
+const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ESC[c]);
+const $ = id => document.getElementById(id);
+
+const fmtInt = n => (n == null || isNaN(n) ? 0 : Number(n)).toLocaleString('zh-CN');
+// 粉丝数万位缩写，避免卡片里出现 7 位数字
+const fmtFans = n => { n = Number(n) || 0; return n >= 10000 ? (n / 10000).toFixed(1).replace(/\.0$/, '') + '万' : fmtInt(n); };
+const fmtPrice = p => '¥' + ((p || 0) / 100).toLocaleString('zh-CN', { maximumFractionDigits: ((p || 0) / 100) % 1 ? 2 : 0 });
+const fmtPct = r => ((r || 0) * 100).toFixed(1).replace(/\.0$/, '') + '%';
+const fmtDay = ts => ts ? new Date(ts).toISOString().slice(0, 10) : '';
+const itemUrl = it => 'https://weidian.com/item.html?itemID=' + encodeURIComponent(it.itemId || '');
+const shopUrl = sid => 'https://weidian.com/?shopId=' + encodeURIComponent(sid || '');
+
 const daysSince = v => {
   if (v == null || v === '') return null;
   let ms;
@@ -315,454 +670,813 @@ const daysSince = v => {
   if (isNaN(ms)) return null;
   return Math.max(0, Math.floor((Date.now() - ms) / 86400000));
 };
+// 图片加载失败的占位图：微店图床有防盗链，用藏好的遮罩而不是 visibility:hidden，
+// 否则会留下整块空白（商品卡里就是图片区那么大一片）
+const BLANK = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect width="60" height="60" fill="#f0ede8"/></svg>');
+// 分词搜索：中文/英文边界拆 token，全部命中才算匹配（"ac短袖" → ac + 短袖）
+const tokenMatch = (text, kw) =>
+  kw.split(/(?<=[\u4e00-\u9fff])(?=[^\u4e00-\u9fff])|(?<=[^\u4e00-\u9fff])(?=[\u4e00-\u9fff])|\s+/)
+    .filter(Boolean).every(t => text.includes(t));
 
-// HTML 转义（店铺名/商品名可能含 < > & 等字符，防止渲染坏裂）
-const ESC_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ESC_MAP[c]);
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
-// ---- 店铺屏蔽（页面本地，localStorage 持久化）----
-const BLOCK_KEY = 'wd_blocked_shops';
-// 死店名称关键词（自动屏蔽，始终生效）
-const DEAD_NAME_RULES = ['注销','关闭','不再使用','已换新店','已更换新店','已更换至新店','暂停上新','停业'];
-let blocked = (() => {
+async function fetchJSON(url, ms = 30000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
   try {
-    const raw = JSON.parse(localStorage.getItem(BLOCK_KEY) || '[]');
-    return Array.isArray(raw) ? raw.filter(x => x && x.shopId != null) : [];
-  } catch (e) { return []; }
-})();
-const blockedSet = new Set(blocked.map(x => String(x.shopId)));
-function saveBlocked() { try { localStorage.setItem(BLOCK_KEY, JSON.stringify(blocked)); } catch (e) {} }
-const isDeadShop = name => DEAD_NAME_RULES.some(k => String(name || '').includes(k));
-const shouldHideShop = s => !!s && (blockedSet.has(String(s.shopId)) || isDeadShop(s.name));
-const shouldHideProduct = p => !!p && (blockedSet.has(String(p.shopId)) || isDeadShop(p.shopName));
-const visibleShops = () => SHOPS.filter(s => !shouldHideShop(s));
-
-let toastTimer = null;
-let toastShopId = null;
-function showToast(name, id) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastName').textContent = name || id;
-  toastShopId = String(id);
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 8000);
-}
-function blockShop(id, name) {
-  id = String(id);
-  if (blockedSet.has(id)) return;
-  blocked.push({ shopId: id, name: name || '' });
-  blockedSet.add(id);
-  saveBlocked(); onBlockChanged();
-  showToast(name, id);
-}
-document.getElementById('toastUndo').addEventListener('click', () => {
-  if (toastShopId) unblockShop(toastShopId);
-  toastShopId = null;
-  document.getElementById('toast').classList.remove('show');
-});
-function unblockShop(id) {
-  id = String(id);
-  blocked = blocked.filter(b => String(b.shopId) !== id);
-  blockedSet.delete(id);
-  saveBlocked(); onBlockChanged();
-}
-function clearBlockedList() {
-  blocked = []; blockedSet.clear();
-  try { localStorage.removeItem(BLOCK_KEY); } catch (e) {}
-  onBlockChanged();
-}
-function onBlockChanged() { rebuildMerchants(); updateStats(); render(); renderManageList(); }
-
-function rebuildMerchants() {
-  const pM = document.getElementById('pMerchant');
-  const cur = pM.value;
-  pM.innerHTML = '<option value="">全部商家</option>';
-  visibleShops().filter(s => s.hasShelfItems).forEach(s => {
-    const o = document.createElement('option'); o.value = s.shopId; o.textContent = s.name; pM.appendChild(o);
-  });
-  pM.value = [...pM.options].some(o => o.value === cur) ? cur : '';
+    const r = await fetch(url, { signal: ctrl.signal });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } finally { clearTimeout(timer); }
 }
 
-function updateStats() {
-  const vs = visibleShops();
-  document.getElementById('total').textContent = SHOPS.length ? vs.length : 0;
-  document.getElementById('withItems').textContent = vs.filter(s => s.hasShelfItems).length;
-  document.getElementById('totalItems').textContent = PRODUCTS.length ? PRODUCTS.filter(p => !shouldHideProduct(p)).length : '...';
-  document.getElementById('hiddenNum').textContent = SHOPS.length - vs.length;
-  TOTAL_SOLD = PRODUCTS.reduce((a, p) => a + (!shouldHideProduct(p) && (p.stock || 0) === 0 ? 1 : 0), 0);
+/* ==========================================================================
+   品类规则
+   ========================================================================== */
+const CATE_RULES = [
+  { name: '短袖', kws: ['短袖', 't恤', 'tee', '体恤', '短t'], exclude: ['长袖', '长t'] },
+  { name: '长袖', kws: ['长袖', '长t'] },
+  { name: '卫衣', kws: ['卫衣', 'hoodie', '帽衫', '连帽'] },
+  { name: '外套', kws: ['外套', '夹克', '风衣', '大衣', '棉服', '冲锋衣', '牛仔外套'] },
+  { name: '毛衣', kws: ['毛衣', '针织', '羊毛', '开衫'] },
+  { name: '短裤', kws: ['短裤', '热裤', '沙滩裤'], exclude: ['长裤'] },
+  { name: '长裤', kws: ['长裤', '休闲裤', '工装裤', '牛仔裤', '西裤', '阔腿裤', '拖地裤'], exclude: ['短裤'] },
+  { name: '裙子', kws: ['裙子', '连衣裙', '半身裙', '蓬蓬裙', '仙女裙', '百褶裙', '小黑裙'] },
+  { name: '鞋子', kws: ['鞋', '运动鞋', '板鞋', '帆布', '拖鞋', '凉鞋', '靴子', '德训鞋'] },
+  { name: '配饰', kws: ['配饰', '项链', '手链', '耳环', '戒指', '手表', '腰带', '墨镜', '帽子', '包包', '背包', '袜子', '眼镜'] },
+];
+function matchCategory(name, cate) {
+  if (!cate) return true;
+  const rule = CATE_RULES.find(c => c.name === cate);
+  if (!rule) return true;
+  const nl = name.toLowerCase();
+  if (rule.exclude && rule.exclude.some(k => nl.includes(k))) return false;
+  return rule.kws.some(k => nl.includes(k));
 }
 
-function renderManageList() {
-  const deadN = SHOPS.filter(s => isDeadShop(s.name)).length;
-  document.getElementById('deadNote').innerHTML =
-    `死店关键词自动屏蔽（始终生效）：<b>${DEAD_NAME_RULES.join(' / ')}</b><br>已按名称自动隐藏 ${deadN} 家 · 手动屏蔽 ${blocked.length} 家`;
-  document.getElementById('manageList').innerHTML = blocked.length
-    ? blocked.map(b => `<div class="manage-item"><span class="mi-name">${esc(b.name || b.shopId)}</span><span class="mi-restore" data-unblock="${esc(b.shopId)}">恢复</span></div>`).join('')
-    : '<div class="manage-item" style="color:var(--sub)">暂无手动屏蔽的店铺（点店铺卡片上的「屏蔽」即可加入）</div>';
+/* ==========================================================================
+   屏蔽：全局（blocklist.json）+ 本机（localStorage）
+   ========================================================================== */
+let globalIds = new Set();
+let localHidden = [];   // [{shopId, name}]
+let localIds = new Set();
+
+function loadLocal() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    localHidden = Array.isArray(raw) ? raw.filter(x => x && x.shopId != null) : [];
+  } catch (e) { localHidden = []; }
+  localIds = new Set(localHidden.map(x => String(x.shopId)));
 }
+const saveLocal = () => { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(localHidden)); } catch (e) {} };
 
-const grid=document.getElementById('grid');
-const empty=document.getElementById('empty');
-const visStat=document.getElementById('visStat');
-document.getElementById('total').textContent=SHOPS.length;
-document.getElementById('withItems').textContent=SHOPS.filter(d=>d.hasShelfItems).length;
-document.getElementById('totalItems').textContent=PRODUCTS.length;
-// 屏蔽按钮事件委托（卡片重渲染后依然有效）
-grid.addEventListener('click', e => {
-  const b = e.target.closest('[data-block]');
-  if (!b) return;
-  e.preventDefault(); e.stopPropagation();
-  blockShop(b.dataset.block, b.dataset.name);
-});
+const nameRules = () => (BLOCKLIST.name_rules && BLOCKLIST.name_rules.length)
+  ? BLOCKLIST.name_rules : DEAD_FALLBACK;
 
-// 商品视角分批懒加载（避免一次性渲染上万张卡片卡死页面）
-const sentinel = document.getElementById('sentinel');
-const BATCH = 30;
-let pAll = [], pShown = 0;
-const io = new IntersectionObserver(es => {
-  if (view === 'product' && es[0].isIntersecting && pShown < pAll.length) {
-    renderProduct(false);
+const isGlobalBlocked = s => !!s && (globalIds.has(String(s.shopId))
+  || nameRules().some(k => k && String(s.name || '').includes(k)));
+const isHidden = s => !!s && (isGlobalBlocked(s) || localIds.has(String(s.shopId)));
+const visibleShops = () => SHOPS.filter(s => !isHidden(s));
+
+// 商品侧过滤用：预先算好被全局屏蔽的店铺 ID 集合。
+// 否则每渲染一次就要对 3 万件商品做 9 次关键词匹配（≈28 万次字符串操作）。
+let hiddenShopIds = new Set();
+function recomputeHiddenIds() {
+  const rules = nameRules();
+  hiddenShopIds = new Set(globalIds);
+  for (const s of SHOPS) {
+    if (rules.some(k => k && String(s.name || '').includes(k))) hiddenShopIds.add(String(s.shopId));
   }
-}, { rootMargin: '800px' });
-io.observe(sentinel);
+}
+const hiddenCount = () => hiddenShopIds.size + localIds.size;
 
-// 商家下拉（数据加载后由 rebuildMerchants 填充）
-const pMerchant=document.getElementById('pMerchant');
+function addLocal(id, name) {
+  id = String(id);
+  if (localIds.has(id)) return false;
+  localHidden.push({ shopId: id, name: name || '', at: new Date().toISOString().slice(0, 10) });
+  localIds.add(id); saveLocal(); onHideChanged();
+  return true;
+}
+function removeLocal(id) {
+  id = String(id);
+  localHidden = localHidden.filter(h => String(h.shopId) !== id);
+  localIds.delete(id); saveLocal(); onHideChanged();
+}
+function removeGlobal(id) {
+  id = String(id);
+  BLOCKLIST.shops = BLOCKLIST.shops.filter(s => String(s.shopId) !== id);
+  globalIds.delete(id); onHideChanged();
+}
+function removeRule(kw) {
+  BLOCKLIST.name_rules = nameRules().filter(r => r !== kw);
+  onHideChanged(); renderManage();
+}
 
-let view='product';
+let toastTimer = null, toastId = null;
+function toast(name, id) {
+  $('toastName').textContent = name || id;
+  toastId = String(id);
+  $('toast').classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('toast').classList.remove('on'), 7000);
+}
+$('toastUndo').addEventListener('click', () => {
+  if (toastId) removeLocal(toastId);
+  toastId = null; $('toast').classList.remove('on');
+});
 
-function shopCard(d){
-  const cnt = d.itemCount != null ? d.itemCount : (d.items||[]).length;
-  const btn = cnt ? `<span class="toggle-items" data-goshop="${esc(d.shopId)}">查看全部 ${cnt} 件商品 ›</span>` : '';
-  return `<div class="card">
-    <div class="top">
-      <img class="avatar" src="${esc(d.headImage||'')}" loading="lazy" onerror="this.style.background='#eef0f3'">
-      <div style="min-width:0;flex:1">
-        <div class="name">${esc(d.name||'(未命名)')}</div>
-        <div class="sid">ID: ${esc(d.shopId||'')}</div>
-      </div>
-      ${d.focusFlag?'<span class="badge">特别关注</span>':''}
+/* ==========================================================================
+   状态 + URL 同步（刷新/分享可还原筛选）
+   ========================================================================== */
+const S = {
+  view: 'product', qShop: '', qProd: '',
+  sort: 'followTime', fItems: false, fMinFans: 0, fMinRate: 0,
+  merchant: '', pSort: 'newest', min: '', max: '', cate: '',
+  hideSold: false, freeShip: false, isNew: false,
+};
+const DEFAULTS = JSON.parse(JSON.stringify(S));
+
+function readURL() {
+  const p = new URLSearchParams(location.search);
+  const num = k => (p.has(k) ? parseFloat(p.get(k)) || 0 : 0);
+  const bool = k => p.get(k) === '1';
+  S.view = p.get('v') === 'shop' ? 'shop' : 'product';
+  S.qShop = p.get('sq') || ''; S.qProd = p.get('q') || '';
+  S.sort = p.get('so') || S.sort;
+  S.fItems = bool('fi'); S.fMinFans = num('mf'); S.fMinRate = num('mr');
+  S.merchant = p.get('m') || ''; S.pSort = p.get('ps') || S.pSort;
+  S.min = p.get('min') || ''; S.max = p.get('max') || '';
+  S.cate = p.get('cate') || '';
+  S.hideSold = bool('hs'); S.freeShip = bool('fs'); S.isNew = bool('nw');
+}
+const writeURL = debounce(() => {
+  const p = new URLSearchParams();
+  if (S.view === 'shop') p.set('v', 'shop');
+  if (S.qShop) p.set('sq', S.qShop);
+  if (S.qProd) p.set('q', S.qProd);
+  if (S.sort !== DEFAULTS.sort) p.set('so', S.sort);
+  if (S.fItems) p.set('fi', '1');
+  if (S.fMinFans) p.set('mf', S.fMinFans);
+  if (S.fMinRate) p.set('mr', S.fMinRate);
+  if (S.merchant) p.set('m', S.merchant);
+  if (S.pSort !== DEFAULTS.pSort) p.set('ps', S.pSort);
+  if (S.min !== '') p.set('min', S.min);
+  if (S.max !== '') p.set('max', S.max);
+  if (S.cate) p.set('cate', S.cate);
+  if (S.hideSold) p.set('hs', '1');
+  if (S.freeShip) p.set('fs', '1');
+  if (S.isNew) p.set('nw', '1');
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+}, 320);
+
+/* ==========================================================================
+   卡片
+   ========================================================================== */
+function shopRow(s) {
+  const cnt = s.itemCount != null ? s.itemCount : (s.items || []).length;
+  const day = fmtDay(s.followTime);
+  return `<div class="shop">
+    <img class="shop-av" src="${esc(s.headImage || BLANK)}" loading="lazy" decoding="async"
+         onerror="this.src=BLANK">
+    <div class="shop-id">
+      <div class="shop-name"><a href="${shopUrl(s.shopId)}" target="_blank" rel="noopener">${esc(s.name || '(未命名)')}</a>${s.focusFlag ? '<span class="tag">特别关注</span>' : ''}</div>
+      <div class="shop-sub">ID ${esc(s.shopId || '')}${day ? ` <span class="sep">·</span> <span class="pref">关注于 </span>${day}` : ''}</div>
     </div>
-    <div class="badges">
-      ${d.hasShelfItems?'<span class="badge">有在售</span>':''}
-      ${cnt?`<span class="badge" style="background:#eef0f3;color:#5a6068">在售 ${cnt}</span>`:''}
-      <span class="block-link" data-block="${esc(d.shopId)}" data-name="${esc(d.name||'')}">🚫 屏蔽</span>
+    <div class="shop-stats">
+      <span><i>粉丝</i><b>${fmtFans(s.followCount)}</b></span>
+      <span><i>转化</i><b>${fmtPct(s.turningRate)}</b></span>
+      <span><i>商品</i><b>${fmtInt(cnt)}</b></span>
     </div>
-    <div class="metrics">
-      <div>粉丝<b>${fmtNum(d.followCount)}</b></div>
-      <div>转化率<b>${fmtRate(d.turningRate)}</b></div>
-      <div>关注时间<b>${fmtDate(d.followTime)}</b></div>
-      <div>在售数<b>${fmtNum(d.onShelfItemNum)}</b></div>
+    <div class="shop-act">
+      <button class="shop-go" data-goshop="${esc(s.shopId)}">看商品 ›</button>
+      <button class="btn-x" data-hide="${esc(s.shopId)}" data-name="${esc(s.name || '')}" title="加入本机隐藏">隐藏</button>
     </div>
-    ${btn}
   </div>`;
 }
 
-function productCard(p){
-  const off = (p.status||1) !== 1;            // 已下架/失效（getItemList 一般不返回，做前向兼容）
-  const soldout = !off && (p.stock||0) === 0;
-  const invalid = off || soldout;
-  const tags = (p.itemTag||[]).map(t => `<span class="ptag">${esc(t.tagTitle||'')}</span>`).join('');
+function productCard(p) {
+  const off = (p.status || 1) !== 1;
+  const soldout = !off && (p.stock || 0) === 0;
+  const dim = off || soldout;
   const hasOrig = p.originalPrice && p.originalPrice > p.price;
-  const discount = hasOrig ? Math.round((1 - p.price/p.originalPrice) * 100) : 0;
+  const cut = hasOrig ? Math.round((1 - p.price / p.originalPrice) * 100) : 0;
   const days = daysSince(p.addTime);
-  const isNew = days != null && days <= 14;
-  const stockText = off ? '已下架' : (soldout ? '已售罄' : (p.stock ? `库存 ${p.stock}` : ''));
-  const meta = [(p.soldText ? `已售${p.soldText}` : ''), stockText, (days != null ? `在售${days}天` : '')].filter(Boolean).join(' · ');
-  return `<a class="pcard${invalid?' soldout':''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
+  const meta = [
+    p.soldText ? `已售 ${p.soldText}` : '',
+    off ? '已下架' : (soldout ? '已售罄' : (p.stock ? `库存 ${fmtInt(p.stock)}` : '')),
+    days != null ? `上架 ${days} 天` : '',
+  ].filter(Boolean);
+  const tags = (p.itemTag || []).map(t => `<span class="ptag">${esc(t.tagTitle || '')}</span>`).join('');
+  return `<a class="pcard${dim ? ' dim' : ''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
-      <img class="pimg" src="${esc(p.image||'')}" loading="lazy" decoding="async"
-        onload="this.classList.add('loaded')"
-        onerror="this.style.background='#eef0f3';this.classList.add('loaded')">
+      <img class="pimg" src="${esc(p.image || BLANK)}" loading="lazy" decoding="async"
+           onload="this.classList.add('loaded')"
+           onerror="this.src=BLANK;this.classList.add('loaded')">
       <div class="pbadges">
-        ${discount ? `<span class="pbadge-discount">-${discount}%</span>` : ''}
-        ${p.freeShip ? `<span class="pbadge-freeship">包邮</span>` : ''}
-        ${isNew ? `<span class="pbadge-new">新上架</span>` : ''}
+        ${cut ? `<span class="flag flag-cut">-${cut}%</span>` : ''}
+        ${p.freeShip ? '<span class="flag flag-ship">包邮</span>' : ''}
+        ${days != null && days <= 14 ? '<span class="flag flag-new">新上架</span>' : ''}
       </div>
-      ${off ? `<span class="pbadge-soldout">已下架</span>`
-            : (soldout ? `<span class="pbadge-soldout">已售罄</span>` : '')}
+      ${off ? '<span class="flag-out">已下架</span>' : (soldout ? '<span class="flag-out">已售罄</span>' : '')}
     </div>
     <div class="pbody">
-      <div class="pname">${esc(p.itemName||'')}</div>
-      <div class="pprice-row">
+      <div class="pname">${esc(p.itemName || '')}</div>
+      <div class="prow">
         <span class="pprice">${fmtPrice(p.price)}</span>
-        ${hasOrig ? `<span class="pprice-original">${fmtPrice(p.originalPrice)}</span>` : ''}
+        ${hasOrig ? `<span class="pprice-o">${fmtPrice(p.originalPrice)}</span>` : ''}
       </div>
-      ${meta ? `<div class="pmeta">${meta}</div>` : ''}
+      ${meta.length ? `<div class="pmeta">${meta.map(esc).join('<span class="sep">·</span>')}</div>` : ''}
       ${tags ? `<div class="ptags">${tags}</div>` : ''}
-      <span class="pmerchant"><img src="${esc(p.shopAvatar||'')}" onerror="this.style.display='none'">${esc(p.shopName||'')}<span class="block-link" data-block="${esc(p.shopId)}" data-name="${esc(p.shopName||'')}" title="屏蔽此店铺">🚫</span></span>
+      <div class="pfoot">
+        <span class="pmerchant">
+          <img src="${esc(p.shopAvatar || BLANK)}" loading="lazy" onerror="this.src=BLANK">
+          <span class="m-name">${esc(p.shopName || '')}</span>
+          <span class="btn-x" data-hide="${esc(p.shopId)}" data-name="${esc(p.shopName || '')}" title="隐藏此店铺">隐藏</span>
+        </span>
+      </div>
     </div>
   </a>`;
 }
 
-function renderShop(){
-  const kw=document.getElementById('search').value.trim().toLowerCase();
-  const onlyItems=document.getElementById('fItems').checked;
-  const minFans=parseFloat(document.getElementById('fMinFans').value)||0;
-  const minRate=parseFloat(document.getElementById('fMinRate').value)||0;
-  const sort=document.getElementById('sort').value;
-  let list=SHOPS.filter(d=>{
-    if(shouldHideShop(d))return false;
-    if(onlyItems&&!d.hasShelfItems)return false;
-    if((d.followCount||0)<minFans)return false;
-    if((d.turningRate||0)<minRate)return false;
-    if(kw&&!((d.name||'')+' '+(d.shopId||'')).toLowerCase().includes(kw))return false;
+/* ==========================================================================
+   渲染
+   ========================================================================== */
+const grid = $('grid'), emptyEl = $('empty'), footStat = $('footStat');
+const shopMap = new Map();
+let shopList = [], prodList = [], prodShown = 0;
+const BATCH = 36;
+
+function renderSkeleton(n) {
+  const one = `<div class="skel"><div class="s-img"></div><div class="s-b">
+    <div class="s-l w80"></div><div class="s-l"></div><div class="s-l w30"></div></div></div>`;
+  grid.innerHTML = one.repeat(n);
+  grid.className = 'grid ' + (S.view === 'shop' ? 'g-shop' : 'g-product');
+}
+
+function activeCate() {
+  const b = document.querySelector('#cateBtns .pill.on');
+  return b ? b.dataset.cate : '';
+}
+
+function renderShop() {
+  const kw = S.qShop.trim().toLowerCase();
+  const list = SHOPS.filter(s => {
+    if (isHidden(s)) return false;
+    if (S.fItems && !s.hasShelfItems) return false;
+    if ((s.followCount || 0) < S.fMinFans) return false;
+    if ((s.turningRate || 0) < S.fMinRate) return false;
+    if (kw && !((s.name || '') + ' ' + (s.shopId || '')).toLowerCase().includes(kw)) return false;
     return true;
   });
-  const sorters={
-    followTime:(a,b)=>(b.followTime||0)-(a.followTime||0),
-    followCount:(a,b)=>(b.followCount||0)-(a.followCount||0),
-    turningRate:(a,b)=>(b.turningRate||0)-(a.turningRate||0),
-    onShelfItemNum:(a,b)=>(b.onShelfItemNum||0)-(a.onShelfItemNum||0),
-    name:(a,b)=>(a.name||'').localeCompare(b.name||'','zh'),
+  const sorters = {
+    followTime: (a, b) => (b.followTime || 0) - (a.followTime || 0),
+    itemCount: (a, b) => (b.itemCount || 0) - (a.itemCount || 0),
+    followCount: (a, b) => (b.followCount || 0) - (a.followCount || 0),
+    turningRate: (a, b) => (b.turningRate || 0) - (a.turningRate || 0),
+    name: (a, b) => (a.name || '').localeCompare(b.name || '', 'zh'),
   };
-  list.sort(sorters[sort]||sorters.followTime);
-  grid.innerHTML=list.map(shopCard).join('');
-  bindToggles();
-  finish(list.length,visibleShops().length,'个店铺');
+  list.sort(sorters[S.sort] || sorters.followTime);
+  shopList = list;
+  grid.className = 'grid g-shop';
+  grid.innerHTML = list.length
+    ? list.map(shopRow).join('')
+    : '';
+  if (!list.length) showEmpty('没有符合条件的店铺', '试试放宽筛选，或清空搜索词');
+  footStat.textContent = `显示 ${fmtInt(list.length)} / ${fmtInt(visibleShops().length)} 个店铺`;
 }
 
-function renderProduct(reset){
-  if(reset){
-    const kw=document.getElementById('pSearch').value.trim().toLowerCase();
-    const mid=document.getElementById('pMerchant').value;
-    const min=parseFloat(document.getElementById('pMin').value)||0;
-    const max=parseFloat(document.getElementById('pMax').value)||Infinity;
-    const sort=document.getElementById('pSort').value;
-    const hideSold=document.getElementById('pHideSold').checked;
-    const freeShip=document.getElementById('pFreeShip').checked;
-    const cate = document.querySelector('#cateBtns .cate-btn.active')?.dataset.cate || '';
-    pAll=PRODUCTS.filter(p=>{
-      if(shouldHideProduct(p))return false;
-      if(hideSold&&(p.stock||0)===0)return false;
-      if(freeShip&&!p.freeShip)return false;
-      if(mid&&String(p.shopId)!==mid)return false;
-      if((p.priceYuan||0)<min)return false;
-      if((p.priceYuan||0)>max)return false;
-      if(kw&&!tokenMatch((p.itemName||'').toLowerCase(), kw))return false;
-      if(cate&&!matchCategory((p.itemName||'').toLowerCase(), cate))return false;
+function renderProduct(reset) {
+  if (reset) {
+    const kw = S.qProd.trim().toLowerCase();
+    const min = parseFloat(S.min) || 0;
+    const max = S.max === '' ? Infinity : (parseFloat(S.max) || Infinity);
+    const cate = activeCate();
+    prodList = PRODUCTS.filter(p => {
+      if (hiddenShopIds.has(String(p.shopId))) return false;
+      if (S.hideSold && (p.stock || 0) === 0 && (p.status || 1) === 1) return false;
+      if (S.freeShip && !p.freeShip) return false;
+      if (S.isNew) { const d = daysSince(p.addTime); if (d == null || d > 14) return false; }
+      if (S.merchant && String(p.shopId) !== S.merchant) return false;
+      if ((p.priceYuan || 0) < min || (p.priceYuan || 0) > max) return false;
+      if (kw && !tokenMatch((p.itemName || '').toLowerCase(), kw)) return false;
+      if (cate && !matchCategory((p.itemName || '').toLowerCase(), cate)) return false;
       return true;
     });
-    const sorters={
-      newest:(a,b)=>String(b.addTime).localeCompare(String(a.addTime)),
-      sold:(a,b)=>(b.soldNum||0)-(a.soldNum||0),
-      priceAsc:(a,b)=>(a.priceYuan||0)-(b.priceYuan||0),
-      priceDesc:(a,b)=>(b.priceYuan||0)-(a.priceYuan||0),
+    const cutOf = p => (p.originalPrice && p.originalPrice > p.price)
+      ? (1 - p.price / p.originalPrice) : -1;
+    const sorters = {
+      newest: (a, b) => String(b.addTime).localeCompare(String(a.addTime)),
+      sold: (a, b) => (b.soldNum || 0) - (a.soldNum || 0),
+      cut: (a, b) => cutOf(b) - cutOf(a),
+      priceAsc: (a, b) => (a.priceYuan || 0) - (b.priceYuan || 0),
+      priceDesc: (a, b) => (b.priceYuan || 0) - (a.priceYuan || 0),
+      shop: (a, b) => String(a.shopName || '').localeCompare(String(b.shopName || ''), 'zh')
+        || (b.addTime > a.addTime ? 1 : -1),
     };
-    pAll.sort(sorters[sort]||sorters.newest);
-    pShown=0; grid.innerHTML='';
+    prodList.sort(sorters[S.pSort] || sorters.newest);
+    prodShown = 0;
+    grid.className = 'grid g-product';
+    grid.innerHTML = '';
   }
-  const batch=pAll.slice(pShown, pShown+BATCH);
-  grid.insertAdjacentHTML('beforeend', batch.map(productCard).join(''));
-  pShown+=batch.length;
-  empty.classList.toggle('hide', pAll.length>0);
-  visStat.textContent=`显示 ${Math.min(pShown,pAll.length)} / ${pAll.length} 件商品${TOTAL_SOLD?` · 已售罄 ${fmtNum(TOTAL_SOLD)}`:''}`;
-  sentinel.classList.toggle('hide', pShown>=pAll.length || view!=='product');
+  const batch = prodList.slice(prodShown, prodShown + BATCH);
+  if (batch.length) grid.insertAdjacentHTML('beforeend', batch.map(productCard).join(''));
+  prodShown += batch.length;
+  if (!prodList.length) showEmpty('没有符合条件的商品', '试试放宽价格区间，或清空搜索词');
+  else emptyEl.classList.add('hide');
+  updateFoot();
 }
 
-function finish(n,total,unit){
-  empty.classList.toggle('hide',n>0);
-  visStat.textContent=`显示 ${n} / ${total} ${unit}`;
+function showEmpty(title, sub) {
+  emptyEl.classList.remove('hide');
+  emptyEl.innerHTML = `<b>${esc(title)}</b>${esc(sub || '')}`;
 }
 
-function bindToggles(){
-  grid.querySelectorAll('[data-goshop]').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const sid = btn.dataset.goshop;
-      switchToShop(sid);
-    });
+function updateFoot() {
+  const shown = Math.min(prodShown, prodList.length);
+  let soldOut = 0;
+  for (const p of prodList) if ((p.stock || 0) === 0 && (p.status || 1) === 1) soldOut++;
+  footStat.innerHTML = `显示 <b>${fmtInt(shown)}</b> / ${fmtInt(prodList.length)} 件商品`
+    + (soldOut ? ` · <button class="lk" id="footSold">${fmtInt(soldOut)} 件已售罄，点此隐藏</button>` : '')
+    + `<br>数据来自微店公开接口全量爬取${hiddenCount() ? ` · 已屏蔽 ${fmtInt(hiddenCount())} 家店铺` : ''}`;
+  const lk = $('footSold');
+  if (lk) lk.addEventListener('click', () => {
+    S.hideSold = true; $('pHideSold').checked = true; syncCheckLabels(); renderProduct(true);
   });
 }
-function switchToShop(sid){
-  // 切换到商品视角，设置商家下拉，触发渲染
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector('[data-view="product"]').classList.add('active');
-  view = 'product';
-  document.getElementById('shopBar').classList.add('hide');
-  document.getElementById('productBar').classList.remove('hide');
-  sentinel.classList.remove('hide');
-  document.getElementById('pMerchant').value = sid;
-  // 重置其他筛选条件
-  document.getElementById('pSearch').value = '';
-  document.getElementById('pMin').value = '';
-  document.getElementById('pMax').value = '';
-  document.querySelectorAll('#priceBtns .pbtn').forEach(b=>b.classList.remove('active'));
-  document.querySelector('#priceBtns .pbtn:first-child').classList.add('active');
-  document.getElementById('pSort').value = 'newest';
+
+function render() {
+  emptyEl.classList.add('hide');
+  S.view === 'shop' ? renderShop() : renderProduct(true);
+  writeURL();
+  updateFilterBadge();
+  $('sentinel').style.height = (S.view === 'product' && prodShown < prodList.length) ? '1px' : '0px';
+}
+
+/* ==========================================================================
+   顶部统计 / 屏蔽计数
+   ========================================================================== */
+let UPDATED_AT = '', UPDATED_AT_SHORT = '';
+function updateStats() {
+  const vs = visibleShops();
+  const withItems = vs.filter(s => s.hasShelfItems).length;
+  let prodCount = 0;
+  for (const p of PRODUCTS) if (!hiddenShopIds.has(String(p.shopId)) && !localIds.has(String(p.shopId))) prodCount++;
+  if (!SHOPS.length) {
+    $('brandSub').textContent = '正在加载数据…';
+    $('brandSubSm').textContent = '正在加载…';
+  } else {
+    $('brandSub').innerHTML = `<b>${fmtInt(vs.length)}</b> 家店铺 · <b>${fmtInt(withItems)}</b> 家有货 · <b>${fmtInt(prodCount)}</b> 件商品`
+      + (hiddenCount() ? ` · <b>${fmtInt(hiddenCount())}</b> 家已屏蔽` : '')
+      + (UPDATED_AT ? ` · ${UPDATED_AT}` : '');
+    // 手机上单行放不下，标题下只留最关键的两个数
+    $('brandSubSm').innerHTML = `<b>${fmtInt(vs.length)}</b> 店 · <b>${fmtInt(prodCount)}</b> 件`
+      + (UPDATED_AT_SHORT ? ` · ${UPDATED_AT_SHORT}` : '');
+  }
+  const total = SHOPS.length - vs.length;
+  const badge = $('blockBadge');
+  badge.textContent = total;
+  badge.classList.toggle('on', total > 0);
+  $('clearLocal').style.opacity = localIds.size ? '1' : '.45';
+}
+
+function rebuildMerchantOptions() {
+  const sel = $('pMerchant'), cur = S.merchant;
+  sel.innerHTML = '<option value="">全部商家</option>';
+  visibleShops().filter(s => s.hasShelfItems)
+    .sort((a, b) => (b.itemCount || 0) - (a.itemCount || 0))
+    .forEach(s => {
+      const o = document.createElement('option');
+      o.value = s.shopId; o.textContent = `${s.name || s.shopId}（${s.itemCount || 0}）`;
+      sel.appendChild(o);
+    });
+  sel.value = [...sel.options].some(o => o.value === cur) ? cur : '';
+  S.merchant = sel.value;
+}
+
+function onHideChanged() {
+  recomputeHiddenIds();
+  rebuildMerchantOptions();
+  updateStats();
+  render();
+  renderManage();
+}
+
+/* ==========================================================================
+   屏蔽管理面板
+   ========================================================================== */
+function renderManage() {
+  const named = id => (SHOPS.find(s => String(s.shopId) === String(id)) || {}).name || '';
+
+  // 全局：blocklist.json 的 ID 名单（可一键移除）+ 关键词自动命中的店铺
+  const gItems = BLOCKLIST.shops.map(s => ({
+    id: String(s.shopId), name: s.name || named(s.shopId), why: '已写入仓库', kw: '',
+  }));
+  const gIds = new Set(gItems.map(x => x.id));
+  SHOPS.filter(s => !gIds.has(String(s.shopId)) && isGlobalBlocked(s)).forEach(s => {
+    gItems.push({
+      id: String(s.shopId), name: s.name || '',
+      why: `含「${nameRules().find(k => k && String(s.name).includes(k))}」`,
+      kw: nameRules().find(k => k && String(s.name).includes(k)),
+    });
+  });
+  $('gCount').textContent = `（${gItems.length}）`;
+  $('globalList').innerHTML = gItems.length
+    ? gItems.map(x => `<div class="blk-item">
+        <span class="bi-name">${esc(x.name || x.id)}</span>
+        <span class="bi-why">${esc(x.why)}</span>
+        <button class="btn-x" data-unhide="${esc(x.id)}" data-kw="${esc(x.kw)}">恢复</button>
+      </div>`).join('')
+    : '<div class="blk-none">暂无全局屏蔽的店铺。</div>';
+
+  $('lCount').textContent = `（${localHidden.length}）`;
+  $('localList').innerHTML = localHidden.length
+    ? localHidden.map(h => `<div class="blk-item">
+        <span class="bi-name">${esc(h.name || h.shopId)}</span>
+        <span class="bi-meta">${esc(h.at || '')}</span>
+        <button class="btn-x" data-unhide="${esc(h.shopId)}" data-kw="">恢复</button>
+      </div>`).join('')
+    : '<div class="blk-none">本机没有隐藏任何店铺。</div>';
+
+  const rules = nameRules();
+  $('rCount').textContent = `（${rules.length}）`;
+  $('ruleBox').innerHTML = rules.map((r, i) =>
+    `<span class="rule">${esc(r)}<button data-delrule="${i}" aria-label="删除">✕</button></span>`).join('');
+}
+
+function openMask(id) { $(id).classList.add('on'); document.body.style.overflow = 'hidden'; }
+function closeMask(id) { $(id).classList.remove('on'); document.body.style.overflow = ''; }
+
+$('openManage').addEventListener('click', () => { renderManage(); openMask('manageMask'); });
+document.querySelectorAll('[data-close]').forEach(b =>
+  b.addEventListener('click', () => closeMask(b.dataset.close)));
+document.querySelectorAll('.mask').forEach(m =>
+  m.addEventListener('click', e => { if (e.target === m) closeMask(m.id); }));
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.mask.on').forEach(m => closeMask(m.id));
+  closeFilterSheet();
+});
+
+$('manageMask').addEventListener('click', e => {
+  const u = e.target.closest('[data-unhide]');
+  if (u) {
+    const id = u.dataset.unhide, kw = u.dataset.kw;
+    // 关键词自动屏蔽的店铺不能单独放行 —— 恢复它等于删掉那个关键词
+    if (kw) {
+      if (!confirm(`「${kw}」是自动屏蔽关键词。\n恢复该店铺需要删除关键词「${kw}」，其他同名店铺也会一并恢复。继续？`)) return;
+      removeRule(kw);
+    } else if (localIds.has(id)) removeLocal(id);
+    else removeGlobal(id);
+    renderManage();
+    return;
+  }
+  const dr = e.target.closest('[data-delrule]');
+  if (dr) { removeRule(nameRules()[+dr.dataset.delrule]); }
+});
+
+$('addRule').addEventListener('click', () => {
+  const kw = prompt('输入要自动屏蔽的店铺名关键词（例如：注销 / 已换新店）');
+  if (!kw || !kw.trim()) return;
+  BLOCKLIST.name_rules = [...nameRules(), kw.trim()];
+  onHideChanged(); renderManage();
+});
+
+$('clearLocal').addEventListener('click', () => {
+  if (!localHidden.length) return;
+  if (!confirm(`清空本机隐藏的 ${localHidden.length} 家店铺？`)) return;
+  localHidden = []; localIds.clear(); saveLocal(); onHideChanged();
+});
+
+/* ==========================================================================
+   导出 blocklist.json
+   ========================================================================== */
+function buildExport() {
+  const shops = new Map();
+  BLOCKLIST.shops.forEach(s => shops.set(String(s.shopId), {
+    shopId: String(s.shopId), name: s.name || '', blocked_at: s.blocked_at || todayStr(),
+  }));
+  if ($('includeLocal').checked) {
+    localHidden.forEach(h => {
+      const id = String(h.shopId);
+      if (!shops.has(id)) shops.set(id, { shopId: id, name: h.name || '', blocked_at: h.at || todayStr() });
+    });
+  }
+  const rules = nameRules();
+  const doc = {
+    version: 1,
+    updated_at: todayStr(),
+    _readme: '全局屏蔽名单。shops=按店铺ID屏蔽(不再同步、不再爬取，所有设备一致)；name_rules=按店铺名关键词自动屏蔽死店。页面「屏蔽管理」面板可直接编辑并导出覆盖本文件。',
+    shops: [...shops.values()],
+    name_rules: rules,
+  };
+  return JSON.stringify(doc, null, 2);
+}
+const todayStr = () => new Date().toISOString().slice(0, 10);
+
+$('openExport').addEventListener('click', () => {
+  $('exportTa').value = buildExport();
+  closeMask('manageMask'); openMask('exportMask');
+});
+$('includeLocal').addEventListener('change', () => { $('exportTa').value = buildExport(); });
+$('copyExport').addEventListener('click', async () => {
+  const ta = $('exportTa');
+  try {
+    await navigator.clipboard.writeText(ta.value);
+    flash($('copyExport'), '已复制 ✓');
+  } catch (e) {
+    ta.removeAttribute('readonly'); ta.select();
+    try { document.execCommand('copy'); flash($('copyExport'), '已复制 ✓'); }
+    catch (e2) { flash($('copyExport'), '请手动复制'); }
+    ta.setAttribute('readonly', '');
+  }
+});
+$('downloadExport').addEventListener('click', () => {
+  const blob = new Blob([$('exportTa').value], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'blocklist.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+function flash(btn, text) {
+  const old = btn.textContent; btn.textContent = text;
+  setTimeout(() => { btn.textContent = old; }, 1400);
+}
+
+/* ==========================================================================
+   控件绑定
+   ========================================================================== */
+// 视图切换
+document.querySelectorAll('.seg button').forEach(b => {
+  b.addEventListener('click', () => setView(b.dataset.view));
+});
+function setView(v) {
+  S.view = v;
+  document.querySelectorAll('.seg button').forEach(x =>
+    x.setAttribute('aria-selected', String(x.dataset.view === v)));
+  document.querySelectorAll('#filterPanel [data-for]').forEach(g =>
+    g.classList.toggle('hide', g.dataset.for !== v));
+  $('q').placeholder = v === 'shop' ? '搜索店铺名 / 店铺ID…' : '搜索商品名…';
+  $('q').value = v === 'shop' ? S.qShop : S.qProd;
+  $('searchWrap').classList.toggle('has-value', !!$('q').value);
+  closeFilterSheet();
   render();
 }
 
-function render(){ view==='shop'?renderShop():renderProduct(true); }
+// 搜索（防抖，避免 3 万条每次按键全量重排）
+$('q').addEventListener('input', debounce(e => {
+  const v = e.target.value;
+  if (S.view === 'shop') S.qShop = v; else S.qProd = v;
+  $('searchWrap').classList.toggle('has-value', !!v);
+  render();
+}, 180));
+$('qClear').addEventListener('click', () => {
+  if (S.view === 'shop') S.qShop = ''; else S.qProd = '';
+  $('q').value = ''; $('searchWrap').classList.remove('has-value');
+  render(); $('q').focus();
+});
 
-// tab 切换
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    view=t.dataset.view;
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('shopBar').classList.toggle('hide',view!=='shop');
-    document.getElementById('productBar').classList.toggle('hide',view!=='product');
-    sentinel.classList.toggle('hide', view!=='product');
+const bind = (id, set) => $(id).addEventListener('change', e => { set(e.target.value); render(); });
+bind('sort', v => { S.sort = v; });
+bind('pSort', v => { S.pSort = v; });
+bind('pMerchant', v => { S.merchant = v; });
+bind('fMinFans', v => { S.fMinFans = parseFloat(v) || 0; });
+bind('fMinRate', v => { S.fMinRate = parseFloat(v) || 0; });
+bind('pMin', v => { S.min = v; setPricePills(); });
+bind('pMax', v => { S.max = v; setPricePills(); });
+
+const TOGGLES = { fItems: 'fItems', pHideSold: 'hideSold', pFreeShip: 'freeShip', pNew: 'isNew' };
+Object.entries(TOGGLES).forEach(([el, key]) => {
+  $(el).addEventListener('change', e => { S[key] = e.target.checked; syncCheckLabels(); render(); });
+});
+function syncCheckLabels() {
+  [['fItemsWrap', 'fItems'], ['pHideSoldWrap', 'pHideSold'], ['pFreeShipWrap', 'pFreeShip'], ['pNewWrap', 'pNew']]
+    .forEach(([w, i]) => $(w).classList.toggle('on', $(i).checked));
+}
+
+// 价格快捷
+document.querySelectorAll('[data-min][data-max]').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('[data-min][data-max]').forEach(x => x.classList.remove('on'));
+    p.classList.add('on');
+    $('pMin').value = p.dataset.min; $('pMax').value = p.dataset.max;
+    S.min = p.dataset.min; S.max = p.dataset.max;
     render();
   });
 });
+function setPricePills() {
+  document.querySelectorAll('[data-min][data-max]').forEach(x =>
+    x.classList.toggle('on', x.dataset.min === S.min && x.dataset.max === S.max));
+}
 
-['search','sort','fItems','fMinFans','fMinRate'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',()=>view==='shop'&&render());
-  document.getElementById(id).addEventListener('change',()=>view==='shop'&&render());
-});
-['pSearch','pMerchant','pSort','pMin','pMax','pHideSold','pFreeShip'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',()=>view==='product'&&render());
-  document.getElementById(id).addEventListener('change',()=>view==='product'&&render());
-});
-// 价格快捷按钮
-document.querySelectorAll('#priceBtns .pbtn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#priceBtns .pbtn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('pMin').value = btn.dataset.min;
-    document.getElementById('pMax').value = btn.dataset.max;
-    if (view === 'product') render();
+// 品类
+(function initCate() {
+  const box = $('cateBtns');
+  const all = document.createElement('span');
+  all.className = 'pill on'; all.textContent = '全部'; all.dataset.cate = '';
+  box.appendChild(all);
+  CATE_RULES.forEach(c => {
+    const b = document.createElement('span');
+    b.className = 'pill'; b.textContent = c.name; b.dataset.cate = c.name;
+    box.appendChild(b);
   });
-});
-// 品类按钮事件
-document.getElementById('cateBtns').addEventListener('click', e => {
-  const btn = e.target.closest('.cate-btn');
-  if (!btn) return;
-  document.querySelectorAll('#cateBtns .cate-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  if (view === 'product') render();
+  box.addEventListener('click', e => {
+    const b = e.target.closest('.pill'); if (!b) return;
+    box.querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    S.cate = b.dataset.cate;
+    render();
+  });
+})();
+
+// 移动端筛选抽屉
+function isMobile() { return window.matchMedia('(max-width:860px)').matches; }
+function openFilterSheet() { if (isMobile()) { $('filterPanel').classList.add('open'); $('drawerMask').classList.add('on'); } }
+function closeFilterSheet() { $('filterPanel').classList.remove('open'); $('drawerMask').classList.remove('on'); }
+$('drawerMask').addEventListener('click', closeFilterSheet);
+$('openFilters').addEventListener('click', () => openFilterSheet());
+$('fpApply').addEventListener('click', () => closeFilterSheet());
+function syncResponsive() {
+  const m = isMobile();
+  $('openFilters').style.display = m ? '' : 'none';
+  $('fpDone').style.display = m ? '' : 'none';
+  if (!m) closeFilterSheet();
+}
+window.addEventListener('resize', debounce(syncResponsive, 150));
+
+// 活动筛选数
+function updateFilterBadge() {
+  const n = S.view === 'shop'
+    ? (S.sort !== DEFAULTS.sort ? 1 : 0) + (S.fItems ? 1 : 0) + (S.fMinFans ? 1 : 0) + (S.fMinRate ? 1 : 0) + (S.qShop ? 1 : 0)
+    : (S.pSort !== DEFAULTS.pSort ? 1 : 0) + (S.merchant ? 1 : 0) + (S.min !== '' ? 1 : 0) + (S.max !== '' ? 1 : 0)
+      + (S.hideSold ? 1 : 0) + (S.freeShip ? 1 : 0) + (S.isNew ? 1 : 0) + (S.cate ? 1 : 0) + (S.qProd ? 1 : 0);
+  const b = $('filterBadge');
+  b.textContent = n;
+  b.classList.toggle('on', n > 0 && isMobile());
+}
+
+// 卡片内交互（事件委托，重渲染后依然有效）
+grid.addEventListener('click', e => {
+  const h = e.target.closest('[data-hide]');
+  if (h) {
+    e.preventDefault(); e.stopPropagation();
+    if (addLocal(h.dataset.hide, h.dataset.name)) toast(h.dataset.name, h.dataset.hide);
+    return;
+  }
+  const g = e.target.closest('[data-goshop]');
+  if (g) {
+    e.preventDefault();
+    // 重置商品侧筛选，只留「只看这家店」
+    S.merchant = g.dataset.goshop; S.qProd = ''; S.min = ''; S.max = '';
+    S.cate = ''; S.pSort = 'newest'; S.hideSold = false; S.freeShip = false; S.isNew = false;
+    $('q').value = ''; $('searchWrap').classList.remove('has-value');
+    $('pSort').value = 'newest'; $('pMin').value = ''; $('pMax').value = '';
+    $('pHideSold').checked = $('pFreeShip').checked = $('pNew').checked = false;
+    $('cateBtns').querySelectorAll('.pill').forEach((x, i) => x.classList.toggle('on', i === 0));
+    setPricePills(); syncCheckLabels();
+    setView('product');
+    $('pMerchant').value = S.merchant;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 });
 
-// 屏蔽管理面板
-document.getElementById('manageLink').addEventListener('click', () => {
-  renderManageList();
-  document.getElementById('manageMask').classList.remove('hide');
-});
-document.getElementById('closeManage').addEventListener('click', () => {
-  document.getElementById('manageMask').classList.add('hide');
-});
-document.getElementById('manageMask').addEventListener('click', e => {
-  if (e.target.id === 'manageMask') e.target.classList.add('hide');
-});
-document.getElementById('manageList').addEventListener('click', e => {
-  const u = e.target.closest('[data-unblock]');
-  if (u) unblockShop(u.dataset.unblock);
-});
-document.getElementById('clearBlocked').addEventListener('click', () => {
-  if (blocked.length && confirm(`清空 ${blocked.length} 家手动屏蔽的店铺？`)) clearBlockedList();
-});
+// 返回顶部
+$('toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+window.addEventListener('scroll', () => {
+  $('toTop').classList.toggle('on', window.scrollY > 900);
+}, { passive: true });
 
-// 异步加载数据：店铺索引秒开 → 商品分块首块秒出 → 其余后台排队
-(async () => {
-  grid.innerHTML = '<div class="empty">⏳ 加载店铺数据...</div>';
-  const start = performance.now();
-  const VER = 'v=3';
-  const TIMEOUT = 30000; // 单块超时30秒
-  const shopMap = {};
+// 无限滚动
+new IntersectionObserver(es => {
+  if (S.view === 'product' && es[0].isIntersecting && prodShown < prodList.length) {
+    renderProduct(false);
+    $('sentinel').style.height = (prodShown < prodList.length) ? '1px' : '0px';
+  }
+}, { rootMargin: '900px' }).observe($('sentinel'));
 
-  async function fetchWithTimeout(url) {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), TIMEOUT);
-    try { return await fetch(url, { signal: ctrl.signal }); }
-    finally { clearTimeout(timer); }
+/* ==========================================================================
+   启动
+   ========================================================================== */
+async function boot() {
+  readURL();
+  loadLocal();
+  syncResponsive();
+  syncCheckLabels();
+  setPricePills();
+  renderSkeleton(10);
+
+  // 控件回填（URL → 表单）
+  $('sort').value = S.sort; $('fItems').checked = S.fItems;
+  $('fMinFans').value = S.fMinFans || ''; $('fMinRate').value = S.fMinRate || '';
+  $('pSort').value = S.pSort; $('pMin').value = S.min; $('pMax').value = S.max;
+  $('pHideSold').checked = S.hideSold; $('pFreeShip').checked = S.freeShip; $('pNew').checked = S.isNew;
+  if (S.cate) {
+    const b = [...$('cateBtns').children].find(x => x.dataset.cate === S.cate);
+    if (b) { $('cateBtns').querySelectorAll('.pill').forEach(x => x.classList.remove('on')); b.classList.add('on'); }
   }
 
-  // token 状态 / 数据更新时间（status.json）
+  // 先拿屏蔽名单（很小），避免被屏蔽的店先闪一下
   try {
-    const sr = await fetchWithTimeout('data/status.json?' + VER);
-    if (sr.ok) {
-      const stt = await sr.json();
-      if (stt.token_expired) document.getElementById('tokenWarn').classList.remove('hide');
-      if (stt.updated_at) {
-        const dd = new Date(stt.updated_at);
-        if (!isNaN(dd)) document.getElementById('updatedAt').textContent = '· 数据更新于 ' + dd.toLocaleString('zh-CN', { hour12: false });
+    const bl = await fetchJSON('data/blocklist.json?' + VER, 8000);
+    if (bl && typeof bl === 'object') {
+      BLOCKLIST = {
+        shops: (bl.shops || []).map(s => typeof s === 'object' && s !== null ? s : { shopId: String(s) }),
+        name_rules: bl.name_rules || [],
+      };
+      BLOCKLIST.shops.forEach(s => globalIds.add(String(s.shopId)));
+    }
+  } catch (e) { console.warn('blocklist.json 加载失败，使用兜底关键词', e); }
+
+  // token 状态 / 更新时间（先取，之后每次重绘顶部统计都要用）
+  try {
+    const st = await fetchJSON('data/status.json?' + VER, 8000);
+    if (st && st.token_expired) $('tokenWarn').classList.remove('hide');
+    if (st && st.chunks) TOTAL_CHUNKS = Math.max(1, st.chunks | 0);
+    if (st && st.updated_at) {
+      const d = new Date(st.updated_at);
+      if (!isNaN(d)) {
+        const o = { hour12: false, month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+        UPDATED_AT = '更新于 ' + d.toLocaleString('zh-CN', o);
+        UPDATED_AT_SHORT = d.toLocaleString('zh-CN', { ...o, day: '2-digit', hour: '2-digit', minute: '2-digit' });
       }
     }
   } catch (e) {}
 
-  function addProducts(raw) {
-    raw.forEach(p => {
-      const shop = shopMap[p.s] || {};
-      PRODUCTS.push({
-        shopId: p.s, shopName: shop.name || '', shopAvatar: shop.headImage || '',
-        itemId: p.i, itemName: p.n, image: p.g,
-        price: p.p, priceYuan: (p.p || 0) / 100, addTime: p.t || '',
-        stock: p.k || 0, soldText: p.d || '', soldNum: p.u || 0,
-        originalPrice: p.o || 0, itemTag: p.a || [],
-        preSale: p.r || false, hasSku: p.h || false,
-        status: p.m || 1, freeShip: !!p.f, comment: p.c || ''
-      });
-    });
-    TOTAL_SOLD = PRODUCTS.reduce((a, p) => a + ((p.stock || 0) === 0 ? 1 : 0), 0);
-  }
-
+  const t0 = performance.now();
   try {
-    // 第一步：加载店铺索引（52KB，秒开）
-    const idxResp = await fetchWithTimeout('data/shops_index.json?' + VER);
-    if (!idxResp.ok) throw new Error('店铺索引 HTTP ' + idxResp.status);
-    const idx = await idxResp.json();
+    const idx = await fetchJSON('data/shops_index.json?' + VER);
     SHOPS.push(...idx);
-    SHOPS.forEach(s => { shopMap[s.shopId] = s; });
-    // 立即显示店铺统计（含死店/屏蔽过滤）
-    rebuildMerchants();
+    idx.forEach(s => shopMap.set(String(s.shopId), s));
+    recomputeHiddenIds();          // 店铺到齐后才能算出「关键词命中哪些店」
+    rebuildMerchantOptions();
     updateStats();
-    console.log(`店铺索引 ${(performance.now()-start).toFixed(0)}ms，${SHOPS.length} 店`);
+    $('pMerchant').value = S.merchant;
+    console.log(`店铺索引 ${(performance.now() - t0).toFixed(0)}ms · ${SHOPS.length} 店`);
 
-    // 第二步：加载第一块商品（~2MB），立即渲染
-    grid.innerHTML = '<div class="empty">⏳ 加载首屏商品...</div>';
-    const c0 = await fetchWithTimeout(`data/shops_products_0.json?${VER}`);
-    if (!c0.ok) throw new Error('首块 HTTP ' + c0.status);
-    const r0 = await c0.json();
-    addProducts(r0);
-    console.log(`首块 ${(performance.now()-start).toFixed(0)}ms · ${r0.length} 件 → 总${PRODUCTS.length}件`);
+    const c0 = await fetchJSON(`data/shops_products_0.json?${VER}`);
+    addProducts(c0);
+    console.log(`首块 ${(performance.now() - t0).toFixed(0)}ms · ${c0.length} 件`);
     updateStats();
-    render();
+    setView(S.view);
 
-    // 第三步：后台排队加载剩余块
-    let ci = 1;
     (async function loadRest() {
-      while (true) {
-        const url = `data/shops_products_${ci}.json?${VER}`;
-        try {
-          const resp = await fetchWithTimeout(url);
-          if (!resp.ok) break;
-          const raw = await resp.json();
-          addProducts(raw);
-          console.log(`块${ci} ${(performance.now()-start).toFixed(0)}ms · +${raw.length} 件 → 总${PRODUCTS.length}件`);
-          updateStats();
-          // 如果在商品视图，静默刷新（注意：此处必须用词法作用域的 view，window.view 恒为 undefined）
-          if (view === 'product') render();
-          ci++;
-        } catch (e) { break; }
+      // status.json 里有分块数就用它（避免多打一次必然 404 的请求）；
+      // 老数据没有这个字段时，退回「fetch 到 404 为止」。
+      const n = TOTAL_CHUNKS;
+      for (let ci = 1; ci < n; ci++) {
+        let raw;
+        try { raw = await fetchJSON(`data/shops_products_${ci}.json?${VER}`); }
+        catch (e) { break; }
+        addProducts(raw);
+        updateStats(); updateFilterBadge();
+        if (S.view === 'product') renderProduct(true);
+        console.log(`块${ci} · 累计 ${PRODUCTS.length} 件`);
       }
     })();
-
   } catch (e) {
-    // 降级：旧格式
-    console.warn('新格式失败，降级旧格式:', e.message);
+    console.warn('新格式加载失败，尝试旧格式', e.message);
+    grid.innerHTML = '';
     try {
-      const resp = await fetchWithTimeout('data/shops_data.json?' + VER);
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      const d = await resp.json();
-      SHOPS.length = 0;
+      const d = await fetchJSON('data/shops_data.json?' + VER, 60000);
       SHOPS.push(...d);
-      SHOPS.forEach(s => { shopMap[s.shopId] = s; s.items.forEach(it => { PRODUCTS.push({
-        shopId:s.shopId, shopName:s.name, shopAvatar:s.headImage,
-        itemId:it.itemId, itemName:it.itemName, image:it.image,
-        price:it.price, priceYuan:(it.price||0)/100, addTime:it.addTime||'',
-        stock:it.stock||0, soldText:it.soldText||'', soldNum:it.soldNum||0,
-        originalPrice:it.originalPrice||0, itemTag:it.itemTag||[],
-        preSale:it.preSale||false, hasSku:it.hasSku||false
-      }); }); });
-      rebuildMerchants();
-      updateStats();
-      render();
+      d.forEach(s => {
+        shopMap.set(String(s.shopId), s);
+        s.itemCount = (s.items || []).length;
+        (s.items || []).forEach(it => PRODUCTS.push({
+          shopId: s.shopId, shopName: s.name || '', shopAvatar: s.headImage || '',
+          itemId: it.itemId, itemName: it.itemName, image: it.image,
+          price: it.price, priceYuan: (it.price || 0) / 100, addTime: it.addTime || '',
+          stock: it.stock || 0, soldText: it.soldText || '', soldNum: it.soldNum || 0,
+          originalPrice: it.originalPrice || 0, itemTag: it.itemTag || [],
+          preSale: !!it.preSale, hasSku: !!it.hasSku,
+          status: it.status == null ? 1 : it.status, freeShip: !!it.freeShip,
+        }));
+      });
+      rebuildMerchantOptions(); updateStats(); setView(S.view);
     } catch (e2) {
-      grid.innerHTML = `<div class="empty">数据加载失败<br><small>${e2.message}</small><br><br><button onclick="location.reload()" style="padding:8px 24px;background:#4a6cf7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">🔄 重试</button></div>`;
+      grid.innerHTML = '';
+      showEmpty('数据加载失败', (e2.message || '') + ' · 请检查网络后重试');
+      $('brandSub').textContent = '加载失败';
     }
   }
-})();
+}
+
+function addProducts(raw) { raw.forEach(p => addProduct(p, shopMap.get(String(p.s)))); }
+function addProduct(p, shop) {
+  shop = shop || shopMap.get(String(p.s)) || {};
+  PRODUCTS.push({
+    shopId: p.s, shopName: shop.name || '', shopAvatar: shop.headImage || '',
+    itemId: p.i, itemName: p.n, image: p.g,
+    price: p.p, priceYuan: (p.p || 0) / 100, addTime: p.t || '',
+    stock: p.k || 0, soldText: p.d || '', soldNum: p.u || 0,
+    originalPrice: p.o || 0, itemTag: p.a || [],
+    preSale: !!p.r, hasSku: !!p.h,
+    status: p.m == null ? 1 : p.m, freeShip: !!p.f,
+  });
+}
+
+// render 后统一刷新派生 UI
+boot();
 </script>
 </body>
 </html>
