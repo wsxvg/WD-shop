@@ -210,6 +210,8 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 }
 .pcard:hover{transform:translateY(-3px);box-shadow:var(--sh-2);border-color:#ddd7cf;}
 .pimg-wrap{position:relative;aspect-ratio:1/1;background:var(--line-2);overflow:hidden;}
+/* 窗口化后 DOM 里只有约 50 张卡，loading="lazy" 没有收益反而有害：
+   视口内的图也被延迟，且每次窗口重绘都会把未完成的加载重来一遍。 */
 .pimg{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;}
 .pimg.loaded{opacity:1;}
 .pbadges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;
@@ -969,7 +971,7 @@ function productCard(p) {
   const tags = (p.itemTag || []).map(t => `<span class="ptag">${esc(t.tagTitle || '')}</span>`).join('');
   return `<a class="pcard${dim ? ' dim' : ''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
-      <img class="pimg" src="${esc(p.image || BLANK)}" loading="lazy" decoding="async"
+      <img class="pimg" src="${esc(p.image || BLANK)}" decoding="async"
            onload="this.classList.add('loaded')"
            onerror="this.src=BLANK;this.classList.add('loaded')">
       <div class="pbadges">
@@ -1026,6 +1028,7 @@ function measure() {
 }
 
 function drawRange(start, end) {
+  clearSkeletons();
   grid.querySelectorAll('.pcard').forEach(n => n.remove());
   const slice = prodList.slice(start, end);
   if (slice.length) padBot.insertAdjacentHTML('beforebegin', slice.map(productCard).join(''));
@@ -1087,6 +1090,7 @@ function renderShop() {
   shopList = list;
   grid.className = 'grid g-shop';
   padTop.style.height = '0px'; padBot.style.height = '0px';
+  clearSkeletons();
   grid.querySelectorAll('.shop').forEach(n => n.remove());
   padTop.insertAdjacentHTML('afterend', list.length ? list.map(shopRow).join('') : '');
   if (!list.length) showEmpty('没有符合条件的店铺', '试试放宽筛选，或清空搜索词');
@@ -1128,7 +1132,16 @@ function renderSkeleton(n) {
   const one = `<div class="skel"><div class="s-img"></div><div class="s-b">
     <div class="s-l w80"></div><div class="s-l"></div><div class="s-l w30"></div></div></div>`;
   padTop.style.height = '0px'; padBot.style.height = '0px';
-  grid.insertAdjacentHTML('afterbegin', one.repeat(n));
+  // 必须插在 padBot 之前（内容位），不能 afterbegin —— 否则骨架会跑到
+  // padTop 前面，真实内容渲染后也没人清它，会变成一堵灰墙压在商品上面。
+  padBot.insertAdjacentHTML('beforebegin', one.repeat(n));
+}
+
+/** 真实内容到位后清掉骨架占位块 */
+function clearSkeletons() {
+  const n = grid.querySelectorAll('.skel').length;
+  if (n) grid.querySelectorAll('.skel').forEach(el => el.remove());
+  return n;
 }
 
 function showEmpty(title, sub) {
@@ -1141,6 +1154,7 @@ function renderProduct(reset) {
   if (!reset) return;
   computeList();
   grid.className = 'grid g-product';
+  clearSkeletons();
   grid.querySelectorAll('.pcard').forEach(n => n.remove());
   domStart = 0; domEnd = 0; rowH = 0;
   if (!prodList.length) {
