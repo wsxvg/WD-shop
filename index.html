@@ -210,10 +210,11 @@ input[type=number]{width:92px;font-variant-numeric:tabular-nums;}
 }
 .pcard:hover{transform:translateY(-3px);box-shadow:var(--sh-2);border-color:#ddd7cf;}
 .pimg-wrap{position:relative;aspect-ratio:1/1;background:var(--line-2);overflow:hidden;}
-/* 窗口化后 DOM 里只有约 50 张卡，loading="lazy" 没有收益反而有害：
-   视口内的图也被延迟，且每次窗口重绘都会把未完成的加载重来一遍。 */
-.pimg{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s;}
-.pimg.loaded{opacity:1;}
+/* 图片默认可见：不再用 opacity:0 等 onload 加 class。
+   那样只要 onload/onerror 都没触发（网络慢、窗口重绘时元素被重建），
+   图片就会永久停在透明状态，看起来就是「一直加载」。
+   底色由 .pimg-wrap 提供，未加载时是一个中性灰块，比看不见强。 */
+.pimg{width:100%;height:100%;object-fit:cover;background:var(--line-2);}
 .pbadges{position:absolute;top:8px;left:8px;display:flex;flex-direction:column;
   gap:4px;align-items:flex-start;pointer-events:none;}
 .flag{font-size:10.5px;font-weight:700;padding:2.5px 7px;border-radius:6px;
@@ -972,8 +973,7 @@ function productCard(p) {
   return `<a class="pcard${dim ? ' dim' : ''}" href="${itemUrl(p)}" target="_blank" rel="noopener">
     <div class="pimg-wrap">
       <img class="pimg" src="${esc(p.image || BLANK)}" decoding="async"
-           onload="this.classList.add('loaded')"
-           onerror="this.src=BLANK;this.classList.add('loaded')">
+           onerror="this.src=BLANK">
       <div class="pbadges">
         ${cut ? `<span class="flag flag-cut">-${cut}%</span>` : ''}
         ${p.freeShip ? '<span class="flag flag-ship">包邮</span>' : ''}
