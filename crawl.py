@@ -18,11 +18,21 @@ import os
 import sys
 import glob
 import time
+import threading
+import http.client
 import urllib.parse
 import urllib.request
 import gzip
 import re
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timezone
+
+# Windows 控制台默认 GBK，print emoji 会直接抛 UnicodeEncodeError；统一走 UTF-8。
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_HAR = os.path.join(HERE, "thor.weidian.com_2026_07_13_18_46_45.har")
@@ -41,8 +51,94 @@ DEFAULT_HEADERS = {
 
 WDBASE = "https://thor.weidian.com/wdbuybuy/"
 DECOBASE = "https://thor.weidian.com/decorate/"
+# 商品列表接口的镜像域名：thor.weidian.com 触发风控时，thor.koudai.com 往往仍可用
+# （同一套接口，实测数据一致）。按顺序尝试，记住上次成功的域名。
+DECO_HOSTS = ("thor.koudai.com", "thor.weidian.com")
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781")
+
+# ---------- 并发限速 & 连接复用 ----------
+# 全局限速：所有线程共享一个请求节拍，避免并发时把接口打爆。
+# 线程本地连接：每个 worker 复用自己的 keep-alive 连接，省掉重复 TLS 握手。
+REQUEST_MIN_INTERVAL = 0.6    # 秒/请求（全局约 1.7 req/s，实测 8 req/s 会触发风控）
+_RATE_LOCK = threading.Lock()
+_NEXT_REQUEST_AT = [0.0]
+_PAUSE_UNTIL = [0.0]
+_HOST_PREF_COUNTER = [0]
+_THREAD_LOCAL = threading.local()
+
+
+def set_request_interval(seconds):
+    """设置全局请求间隔（供命令行 --delay 使用）。"""
+    global REQUEST_MIN_INTERVAL
+    REQUEST_MIN_INTERVAL = max(0.0, float(seconds))
+
+
+def _rate_wait():
+    with _RATE_LOCK:
+        now = time.time()
+        slot = max(_NEXT_REQUEST_AT[0], now, _PAUSE_UNTIL[0])
+        _NEXT_REQUEST_AT[0] = slot + REQUEST_MIN_INTERVAL
+        pause = _PAUSE_UNTIL[0]
+    delay = max(slot, pause) - time.time()
+    if delay > 0:
+        time.sleep(delay)
+
+
+def _pause_requests(seconds):
+    """全局冷却：检测到限频时让所有 worker 一起停一会儿。"""
+    with _RATE_LOCK:
+        _PAUSE_UNTIL[0] = max(_PAUSE_UNTIL[0], time.time() + seconds)
+
+
+def _get_conn(host):
+    conns = getattr(_THREAD_LOCAL, "conns", None)
+    if conns is None:
+        conns = {}
+        _THREAD_LOCAL.conns = conns
+    conn = conns.get(host)
+    if conn is None:
+        conn = http.client.HTTPSConnection(host, timeout=20)
+        conns[host] = conn
+    return conn
+
+
+def _drop_conn(host):
+    conns = getattr(_THREAD_LOCAL, "conns", None)
+    if conns and host in conns:
+        try:
+            conns[host].close()
+        except Exception:
+            pass
+        conns.pop(host, None)
+
+
+def _http_get_json(path_with_query, headers):
+    """带 keep-alive 的 GET；某个域名被风控时自动切换镜像域名。"""
+    pref = getattr(_THREAD_LOCAL, "host_idx", None)
+    if pref is None:
+        # 不同线程从不同域名起步，分摊单域名请求量，降低被风控的概率
+        with _RATE_LOCK:
+            pref = _HOST_PREF_COUNTER[0] % len(DECO_HOSTS)
+            _HOST_PREF_COUNTER[0] += 1
+        _THREAD_LOCAL.host_idx = pref
+    hosts = DECO_HOSTS[pref:] + DECO_HOSTS[:pref]
+    last = None
+    for host in hosts:
+        conn = _get_conn(host)
+        try:
+            conn.request("GET", path_with_query, headers=headers)
+            resp = conn.getresponse()
+            body = resp.read()
+            if resp.status != 200:
+                raise RuntimeError(f"HTTP {resp.status}")
+            data = json.loads(body.decode("utf-8"))
+            _THREAD_LOCAL.host_idx = DECO_HOSTS.index(host)
+            return data
+        except Exception as ex:
+            last = ex
+            _drop_conn(host)
+    raise last
 
 
 def find_latest_har(here):
@@ -245,19 +341,22 @@ def call_api_get(context, path, param, headers):
     # 带 context（若提供了有效鉴权则带，否则仅 param 也能公开访问）
     if context is not None:
         data["context"] = json.dumps(context, separators=(",", ":"))
-    url = DECOBASE + path + "?" + urllib.parse.urlencode(data)
-    req = urllib.request.Request(url, method="GET")
-    req.add_header("user-agent", UA)
-    req.add_header("xweb_xhr", "1")
-    req.add_header("referer",
-                   "https://servicewechat.com/wx4d1258677af59f5c/196/page-frame.html")
+    qs = urllib.parse.urlencode(data)
+    req_headers = {
+        "user-agent": UA,
+        "xweb_xhr": "1",
+        "accept": "*/*",
+        "accept-encoding": "identity",
+        "referer": "https://servicewechat.com/wx4d1258677af59f5c/196/page-frame.html",
+        "connection": "keep-alive",
+    }
     if headers:
         for k, v in headers.items():
             if k == "referer":
                 continue
-            req.add_header(k, v)
-    with urllib.request.urlopen(req, timeout=20) as resp:
-        return _decode(resp)
+            req_headers[k] = v
+    _rate_wait()
+    return _http_get_json("/decorate/" + path + "?" + qs, req_headers)
 
 
 def crawl(path, context, headers, page_size, max_pages=200):
@@ -333,7 +432,8 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_page
     limit=100（API 不支持 >100）；max_pages=50 防止 API 死循环。
     返回 (items, state)：
       state=True  确定结果（API 正常应答；items 可能为空 = 真的无在售）
-      state=False 失败（异常/业务错误，结果不可信，应重试）
+      state=False 业务失败（status.code 非 0，结果不可信，应重试）
+      state="net" 网络失败（连接被断开/超时，通常是限频，全局冷却后重试）
       state=None  不确定（首页静默空，无法区分限频与全下架，需元数据辅助判断）"""
     items = []
     offset = 0
@@ -350,7 +450,7 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_page
             d = call_api_get(context, "shopDetail.tab.getItemList/1.0", param, headers)
         except Exception as e:
             print(f"    shop {shop_id} 请求异常: {type(e).__name__}: {e}")
-            return items, False
+            return items, "net"
         st = d.get("status", {}).get("code")
         res = d.get("result")
         if st != 0 or not isinstance(res, dict):
@@ -363,7 +463,6 @@ def crawl_shop_items(context, headers, shop_id, limit=100, max_retry=1, max_page
         if len(lst) < limit or not res.get("hasData", False):
             break
         offset += limit
-        time.sleep(1.0)  # 翻页间隔（降频）
     return items, True
 
 
@@ -387,6 +486,11 @@ def main():
     page_size = 50
     if "--pagesize" in sys.argv:
         page_size = int(sys.argv[sys.argv.index("--pagesize") + 1])
+    workers = 4
+    if "--workers" in sys.argv:
+        workers = max(1, min(8, int(sys.argv[sys.argv.index("--workers") + 1])))
+    if "--delay" in sys.argv:
+        set_request_interval(float(sys.argv[sys.argv.index("--delay") + 1]))
 
     # 阶段1：解析 token（context）。无 token 也能跑，只是无法获取新关注店铺
     context, headers, source = load_context(har_arg)
@@ -473,44 +577,56 @@ def main():
 
     # 阶段4：商品补全（getItemList 公开接口，无需 token，可增量刷新）
     total = len(shelf_ids)
-    print(f"刷新 {total} 个店铺的全量商品 (getItemList)…", flush=True)
+    print(f"刷新 {total} 个店铺的全量商品 (getItemList, {workers} 并发, "
+          f"间隔{REQUEST_MIN_INTERVAL:.2f}s)…", flush=True)
     t0 = time.time()
     pending = list(shelf_ids)
     retry_count = {}  # sid → 已重试次数
-    consecutive_empty = 0
-    cooldowns = 0
-    MAX_COOLDOWNS = 20
-    MAX_RETRY_PER_SHOP = 3  # 每家店最多重试 3 次，超限跳过
+    MAX_RETRY_PER_SHOP = 4  # 每家店最多重试 4 次，超限跳过
     done_count = 0
-    while pending:
-        sid = pending.pop(0)
+    failure_streak = 0
+    last_save = 0
+
+    def progress_line(extra=""):
+        pct = done_count / total * 100 if total else 100
+        bar_len = 20
+        filled = int(bar_len * done_count / total) if total else bar_len
+        bar = "#" * filled + "-" * (bar_len - filled)
+        elapsed = time.time() - t0
+        eta = elapsed / done_count * (total - done_count) if done_count else 0
+        return (f"  [{bar}] {done_count}/{total} {pct:.1f}% |{extra} "
+                f"已用{elapsed:.0f}s 预计还需{eta:.0f}s")
+
+    def handle_result(sid, raw, state):
+        nonlocal done_count, failure_streak
         shop_name = str(by_id.get(sid, {}).get("name") or sid)[:18]
-        raw, state = crawl_shop_items(context, headers, sid)
         if raw:
             by_id[sid]["items"] = [norm_item(it) for it in raw]
             by_id[sid]["hasShelfItems"] = True
-            consecutive_empty = 0
+            failure_streak = 0
             done_count += 1
-            pct = done_count / total * 100 if total else 100
-            bar_len = 20
-            filled = int(bar_len * done_count / total) if total else bar_len
-            bar = "#" * filled + "-" * (bar_len - filled)
-            elapsed = time.time() - t0
-            eta = elapsed / done_count * (total - done_count) if done_count else 0
-            print(f"  [{bar}] {done_count}/{total} {pct:.1f}% | "
-                  f"{shop_name} {len(raw)}件 | 剩{total-done_count}家 "
-                  f"已用{elapsed:.0f}s 预计还需{eta:.0f}s", flush=True)
+            print(progress_line(f" {shop_name} {len(raw)}件 | 剩{total-done_count}家"), flush=True)
         elif state is True:
             # API 明确正常应答但商品列表为空 → 该店确实无在售商品
             # （state=None 的静默空是限频，onShelfItemNum 字段在 API 中不可靠，
             #   不能用来判断全下架，故一律保留旧数据并重试，避免误清空）
             by_id[sid]["items"] = []
             by_id[sid]["hasShelfItems"] = False
-            consecutive_empty = 0
+            failure_streak = 0
             done_count += 1
-            print(f"  [清空] {shop_name} API确认已无在售商品 "
-                  f"({done_count}/{total})", flush=True)
+            print(f"  [清空] {shop_name} API确认已无在售商品 ({done_count}/{total})", flush=True)
         else:
+            if state == "net":
+                # 连接被服务器断开：几乎都是限频/临时封禁，不算单店失败
+                pending.append(sid)
+                failure_streak += 1
+                print(f"  [连接断开] {shop_name} 暂无返回，稍后重试 "
+                      f"(已完成 {done_count}/{total})", flush=True)
+                if failure_streak >= 3:
+                    print("  !! 连续连接被拒，全局冷却 180s…", flush=True)
+                    _pause_requests(180)
+                    failure_streak = 0
+                return
             tries = retry_count.get(sid, 0) + 1
             retry_count[sid] = tries
             if tries >= MAX_RETRY_PER_SHOP:
@@ -518,24 +634,56 @@ def main():
                 if by_id.get(sid, {}).get("items") is None:
                     by_id[sid]["items"] = []
                 done_count += 1  # 跳过也计入进度，否则进度条永远走不满
-                continue  # 不再重试，继续下一家
-            pending.append(sid)  # 限频，放回队尾稍后重试
-            print(f"  [限频重试] {shop_name} 暂无返回，放回队尾 (第{tries}次, "
-                  f"已完成 {done_count}/{total})", flush=True)
-            consecutive_empty += 1
-            if consecutive_empty >= 5:
-                cooldowns += 1
-                if cooldowns > MAX_COOLDOWNS:
-                    print("  !! 限频超时，放弃剩余未填店铺，保存已得数据", flush=True)
-                    pending = []
-                    break
-                print(f"  !! 检测到限频，短冷却 60s "
-                      f"({cooldowns}/{MAX_COOLDOWNS})…", flush=True)
-                time.sleep(60)
-                consecutive_empty = 0
-        if done_count % 5 == 0 or not pending:
-            save_progress(shops, OUT)
-        time.sleep(1.5)
+                failure_streak = 0
+                print(progress_line(), flush=True)
+            else:
+                pending.append(sid)  # 限频，稍后重试
+                failure_streak += 1
+                print(f"  [限频重试] {shop_name} 暂无返回，稍后重试 (第{tries}次, "
+                      f"已完成 {done_count}/{total})", flush=True)
+                if failure_streak >= 5:
+                    print("  !! 检测到连续限频，全局冷却 120s…", flush=True)
+                    _pause_requests(120)
+                    failure_streak = 0
+
+    def fetch_one(sid):
+        # 重试的店先退避，避免刚失败就立刻再打
+        tries = retry_count.get(sid, 0)
+        if tries:
+            time.sleep(min(24.0, 8.0 * tries))
+        return sid, crawl_shop_items(context, headers, sid)
+
+    try:
+        if workers == 1:
+            while pending:
+                sid = pending.pop(0)
+                _, (raw, state) = fetch_one(sid)
+                handle_result(sid, raw, state)
+                if done_count - last_save >= 5 or not pending:
+                    save_progress(shops, OUT)
+                    last_save = done_count
+        else:
+            with ThreadPoolExecutor(max_workers=workers) as ex:
+                futures = {}
+                while pending or futures:
+                    # 保持约 2 倍并发数的在途任务，避免一批一批地等
+                    while pending and len(futures) < workers * 2:
+                        sid = pending.pop(0)
+                        futures[ex.submit(fetch_one, sid)] = sid
+                    done, _ = wait(futures, return_when=FIRST_COMPLETED)
+                    for fut in done:
+                        sid = futures.pop(fut)
+                        try:
+                            _, (raw, state) = fut.result()
+                        except Exception as e:
+                            print(f"    shop {sid} 请求异常: {type(e).__name__}: {e}", flush=True)
+                            raw, state = [], False
+                        handle_result(sid, raw, state)
+                    if done_count - last_save >= 5:
+                        save_progress(shops, OUT)
+                        last_save = done_count
+    except KeyboardInterrupt:
+        print("\n  !! 收到中断，保存已得数据…", flush=True)
     # 其余无在售店铺 items 置空
     for sid in by_id:
         if "items" not in by_id[sid]:
