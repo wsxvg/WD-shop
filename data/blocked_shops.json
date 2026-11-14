@@ -1,5 +1,22 @@
 {
-  "updated_at": "2026-11-14T07:16:17.933030+00:00",
-  "count": 0,
-  "shops": []
+  "updated_at": "2026-11-14T14:41:34.895673+00:00",
+  "count": 2,
+  "shops": [
+    {
+      "shopId": "1759817517",
+      "name": "威廉made已换新店",
+      "reason": "名称含「已换新店」",
+      "followCount": 156747,
+      "itemCount": 0,
+      "blocked_at": "2026-11-14"
+    },
+    {
+      "shopId": "1805462496",
+      "name": "乔治眼镜（请关注新店）",
+      "reason": "名称含「请关注新店」",
+      "followCount": 73525,
+      "itemCount": 0,
+      "blocked_at": "2026-11-14"
+    }
+  ]
 }
